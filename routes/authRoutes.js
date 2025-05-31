@@ -69,6 +69,10 @@ router.get('/login', (req, res) => {
 router.post ('/login', (req, res) => {
     const {username, password, role} = req.body;
 
+    if (!role) {
+        return res.status(400).send('Role is missing!');
+    }
+
     const query = `SELECT * FROM ${role} WHERE username = ?`;
     db.query(query, [username], async (err, results) => {
         if (err) {
@@ -84,7 +88,31 @@ router.post ('/login', (req, res) => {
         if (!match) {
            return res.redirect('login?error=Invalid password!');
         }
+
+        let userId;
+        if (role === 'students') {
+            userId = user.student_id;
+        } else if (role === 'teachers') {
+            userId = user.teacher_id;
+        } else {
+            return res.status(400).send('Invalid role');
+        }
+
+        req.session.userId = userId;
+        req.session.username = user.username;
+        req.session.role = role;
+        req.session.folderRole = role.slice(0, -1);
+        
         return res.redirect('/dashboard');
+    });
+});
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        if (err) {
+            return res.status(500).send('Failed to logout');
+        }
+        res.redirect('/login');
     });
 });
 

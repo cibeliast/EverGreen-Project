@@ -28,9 +28,27 @@
       </div>
 
       <!-- Right: Username -->
-      <a class="nav-link" href="#" style="font-size: 13px;"><i class="bi bi-person-circle"></i> Username</a>
+      <a class="nav-link" href="#" id="username-display" style="font-size: 13px;"><i class="bi bi-person-circle"></i> Loading...</a>
     </div>
   </nav>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('/api/profile')
+        .then(response => response.json())
+        .then(data => {
+          if(!data.error) {
+            document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> ${data.username}`;
+          } else {
+            document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> Guest}`;
+          }
+        })
+        .catch(err => {
+          console.error('Fetch error: ', err);
+          document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> Guest`;
+        });
+    });
+  </script>
 
   <br>
 
