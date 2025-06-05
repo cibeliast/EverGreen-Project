@@ -9,6 +9,7 @@ import session from 'express-session';
 import authRoutes from './routes/authRoutes.js'
 import student from './routes/student.js'
 import profileRouter from './routes/api/profile.js';
+import studentSchedule from './routes/studentSchedule.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -31,6 +32,7 @@ app.use(session({
 app.use('/', authRoutes);
 app.use('/', student);
 app.use('/api', profileRouter);
+app.use('/api', studentSchedule);
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

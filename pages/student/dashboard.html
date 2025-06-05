@@ -56,11 +56,11 @@
   <p>Check your upcoming classes, browse your calendar, and see how you did on recent quizzes.</p>
   <hr>
 
+  
   <div class="dashboard-container">
   <div class="left-schedule">
-    <!-- Tabel jadwal -->
     <div class="table-wrapper">
-      <table class="table table-custom">
+      <table class="table table-custom" id="table-schedule">
         <thead>
           <tr style="background-color: #A69ACA;">
             <th>No</th>
@@ -70,54 +70,6 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>Monday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>6</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>7</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
-          <tr>
-            <td>8</td>
-            <td>Wednesday</td>
-            <td>08:00 - 09:00</td>
-            <td>Jane Cooper</td>
-          </tr>
         </tbody>
       </table>
     </div>
@@ -155,8 +107,66 @@
     </div>
   </div>
 
+  </div>
 
- 
+  <script>
+  
+    async function fetchJadwal() {
+      try {
+        const response = await fetch('/api/studentSchedule');
+        if (!response.ok) {
+          throw new Error('Failed to fetch jadwal');
+      }
+      const schedules = await response.json();
+  
+      const tbody = document.querySelector('#table-schedule tbody');
+      tbody.innerHTML = '';  // Kosongkan dulu
+  
+      if (schedules.length === 0) {
+        const tr = document.createElement('tr');
+        const td = document.createElement('td');
+        td.colSpan = 4;  // colspan supaya menutupi semua kolom
+        td.textContent = 'Tidak ada jadwal';
+        td.style.textAlign = 'center';
+        tr.appendChild(td);
+        tbody.appendChild(tr);
+        return;
+      }
+  
+      schedules.forEach((schedule, index) => {
+        const tr = document.createElement('tr');
+  
+        // No
+        const tdNo = document.createElement('td');
+        tdNo.textContent = index + 1;
+        tr.appendChild(tdNo);
+  
+        // Day
+        const tdDay = document.createElement('td');
+        tdDay.textContent = schedule.day;
+        tr.appendChild(tdDay);
+        
+        // Time
+        const tdTime = document.createElement('td');
+        tdTime.textContent = schedule.time;
+        tr.appendChild(tdTime);
+  
+        // Teacher
+        const tdTeacher = document.createElement('td');
+        tdTeacher.textContent = schedule.teacher_name;
+        tr.appendChild(tdTeacher);
+  
+        tbody.appendChild(tr);
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  fetchJadwal();
+  </script>
+  
+  
 
   <!-- CDN Flatpickr -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
