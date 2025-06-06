@@ -7,9 +7,9 @@ import { fileURLToPath } from 'url';
 import { devNull } from 'os';
 import session from 'express-session';
 import authRoutes from './routes/authRoutes.js'
-import student from './routes/student.js'
+import dashboard from './routes/dashboard.js'
 import profileRouter from './routes/api/profile.js';
-import studentSchedule from './routes/studentSchedule.js';
+import studentSchedule from './routes/student/studentSchedule.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -30,7 +30,7 @@ app.use(session({
 
 //Routing
 app.use('/', authRoutes);
-app.use('/', student);
+app.use('/', dashboard);
 app.use('/api', profileRouter);
 app.use('/api', studentSchedule);
 

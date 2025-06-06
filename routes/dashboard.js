@@ -2,7 +2,7 @@ import express from 'express';
 import bcrypt from 'bcrypt';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import db from '../db.js';
+import db from '../db/db.js';
 
 const router = express.Router();
 const __filename = fileURLToPath(import.meta.url);
