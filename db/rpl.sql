@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 18, 2025 at 05:33 AM
+-- Generation Time: Jun 06, 2025 at 06:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -93,7 +93,9 @@ INSERT INTO `schedules` (`schedule_id`, `student_id`, `teacher_id`, `day`, `time
 (2, NULL, 1, 'Wednesday', '14:00:00'),
 (3, 1, 1, 'Tuesday', '09:00:00'),
 (4, 2, 2, 'Thursday', '11:00:00'),
-(5, 3, 1, 'Friday', '13:00:00');
+(5, 3, 1, 'Friday', '13:00:00'),
+(6, 11, 1, 'Friday', '17:00:00'),
+(7, 11, 2, 'Thursday', '17:00:00');
 
 -- --------------------------------------------------------
 
@@ -106,7 +108,7 @@ CREATE TABLE `students` (
   `name` varchar(40) DEFAULT NULL,
   `email` varchar(40) NOT NULL,
   `username` varchar(15) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
   `total_meetings` int(10) DEFAULT NULL
@@ -119,7 +121,26 @@ CREATE TABLE `students` (
 INSERT INTO `students` (`student_id`, `name`, `email`, `username`, `password`, `phone_number`, `address`, `total_meetings`) VALUES
 (1, 'Rina Putri', 'rina@student.com', 'rina123', 'pass123', '089876543210', 'Jl. Anggrek No.5', 3),
 (2, 'Dina Laras', 'dina@student.com', 'dinal', 'pass123', '089812345678', 'Jl. Melati No.8', 2),
-(3, 'Toni Setiawan', 'toni@student.com', 'tonis', 'pass123', '089876543211', 'Jl. Kamboja No.3', 1);
+(3, 'Toni Setiawan', 'toni@student.com', 'tonis', 'pass123', '089876543211', 'Jl. Kamboja No.3', 1),
+(4, NULL, 'ketty@example.com', 'kettyuiop', '$2b$10$BDF0.XV6lh7.aPYLCFpD/et6UKYOEVXQrV4YHx.P1790RVGUlPN5m', NULL, NULL, NULL),
+(5, NULL, 'kettyiuop@email.com', 'poiuy', '$2b$10$Ys0r3myOMsHlGaAfsPasD.y2/NGLkJLaBy9erw32uHHvOlc9Cmmr6', NULL, NULL, NULL),
+(6, NULL, 'kipli@gmail.com', 'kipliy', '$2b$10$zBqtxT2SpVNJKDFyqBpaDOkNLnTg19zTgszBXIiXD09tCEG5HVtlW', NULL, NULL, NULL),
+(7, NULL, 'kettyuiop@email.com', 'kiplii', '$2b$10$GIhaTSDr458ttbCXz31Xw.oJoZqHa.lvdBOBRK1RH27Nc.BpQtFea', NULL, NULL, NULL),
+(10, NULL, 'evergreen@example.com', 'evergreen', '$2b$10$kIrg5wSTHVCT3n1yf2SblOO4g04iDbUig/VwiGe/QFc/O5bgz6KmO', NULL, NULL, NULL),
+(11, 'Kitibella', 'kibel@email.com', 'kibel', '$2b$10$gXzu9ZWiDNisPSwawnPOQeY/7soGU4uhRmypvbD/qk/iXr2qzsPOy', '', 'Jl. Jalan Yukk', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Stand-in structure for view `student_schedule_view`
+-- (See below for the actual view)
+--
+CREATE TABLE `student_schedule_view` (
+`student_id` int(11)
+,`day` varchar(10)
+,`time` time
+,`teacher_name` varchar(40)
+);
 
 -- --------------------------------------------------------
 
@@ -132,7 +153,7 @@ CREATE TABLE `teachers` (
   `name` varchar(40) DEFAULT NULL,
   `email` varchar(40) NOT NULL,
   `username` varchar(15) NOT NULL,
-  `password` varchar(20) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
   `address` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -143,7 +164,8 @@ CREATE TABLE `teachers` (
 
 INSERT INTO `teachers` (`teacher_id`, `name`, `email`, `username`, `password`, `phone_number`, `address`) VALUES
 (1, 'Ari', 'ari@teacher.com', 'ariww', 'pass123', '081234567890', 'Jl. Merdeka No.1'),
-(2, 'Santo', 'santo@teacher.com', 'santow', 'santo123', '081234567891', 'Jl. Mawar No, 2');
+(2, 'Santo', 'santo@teacher.com', 'santow', 'santo123', '081234567891', 'Jl. Mawar No, 2'),
+(5, NULL, 'teacher@gmail.com', 'Teacher', '$2b$10$e0EYMZuChPedjLQZgtRUx.6BCh1A.HzrFQj9TWRPoY6aTCwXwQ03O', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -165,6 +187,15 @@ INSERT INTO `topics` (`topic_id`, `name`, `description`) VALUES
 (1, 'Tenses', 'Basic to advanced English tenses.'),
 (2, 'Vocabulary', 'Daily vocabulary enrichment.'),
 (3, 'Speaking', 'Improve speaking confidence.');
+
+-- --------------------------------------------------------
+
+--
+-- Structure for view `student_schedule_view`
+--
+DROP TABLE IF EXISTS `student_schedule_view`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `student_schedule_view`  AS SELECT `s`.`student_id` AS `student_id`, `s`.`day` AS `day`, `s`.`time` AS `time`, `t`.`name` AS `teacher_name` FROM (`schedules` `s` join `teachers` `t` on(`s`.`teacher_id` = `t`.`teacher_id`)) ;
 
 --
 -- Indexes for dumped tables
@@ -198,13 +229,17 @@ ALTER TABLE `schedules`
 -- Indexes for table `students`
 --
 ALTER TABLE `students`
-  ADD PRIMARY KEY (`student_id`);
+  ADD PRIMARY KEY (`student_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `teachers`
 --
 ALTER TABLE `teachers`
-  ADD PRIMARY KEY (`teacher_id`);
+  ADD PRIMARY KEY (`teacher_id`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD UNIQUE KEY `username` (`username`);
 
 --
 -- Indexes for table `topics`
@@ -232,19 +267,19 @@ ALTER TABLE `quizzes`
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `topics`
