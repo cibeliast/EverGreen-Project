@@ -10,27 +10,38 @@
 </head>
 <body>
     <!-- NAVBAR -->
-  <nav class="navbar navbar-expand-lg navbar-custom">
-    <div class="container-fluid d-flex justify-content-between align-items-center w-100">
-      
-      <!-- Left: Brand -->
-      <a class="navbar-brand" href="#">EverGreen</a>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+      <div class="container-fluid d-flex justify-content-between align-items-center w-100">
+        
+        <!-- Left: Brand -->
+        <a class="navbar-brand" href="#">EverGreen</a>
 
-      <!-- Center: Dashboard | Quizzes -->
-      <div class="menu d-flex align-items-center">
-        <a class="nav-link" href="#">Dashboard</a>
-        <span class="divider">|</span>
-        <a class="nav-link" href="#">Quizzes</a>
+        <!-- Center: Dashboard | Quizzes -->
+        <div class="menu d-flex align-items-center">
+          <a class="nav-link" href="/dashboard">Dashboard</a>
+          <span class="divider">|</span>
+          <a class="nav-link" href="#">Quizzes</a>
+        </div>
+
+        <!-- Right: Username -->
+        <ul class="navbar-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 13px; color: #9FD3C7 !important;" id="username-display">
+              <i class="bi bi-person-circle me-2"></i>Username
+            </a>
+            <ul class="dropdown-menu" style="margin-top: 30px;">
+              <li><a class="dropdown-item" href="/pages/student/profile.html">Profile</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="#">Log out</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
-
-      <!-- Right: Username -->
-      <a class="nav-link" href="#" id="username-display" style="font-size: 13px;"><i class="bi bi-person-circle"></i> Loading...</a>
-    </div>
-  </nav>
-
+    </nav>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <div class="dashboard-container">
     <div class="left-profile">
-      <img src="/public/assets/profile.png" alt="">
+      <img src="/assets/profile.png" alt="">
       <h5>Michelle</h5>
       <p class="display_id">123230078</p>
       
@@ -169,7 +180,7 @@
     }
 
     /* NAVBAR */
-     .navbar-custom {
+    .navbar-custom {
       background-color: #1F2A44;
       margin: 15px;
       border-radius: 15px;
@@ -204,6 +215,10 @@
       font-size: 13px;
     }
 
+    .nav-link.dropdown-toggle::after {
+      display: none;
+    }
+
     /* BODY */
 
     .dashboard-container {
@@ -213,7 +228,6 @@
       margin: 20px;
       height: 550px;
       font-size: 13px;
-      
     }
 
     .left-profile {

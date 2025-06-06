@@ -20,6 +20,8 @@ const PORT = 3000;
 // Middleware
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(session({
     secret: 'rahasia',
@@ -33,6 +35,10 @@ app.use('/', authRoutes);
 app.use('/', dashboard);
 app.use('/api', profileRouter);
 app.use('/api', studentSchedule);
+
+app.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
+});
 
 app.listen(PORT, () => {
     console.log(`Server running at http://localhost:${PORT}`);

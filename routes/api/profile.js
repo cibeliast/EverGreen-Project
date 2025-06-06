@@ -49,7 +49,7 @@ router.post('/profile/update', (req, res) => {
         return res.status(400).json({ error: 'Invalid Role'});
     }
 
-    const query = `UPDATE ${role} SET name=?, username=?, email=?, address=?, phone number=? WHERE ${idColumn}=?`;
+    const query = `UPDATE ${role} SET name=?, username=?, email=?, address=?, phone_number=? WHERE ${idColumn}=?`;
     db.query(query, [name, username, email, address, phone_number, userId], (err, result) => {
         if (err) {
             return res.status(500).json({ error: 'Database error'});

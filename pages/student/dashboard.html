@@ -28,20 +28,20 @@
       </div>
 
       <!-- Right: Username -->
-      <!-- <a class="nav-link" href="#" id="username-display" style="font-size: 13px;"><i class="bi bi-person-circle"></i> Loading...</a> -->
-       <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Username
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><a class="dropdown-item" href="#">Log out</a></li>
+       <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="username-display"></a>
+          <ul class="dropdown-menu" style="margin-top: 30px;">
+            <li><a class="dropdown-item" href="/profile">Profile</a></li>
             <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Log out</a></li>
           </ul>
         </li>
+      </ul>
     </div>
   </nav>
 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
     window.addEventListener('DOMContentLoaded', () => {
       fetch('/api/profile')
@@ -309,6 +309,10 @@
       font-size: 13px;
     }
 
+    .nav-link.dropdown-toggle::after {
+      display: none;
+    }
+
     .dashboard-container {
       display: grid;
       grid-template-columns: 3fr 1fr; 
@@ -317,6 +321,7 @@
       margin: 30px 5%;
       height: 520px; 
       font-size: 13px;
+      overflow: hidden;
     }
 
     .table-wrapper {
