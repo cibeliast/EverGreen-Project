@@ -27,7 +27,7 @@
     />
   </head>
 
-  <body class="bg-[#F9FAFB] min-h-screen p-4">
+  <body class="bg-[#E0EBF5] min-h-screen p-4">
     <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row gap-10">
       <!-- KOTAKAN UTAMA SMUA -->
       <!-- Sidebar Start -->
@@ -127,252 +127,116 @@
           </p>
         </section>
 
-        <hr /><!-- Garis -->
+        <hr />
+        <!-- Garis -->
 
         <!-- Searching -->
-        <form class="d-flex" role="search">
+        <form class="d-flex" role="search" id="searchForm">
           <input
             class="form-control me-2 text-base"
             type="search"
             placeholder="Search student by name"
             aria-label="Search"
+            id="searchInput"
           />
         </form>
 
-        <!-- Card Start -->
-        <!-- <div
+        <!-- Card Container -->
+        <div
           id="cardContainer"
-          class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
-        >Loading data...</div>
+          class="max-h-[530px] overflow-y-auto rounded-lg scroll-container p-2 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"
+        >
+          Loading data...
+        </div>
 
-        <script src="/routes/guru/T_Student.js"></script> -->
+        <!-- Script untuk fetch & render -->
+        <script>
+          document.addEventListener("DOMContentLoaded", async () => {
+            const cardContainer = document.getElementById("cardContainer");
+            const searchInput = document.getElementById("searchInput");
+            let allStudents = [];
 
-        <!-- Card End -->
+            try {
+              const response = await fetch("/teacher/api/students");
+              allStudents = await response.json();
 
+              renderStudents(allStudents); // Tampilkan semua siswa saat awal
 
-        <!-- Card Start (Bungkus Card)-->
-        <div class="max-h-[480px] overflow-y-auto rounded-lg scroll-container">
-          <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            <!-- Card 1 -->
-          <div class="bg-white rounded-lg shadow p-3">
-            <div class="text-center pb-2 pt-2"><!-- Foto, Nama, Id -->
-              <img
-                    alt="Profile picture of Yelena Beloveme"
-                    class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
-                    height="24"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="24"
-                  />
-              <h2 class="text-lg font-semibold mx-auto">Wanda Maximoff</h2>
-              <p class="text-sm text-[#6b7280]">ID Number: </p>
-            </div><!-- Foto, Nama, Id End -->
+              // Event listener untuk fitur pencarian
+              searchInput.addEventListener("input", () => {
+                const keyword = searchInput.value.trim().toLowerCase();
+                const filteredStudents = allStudents.filter((student) =>
+                  (student.name || "").toLowerCase().includes(keyword)
+                );
+                renderStudents(filteredStudents);
+              });
+            } catch (error) {
+              console.error("Error fetching students:", error);
+              cardContainer.innerHTML = "<p>Error loading students data.</p>";
+            }
+          });
 
-            <!-- Info data -->
-            <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
-              <p class="text-sm">
-                <i class="bi bi-pin-fill mr-2"></i>Schedule</p>
-              <!-- Looping byknya jadwal -->
-              <div class="pl-6 text-sm mb-1">
-                <p>1. apa</p>
-                <p>2. apa</p>
-                <p>3. apa</p>
-              </div>
-              <p class="text-sm">
-                <i class="bi bi-stack mr-2"></i></i>Classes</p>
-              <div class="flex space-x-4 text-sm gap-16">
-                <p><i class="bi bi-house-fill mr-2"></i></i>Address</p>
-                <p><i class="bi bi-telephone-fill mr-2"></i></i>Phone</p>
-              </div>
-            </div> <!-- Info Data End -->
-          </div><!-- Card 1 End -->
+          // Fungsi untuk render data siswa
+          function renderStudents(data) {
+            const cardContainer = document.getElementById("cardContainer");
+            cardContainer.innerHTML = "";
 
-          <!-- Card 2 -->
-          <div class="bg-white rounded-lg shadow p-3">
-            <div class="text-center pb-2 pt-2"><!-- Foto, Nama, Id -->
-              <img
-                    alt="Profile picture of Yelena Beloveme"
-                    class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
-                    height="24"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="24"
-                  />
-              <h2 class="text-lg font-semibold mx-auto">Wanda Maximoff</h2>
-              <p class="text-sm text-[#6b7280]">ID Number: </p>
-            </div><!-- Foto, Nama, Id End -->
+            if (data.length === 0) {
+              cardContainer.innerHTML = "<p>No students found.</p>";
+              return;
+            }
 
-            <!-- Info data -->
-            <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
-              <p class="text-sm">
-                <i class="bi bi-pin-fill mr-2"></i>Schedule</p>
-              <!-- Looping byknya jadwal -->
-              <div class="pl-6 text-sm mb-1">
-                <p>1. apa</p>
-                <p>2. apa</p>
-                <p>3. apa</p>
-              </div>
-              <p class="text-sm">
-                <i class="bi bi-stack mr-2"></i></i>Classes</p>
-              <div class="flex space-x-4 text-sm gap-16">
-                <p><i class="bi bi-house-fill mr-2"></i></i>Address</p>
-                <p><i class="bi bi-telephone-fill mr-2"></i></i>Phone</p>
-              </div>
-            </div> <!-- Info Data End -->
-          </div><!-- Card 2 End -->
+            data.forEach((student) => {
+              const studentCard = document.createElement("div");
+              studentCard.className = "bg-white rounded-lg shadow-md p-3";
 
-          <!-- Card 3 -->
-          <div class="bg-white rounded-lg shadow p-3">
-            <div class="text-center pb-2 pt-2"><!-- Foto, Nama, Id -->
-              <img
-                    alt="Profile picture of Yelena Beloveme"
-                    class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
-                    height="24"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="24"
-                  />
-              <h2 class="text-lg font-semibold mx-auto">Wanda Maximoff</h2>
-              <p class="text-sm text-[#6b7280]">ID Number: </p>
-            </div><!-- Foto, Nama, Id End -->
+              studentCard.innerHTML = `
+        <!-- Foto, Nama, ID -->
+        <div class="text-center pb-2 pt-2">
+          <img
+            alt="Profile picture of ${student.name}"
+            class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
+            src="${student.photo_url || "https://via.placeholder.com/80"}"
+          />
+          <h2 class="text-lg font-semibold mx-auto">${student.name}</h2>
+          <p class="text-sm text-[#6b7280]">ID Student: ${
+            student.student_id
+          }</p>
+        </div>
 
-            <!-- Info data -->
-            <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
-              <p class="text-sm">
-                <i class="bi bi-pin-fill mr-2"></i>Schedule</p>
-              <!-- Looping byknya jadwal -->
-              <div class="pl-6 text-sm mb-1">
-                <p>1. apa</p>
-                <p>2. apa</p>
-                <p>3. apa</p>
-              </div>
-              <p class="text-sm">
-                <i class="bi bi-stack mr-2"></i></i>Classes</p>
-              <div class="flex space-x-4 text-sm gap-16">
-                <p><i class="bi bi-house-fill mr-2"></i></i>Address</p>
-                <p><i class="bi bi-telephone-fill mr-2"></i></i>Phone</p>
-              </div>
-            </div> <!-- Info Data End -->
-          </div><!-- Card 3 End -->
-
-          <!-- Card 4 -->
-          <div class="bg-white rounded-lg shadow p-3">
-            <div class="text-center pb-2 pt-2"><!-- Foto, Nama, Id -->
-              <img
-                    alt="Profile picture of Yelena Beloveme"
-                    class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
-                    height="24"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="24"
-                  />
-              <h2 class="text-lg font-semibold mx-auto">Wanda Maximoff</h2>
-              <p class="text-sm text-[#6b7280]">ID Number: </p>
-            </div><!-- Foto, Nama, Id End -->
-
-            <!-- Info data -->
-            <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
-              <p class="text-sm">
-                <i class="bi bi-pin-fill mr-2"></i>Schedule</p>
-              <!-- Looping byknya jadwal -->
-              <div class="pl-6 text-sm mb-1">
-                <p>1. apa</p>
-                <p>2. apa</p>
-                <p>3. apa</p>
-              </div>
-              <p class="text-sm">
-                <i class="bi bi-stack mr-2"></i></i>Classes</p>
-              <div class="flex space-x-4 text-sm gap-16">
-                <p><i class="bi bi-house-fill mr-2"></i></i>Address</p>
-                <p><i class="bi bi-telephone-fill mr-2"></i></i>Phone</p>
-              </div>
-            </div> <!-- Info Data End -->
-          </div><!-- Card 4 End -->
-
-          <!-- Card 5 -->
-          <div class="bg-white rounded-lg shadow p-3">
-            <div class="text-center pb-2 pt-2"><!-- Foto, Nama, Id -->
-              <img
-                    alt="Profile picture of Yelena Beloveme"
-                    class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
-                    height="24"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="24"
-                  />
-              <h2 class="text-lg font-semibold mx-auto">Wanda Maximoff</h2>
-              <p class="text-sm text-[#6b7280]">ID Number: </p>
-            </div><!-- Foto, Nama, Id End -->
-
-            <!-- Info data -->
-            <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
-              <p class="text-sm">
-                <i class="bi bi-pin-fill mr-2"></i>Schedule</p>
-              <!-- Looping byknya jadwal -->
-              <div class="pl-6 text-sm mb-1">
-                <p>1. apa</p>
-                <p>2. apa</p>
-                <p>3. apa</p>
-              </div>
-              <p class="text-sm">
-                <i class="bi bi-stack mr-2"></i></i>Classes</p>
-              <div class="flex space-x-4 text-sm gap-16">
-                <p><i class="bi bi-house-fill mr-2"></i></i>Address</p>
-                <p><i class="bi bi-telephone-fill mr-2"></i></i>Phone</p>
-              </div>
-            </div> <!-- Info Data End -->
-          </div><!-- Card 5 End -->
-
-            <!-- Card 6 -->
-          <div class="bg-white rounded-lg shadow p-3">
-            <div class="text-center pb-2 pt-2"><!-- Foto, Nama, Id -->
-              <img
-                    alt="Profile picture of Yelena Beloveme"
-                    class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
-                    height="24"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="24"
-                  />
-              <h2 class="text-lg font-semibold mx-auto">Wanda Maximoff</h2>
-              <p class="text-sm text-[#6b7280]">ID Number: </p>
-            </div><!-- Foto, Nama, Id End -->
-
-            <!-- Info data -->
-            <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
-              <p class="text-sm">
-                <i class="bi bi-pin-fill mr-2"></i>Schedule</p>
-              <!-- Looping byknya jadwal -->
-              <div class="pl-6 text-sm mb-1">
-                <p>1. apa</p>
-                <p>2. apa</p>
-                <p>3. apa</p>
-              </div>
-              <p class="text-sm">
-                <i class="bi bi-stack mr-2"></i></i>Classes</p>
-              <div class="flex space-x-4 text-sm gap-16">
-                <p><i class="bi bi-house-fill mr-2"></i></i>Address</p>
-                <p><i class="bi bi-telephone-fill mr-2"></i></i>Phone</p>
-              </div>
-            </div> <!-- Info Data End -->
-          </div><!-- Card 6 End -->
-
+        <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
+          <p class="text-sm">
+            <i class="bi bi-pin-fill mr-2"></i>Schedule
+          </p>
+          <div class="pl-6 text-sm mb-1">
+            ${
+              student.schedule
+                ?.split(",")
+                .map((item, i) => `<p>${i + 1}. ${item.trim()}</p>`)
+                .join("") || "<p>No schedule</p>"
+            }
           </div>
+          <div class="text-sm mb-2">
+            <p><i class="bi bi-stack mr-1"></i>${
+              student.total_meetings || 0
+            }x Meetings</p>
+          </div>
+          <div class="flex space-x-4 text-sm gap-5">
+            <p><i class="bi bi-house-fill mr-2"></i>${
+              student.address || "No address"
+            }</p>
+            <p><i class="bi bi-telephone-fill mr-2"></i>${
+              student.phone || "-"
+            }</p>
+          </div>
+        </div>
+      `;
 
-          
-        </div><!-- Card End -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+              cardContainer.appendChild(studentCard);
+            });
+          }
+        </script>
+        <!-- Card End -->
       </main>
       <!-- Main Content End -->
     </div>
@@ -424,10 +288,8 @@
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
-  
+
   .scroll-container::-webkit-scrollbar {
     display: none;
   }
-  
-  
 </style>
