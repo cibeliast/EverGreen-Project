@@ -193,17 +193,23 @@
               studentCard.innerHTML = `
         <!-- Foto, Nama, ID -->
         <div class="text-center pb-2 pt-2">
+          <!-- Photo Profile -->
           <img
             alt="Profile picture of ${student.name}"
             class="w-20 h-20 mb-2 rounded-full object-cover mx-auto"
             src="${student.photo_url || "https://via.placeholder.com/80"}"
           />
+
+          <!-- Student Name -->
           <h2 class="text-lg font-semibold mx-auto">${student.name}</h2>
+
+          <!-- ID Student -->
           <p class="text-sm text-[#6b7280]">ID Student: ${
             student.student_id
           }</p>
         </div>
 
+        <!-- Schedule -->
         <div class="bg-[#E0EBF5] rounded pl-5 pr-3 pt-3 pb-3">
           <p class="text-sm">
             <i class="bi bi-pin-fill mr-2"></i>Schedule
@@ -216,11 +222,15 @@
                 .join("") || "<p>No schedule</p>"
             }
           </div>
+
+          <!-- Total Meetings -->
           <div class="text-sm mb-2">
-            <p><i class="bi bi-stack mr-1"></i>${
+            <p><i class="bi bi-stack mr-2"></i>${
               student.total_meetings || 0
             }x Meetings</p>
           </div>
+
+          <!-- Address & Phone Number -->
           <div class="flex space-x-4 text-sm gap-5">
             <p><i class="bi bi-house-fill mr-2"></i>${
               student.address || "No address"
