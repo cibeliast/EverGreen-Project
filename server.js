@@ -11,6 +11,7 @@ import dashboard from './routes/dashboard.js'
 import profileRouter from './routes/api/profile.js';
 import studentSchedule from './routes/student/studentSchedule.js';
 import students from './routes/teacher/students.js';
+import changePassword from './routes/changePassword.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -37,6 +38,7 @@ app.use('/', dashboard);
 app.use('/api', profileRouter);
 app.use('/api', studentSchedule);
 app.use('/teacher', students);
+app.use('/', changePassword);
 
 app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
