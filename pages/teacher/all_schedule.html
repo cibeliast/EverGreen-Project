@@ -56,14 +56,14 @@
               <span class="title">Dashboard</span>
             </a>
 
-            <a class="flex items-center gap-3 text-[#9FD3C7]" href="#">
+            <a class="flex items-center gap-3 text-[#9FD3C7]" href="">
               <i class="bi bi-calendar3"></i>
               <span class="title">Schedules</span>
             </a>
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
+              href="/teacher/students"
             >
               <i class="bi bi-people-fill"></i>
               <span class="title">Students</span>
@@ -117,7 +117,7 @@
       <main class="flex-1 flex flex-col gap-6 pt-8 pr-7">
         <!-- Main Judul -->
         <section>
-          <h2 class="text-2xl font-extrabold text-[#111827] mb-1">Schedule</h2>
+          <h2 class="text-3xl font-extrabold text-[#111827] mb-1">Schedules</h2>
           <p class="text-sm text-[#6b7280]">
             Create and manage your schedules and students.
           </p>
@@ -144,7 +144,7 @@
 
           <button
             onclick="showConfirmModal"
-            class="text-[#000000] px-4 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition"
+            class="text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition"
           >
             <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
           </button>
@@ -153,14 +153,32 @@
         <!-- Jadwal -->
         <div>
           <!-- Schedule Table -->
-          <div class="max-h-[500px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
+          <div
+            class="max-h-[500px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md"
+          >
             <table class="min-w-full text-sm text-left">
               <thead class="bg-[#1F2A44] text-white">
                 <tr>
-                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Day</th>
-                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Time</th>
-                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Teacher</th>
-                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Student</th>
+                  <th
+                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                  >
+                    Day
+                  </th>
+                  <th
+                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                  >
+                    Time
+                  </th>
+                  <th
+                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                  >
+                    Teacher
+                  </th>
+                  <th
+                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                  >
+                    Student
+                  </th>
                 </tr>
               </thead>
               <tbody class="text-gray-700">
@@ -247,146 +265,149 @@
                 </tr>
 
                 <tr class="border-t">
-                    <td class="py-3 px-4">Monday</td>
-                    <td class="py-3 px-4">08:00 - 09:00</td>
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <img
-                          alt="Photo of Jacob Jones student"
-                          class="w-8 h-8 rounded-full object-cover"
-                          height="28"
-                          src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
-                          width="28"
-                        />
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-  
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <span
-                          class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >K</span
-                        >
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-                  </tr>
+                  <td class="py-3 px-4">Monday</td>
+                  <td class="py-3 px-4">08:00 - 09:00</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <img
+                        alt="Photo of Jacob Jones student"
+                        class="w-8 h-8 rounded-full object-cover"
+                        height="28"
+                        src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
+                        width="28"
+                      />
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
 
-                  <tr class="border-t">
-                    <td class="py-3 px-4">Monday</td>
-                    <td class="py-3 px-4">08:00 - 09:00</td>
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <img
-                          alt="Photo of Jacob Jones student"
-                          class="w-8 h-8 rounded-full object-cover"
-                          height="28"
-                          src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
-                          width="28"
-                        />
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-  
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <span
-                          class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >K</span
-                        >
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-                  </tr>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
+                        >K</span
+                      >
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+                </tr>
 
-                  <tr class="border-t">
-                    <td class="py-3 px-4">Monday</td>
-                    <td class="py-3 px-4">08:00 - 09:00</td>
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <img
-                          alt="Photo of Jacob Jones student"
-                          class="w-8 h-8 rounded-full object-cover"
-                          height="28"
-                          src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
-                          width="28"
-                        />
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-  
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <span
-                          class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >K</span
-                        >
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-                  </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4">Monday</td>
+                  <td class="py-3 px-4">08:00 - 09:00</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <img
+                        alt="Photo of Jacob Jones student"
+                        class="w-8 h-8 rounded-full object-cover"
+                        height="28"
+                        src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
+                        width="28"
+                      />
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
 
-                  <tr class="border-t">
-                    <td class="py-3 px-4">Monday</td>
-                    <td class="py-3 px-4">08:00 - 09:00</td>
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <img
-                          alt="Photo of Jacob Jones student"
-                          class="w-8 h-8 rounded-full object-cover"
-                          height="28"
-                          src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
-                          width="28"
-                        />
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-  
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <span
-                          class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >K</span
-                        >
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-                  </tr>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
+                        >K</span
+                      >
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+                </tr>
 
-                  <tr class="border-t">
-                    <td class="py-3 px-4">Monday</td>
-                    <td class="py-3 px-4">08:00 - 09:00</td>
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <img
-                          alt="Photo of Jacob Jones student"
-                          class="w-8 h-8 rounded-full object-cover"
-                          height="28"
-                          src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
-                          width="28"
-                        />
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-  
-                    <td class="py-3 px-4">
-                      <div class="flex items-center space-x-2">
-                        <span
-                          class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >K</span
-                        >
-                        <span class="font-semibold text-gray-900">Ketty</span>
-                      </div>
-                    </td>
-                  </tr>
+                <tr class="border-t">
+                  <td class="py-3 px-4">Monday</td>
+                  <td class="py-3 px-4">08:00 - 09:00</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <img
+                        alt="Photo of Jacob Jones student"
+                        class="w-8 h-8 rounded-full object-cover"
+                        height="28"
+                        src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
+                        width="28"
+                      />
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
+                        >K</span
+                      >
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="border-t">
+                  <td class="py-3 px-4">Monday</td>
+                  <td class="py-3 px-4">08:00 - 09:00</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <img
+                        alt="Photo of Jacob Jones student"
+                        class="w-8 h-8 rounded-full object-cover"
+                        height="28"
+                        src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
+                        width="28"
+                      />
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
+                        >K</span
+                      >
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr class="border-t">
+                  <td class="py-3 px-4">Monday</td>
+                  <td class="py-3 px-4">08:00 - 09:00</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <img
+                        alt="Photo of Jacob Jones student"
+                        class="w-8 h-8 rounded-full object-cover"
+                        height="28"
+                        src="https://storage.googleapis.com/a1aa/image/e9531a3f-e223-43b0-d636-0ef9cdf79bbe.jpg"
+                        width="28"
+                      />
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <span
+                        class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
+                        >K</span
+                      >
+                      <span class="font-semibold text-gray-900">Ketty</span>
+                    </div>
+                  </td>
+                </tr>
                 <!-- Tambahkan baris lain sesuai gambar -->
               </tbody>
             </table>
           </div>
-        </div><!-- Jadwal End-->
-      </main><!-- Main Content End -->
-    </div><!-- KOTAKAN UTAMA SMUA end -->
+        </div>
+        <!-- Jadwal End-->
+      </main>
+      <!-- Main Content End -->
+    </div>
+    <!-- KOTAKAN UTAMA SMUA end -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -431,9 +452,8 @@
   .scroll-container {
     cursor: grab;
   }
-  
+
   .scroll-container:active {
     cursor: grabbing;
   }
-  
 </style>
