@@ -68,7 +68,7 @@
       <div class="d-flex justify-content-center mb-4">
         <div class="position-relative w-100">
           <i class="bi bi-search position-absolute" style="top: 50%; left: 10px; transform: translateY(-50%); color: gray;"></i>
-          <input type="text" class="form-control ps-5" placeholder="Search">
+          <input type="text" class="form-control ps-5" placeholder="Search" id="search-input">
         </div>
       </div>
     </div>
@@ -76,7 +76,7 @@
 
   <!-- Topic cards -->
   <div class="container my-2" id="topic-container">
-    <div class="row g-5" >
+    <div class="row g-5" id="topics-row">
       <!-- Cards will be inserted here -->
       <!-- Contoh static card -->
       <div class="col-md-4 my-4 topic-card">
@@ -148,6 +148,53 @@
     </div>
   </div>
   
+  <script>
+    // SEARCH
+    const searchInput = document.getElementById('search-input');
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.toLowerCase();
+      const topicCards = document.querySelectorAll('.topic-card'); 
+
+      topicCards.forEach(card => {
+        const title = card.querySelector('.card-title').textContent.toLowerCase();
+        if (title.includes(query)) {
+          card.style.display = ''; 
+        } else {
+          card.style.display = 'none'; 
+        }
+      });
+    });
+
+
+    // Fetch topics from API and render cards
+    fetch('/api/topics')
+      .then(response => response.json())
+      .then(topics => {
+        const topicsRow = document.getElementById('topics-row');
+        topicsRow.innerHTML = ''; // Clear static content
+
+        topics.forEach(topic => {
+          const cardHTML = `
+            <div class="col-md-4 my-4 topic-card">
+              <a href="/your-target-page" class="text-decoration-none text-dark">
+                <div class="card">
+                  <img src="/assets/quizzes.png" class="card-img-top" alt="Topic image" />
+                  <div class="card-body">
+                    <p class="card-text text-start">${topic.description}</p>
+                    <h5 class="card-title">${topic.name}</h5>
+                  </div>
+                </div>
+              </a>
+            </div>
+          `;
+          topicsRow.insertAdjacentHTML('beforeend', cardHTML);
+        });
+      })
+      .catch(error => {
+        console.error('Failed to fetch topics:', error);
+      });
+  </script>
 </body>
 </html>
 
@@ -263,6 +310,9 @@
       border: none;
       border-radius: 20px;
       box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
+      min-height: 300px;
+      display: flex;
+      flex-direction: column;
     }
 
     .card-img-top {
@@ -272,6 +322,7 @@
 
     .card-body {
       padding-top: 0;
+      flex-grow: 1;
     }
     .card-body .card-text {
       color: black;
