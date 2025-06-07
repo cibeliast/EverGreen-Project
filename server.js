@@ -48,7 +48,8 @@ app.get('/topic', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/topic.html'));
 });
 
-// Sidebar guru ke
+// Sidebar guru ke 
+// 1. Students
 app.get('/teacher/students', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/students.html'));
 });
