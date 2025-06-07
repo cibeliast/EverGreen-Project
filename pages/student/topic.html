@@ -10,8 +10,7 @@
     <title>Quiz Topic</title>
 </head>
 <body>
-  
-    <!-- NAVBAR -->
+  <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-custom">
     <div class="container-fluid d-flex justify-content-between align-items-center w-100">
       
@@ -61,8 +60,8 @@
   <div class="header-top container">
     <h2>Quizzes</h2>
     <p>Check your upcoming classes, browse your calendar, and see how you did on recent quizzes.</p>
+    
     <hr>
-
     
     <div class="container my-4">
     <!-- Search input -->
@@ -146,13 +145,8 @@
           </div>
         </a>
       </div>
-    
-
-      <!-- Tambah card lainnya di sini -->
     </div>
   </div>
-</div>
-
   
 </body>
 </html>
@@ -194,19 +188,17 @@
       margin-top: 10px;
     }
 
-    hr {
-      margin: 0 55px;
-    }
-
     /* NAVBAR */
     .navbar-custom {
+      flex: 0 0 auto;
+      position: sticky;
+      top: 0;
+      z-index: 1030;
       background-color: #1F2A44;
       margin: 15px;
       border-radius: 15px;
       font-weight: bolder;
       letter-spacing: 0.5px;
-      margin: 0 15px; /* hanya margin horizontal */
-       padding: 10px 0;
     }
     
     .container-fluid {
@@ -240,6 +232,22 @@
       display: none;
     }
 
+    .header-top {
+      flex: 0 0 auto;
+      position: sticky;
+      top: calc(56px + 15px * 2);
+      background: white;
+      z-index: 1020;
+      padding-bottom: 15px;
+      padding-top: 10px;
+    }
+
+    /* SEARCH */
+    .form-control {
+      border-radius: 10px;
+    }
+
+    /* CARDS */
     .topic-card {
       padding: 0 40px;
     }
@@ -275,42 +283,19 @@
       font-weight: 600;
     }
 
-    /* Navbar sticky */
-    .navbar-custom {
-      flex: 0 0 auto;
-      position: sticky;
-      top: 0;
-      z-index: 1030;
-      background-color: #1F2A44;
-      margin: 15px;
-      border-radius: 15px;
-      font-weight: bolder;
-      letter-spacing: 0.5px;
-    }
+    
 
-    /* Header sticky di bawah navbar */
-    .header-top {
-      flex: 0 0 auto;
-      position: sticky;
-      top: calc(56px + 15px * 2);
-      background: white;
-      z-index: 1020;
-      padding-bottom: 15px;
-      padding-top: 10px;
-    }
-
-    /* Container cards scrollable */
     #topic-container {
       flex: 1 1 auto;
       overflow-y: auto;
-      padding-right: 15px; /* supaya scroll ga overlap */
+      padding-right: 15px; 
       padding-top: 30px;
-      scrollbar-width: none; /* sembunyikan scrollbar */
+      scrollbar-width: none; 
       -ms-overflow-style: none;
     }
 
     #topic-container::-webkit-scrollbar {
-      display: none; /* Chrome, Safari, Edge */
+      display: none;
     }
 
 </style>
