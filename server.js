@@ -13,6 +13,7 @@ import studentSchedule from './routes/student/studentSchedule.js';
 import students from './routes/teacher/students.js';
 import changePassword from './routes/changePassword.js';
 import topicsRouter from './routes/api/topics.js'
+import quizzesRouter from './routes/api/quizzes.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -41,13 +42,19 @@ app.use('/api', studentSchedule);
 app.use('/teacher', students);
 app.use('/', changePassword);
 app.use('/api', topicsRouter);
+app.use('/api', quizzesRouter);
 
+// Student to
 app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
 });
 
 app.get('/topic', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/topic.html'));
+});
+
+app.get('/quiz', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/student/quiz.html'));
 });
 
 // Sidebar guru ke 

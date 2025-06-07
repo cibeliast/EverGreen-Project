@@ -62,8 +62,8 @@
 
   <br>
 
-  <h2 id="quiz-topic">Vocabulary</h2>
-  <p id="quiz-description">Access your vocabulary quizzes, check your scores, and keep track of your progress.</p>
+  <h2 id="quiz-topic"></h2>
+  <p id="quiz-description"></p>
   <hr>
 
   
@@ -85,6 +85,44 @@
     </div>
   </div>
 
+  <script>
+  // Ambil topic_id dari URL
+  const params = new URLSearchParams(window.location.search);
+  const topic_id = params.get('topic_id');
+
+  if (topic_id) {
+    // Fetch data topic (judul dan deskripsi)
+    fetch(`/api/topics/${topic_id}`)
+      .then(res => res.json())
+      .then(topic => {
+        document.getElementById('quiz-topic').textContent = topic.name;
+        document.getElementById('quiz-description').textContent = topic.description;
+      })
+      .catch(err => console.error('Failed to load topic:', err));
+
+    // Fetch quiz list sesuai topic_id
+    fetch(`/api/quizzes?topic_id=${topic_id}`)
+      .then(res => res.json())
+      .then(quizzes => {
+        const tbody = document.querySelector('#table-schedule tbody');
+        tbody.innerHTML = ''; // Clear dulu isi tabel
+
+        quizzes.forEach((quiz, index) => {
+          const row = `
+            <tr>
+              <td>${index + 1}</td>
+              <td><a href="do-quiz.html?quiz_id=${quiz.quiz_id}">Start Quiz #${index+1}</a></td>
+              <td>${quiz.score ?? '-'}</td>
+            </tr>
+          `;
+          tbody.insertAdjacentHTML('beforeend', row);
+        });
+      })
+      .catch(err => console.error('Failed to load quizzes:', err));
+  } else {
+    alert('Topic ID tidak ditemukan di URL');
+  }
+</script>
 </body>
 </html>
 
@@ -167,6 +205,7 @@
       height: 520px; 
       font-size: 13px;
       overflow: hidden;
+      border-radius: 8px;
     }
 
     .table-wrapper {
@@ -200,6 +239,10 @@
       border: none;
       border-top: 1px solid #dee2e6; 
       padding: 26.5px;
+    }
+
+    .table-custom a {
+        text-decoration: none;
     }
     
     .left-schedule {
