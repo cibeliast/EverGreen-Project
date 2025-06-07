@@ -222,12 +222,12 @@
                   tbody.appendChild(row);
                 });
               })
-              .catch(error => {
-                console.error('Error detail:', error);
-                const tbody = document.querySelector('tbody');
-                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
+              .catch((error) => {
+                console.error("Error detail:", error);
+                const tbody = document.querySelector("tbody");
+                tbody.innerHTML =
+                  '<tr><td colspan="4" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
               });
-              
           });
         </script>
       </main>
