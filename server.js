@@ -44,6 +44,10 @@ app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
 });
 
+app.get('/topic', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/student/topic.html'));
+});
+
 // Sidebar guru ke
 app.get('/teacher/students', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/students.html'));
