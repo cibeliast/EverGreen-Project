@@ -41,7 +41,7 @@ app.use('/', authRoutes);
 app.use('/', dashboard);
 app.use('/api', profileRouter);
 app.use('/api', studentSchedule);
-app.use('/teacher', students);
+app.use('/api', students);
 app.use('/', changePassword);
 app.use('/api', topicsRouter);
 app.use('/api', quizzesRouter);
@@ -63,9 +63,10 @@ app.get('/quiz', (req, res) => {
 
 // Sidebar guru ke 
 // 1. Students
-app.get('/teacher/students', (req, res) => {
+app.get('/students', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/students.html'));
 });
+
 app.get('/all_schedule', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/all_schedule.html'));
 });

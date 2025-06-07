@@ -140,35 +140,34 @@
         <div class="flex justify-between items-center">
           <div class="">
             <button
-            class="text-[#184167] px-3 py-2 text-center bg-[#93B9D6] rounded-lg font-medium transition mr-2"
-          >
-            <i class="bi bi-pencil-square mr-2"></i>Booked
-          </button>
+              class="text-[#184167] px-3 py-2 text-center bg-[#93B9D6] rounded-lg font-medium transition mr-2"
+            >
+              <i class="bi bi-pencil-square mr-2"></i>Booked
+            </button>
 
-          <button
-            onclick="showConfirmModal"
-            class="text-[#6C6969] px-3 py-2 text-center bg-[#E8E5E5] rounded-lg font-medium hover:bg-[#ADADAD] hover:text-[#FFFFFF] transition"
-          >
-            <i class="bi bi-pencil-square mr-2"></i>Free
-          </button>
+            <button
+              onclick="showConfirmModal"
+              class="text-[#6C6969] px-3 py-2 text-center bg-[#E8E5E5] rounded-lg font-medium hover:bg-[#ADADAD] hover:text-[#FFFFFF] transition"
+            >
+              <i class="bi bi-pencil-square mr-2"></i>Free
+            </button>
           </div>
 
-          
           <!-- Button Edit SChedule -->
           <a href="/all_schedule">
             <button
-            class="text-[#000000] px-3 py-2 text-center bg-[#E6D99F] rounded-lg font-medium hover:bg-[#FFF7D4] transition duration-300 transform active:scale-95"
-          >
-            <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
-          </button>
+              class="text-[#000000] px-3 py-2 text-center bg-[#E6D99F] rounded-lg font-medium hover:bg-[#FFF7D4] transition duration-300 transform active:scale-95"
+            >
+              <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
+            </button>
           </a>
-          
-
         </div>
 
-        <p class="text-sm text-[#6b7280]">View and manage all booked sessions that have been assigned to students. Use this page to monitor, reschedule, or reassign students as needed.
-          </p>
-        
+        <p class="text-sm text-[#6b7280]">
+          View and manage all booked sessions that have been assigned to
+          students. Use this page to monitor, reschedule, or reassign students
+          as needed.
+        </p>
 
         <!-- Jadwal -->
         <div>
@@ -210,103 +209,146 @@
         <!-- Jadwal End-->
 
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-              fetch("/api/all_schedule")
-                .then((response) => {
-                  if (!response.ok) {
-                    throw new Error("Gagal mengambil data jadwal");
-                  }
-                  return response.json();
-                })
-                .then((data) => {
-                  const tbody = document.querySelector("tbody");
-                  tbody.innerHTML = ""; // Kosongkan isi default
-  
-                  if (data.length === 0) {
-                    tbody.innerHTML =
-                      '<tr><td colspan="4" class="text-center py-4">Belum ada jadwal</td></tr>';
-                    return;
-                  }
-  
-                  // Fungsi ambil inisial dari nama
-                  const getInitials = (name) => {
-                    return name
-                      .split(" ")
-                      .map((n) => n[0])
-                      .join("")
-                      .toUpperCase();
-                  };
-  
-                  data.forEach((schedule) => {
-                    const row = document.createElement("tr");
-                    row.classList.add("border-t");
-  
-                    // Data
-                    const teacherName =
-                      schedule.teacher_name || "Tidak diketahui";
-                    const teacherPhoto = schedule.teacher_photo;
-                    const teacherInitials = getInitials(teacherName);
-  
-                    const studentName =
-                      schedule.student_name || "Tidak diketahui";
-                    const studentPhoto = schedule.student_photo;
-                    const studentInitials = getInitials(studentName);
-  
-                    // HTML foto atau inisial guru
-                    const teacherProfileHTML = teacherPhoto
-                      ? `<img
-                            alt="Photo of ${teacherName}"
-                            class="w-8 h-8 rounded-full object-cover"
-                            height="28"
-                            src="${teacherPhoto}"
-                            width="28"
-                          />`
-                      : `<span
-                            class="w-8 h-8 rounded-full bg-[#76A2C4] text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >${teacherInitials}</span>`;
-  
-                    // HTML foto atau inisial siswa
-                    const studentProfileHTML = studentPhoto
-                      ? `<img
-                            alt="Photo of ${studentName}"
-                            class="w-8 h-8 rounded-full object-cover"
-                            height="28"
-                            src="${studentPhoto}"
-                            width="28"
-                          />`
-                      : `<span
-                            class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center select-none"
-                          >${studentInitials}</span>`;
-  
-                    // Susun baris tabel
-                    row.innerHTML = `
-                        <td class="py-3 px-4">${schedule.day}</td>
-                        <td class="py-3 px-4">${schedule.time}</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            ${teacherProfileHTML}
-                            <span class="font-semibold text-gray-900">${teacherName}</span>
-                          </div>
-                        </td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            ${studentProfileHTML}
-                            <span class="font-semibold text-gray-900">${studentName}</span>
-                          </div>
-                        </td>
-                      `;
-  
-                    tbody.appendChild(row);
-                  });
+          document.addEventListener("DOMContentLoaded", () => {
+              // Ambil data semua siswa dulu
+            fetch("/api/all_schedule")
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error("Gagal mengambil data jadwal");
+                }
+                return response.json();
+              })
+              .then((students) => {
+                  // Ambil data jadwal setelah data siswa siap
+                  fetch("/api/all_schedule")
+                    .then((res) => {
+                      if (!res.ok) throw new Error("Gagal mengambil data jadwal");
+                      return res.json();
+                    })
+                    .then((data) => {
+                        const tbody = document.querySelector("tbody");
+                        tbody.innerHTML = ""; // Kosongkan isi default
+
+                        if (data.length === 0) {
+                        tbody.innerHTML =
+                            '<tr><td colspan="4" class="text-center py-4">Belum ada jadwal</td></tr>';
+                        return;
+                        }
+
+                        // Fungsi ambil inisial dari nama
+                        const getInitials = (name) => {
+                        return name
+                            .split(" ")
+                            .map((n) => n[0])
+                            .join("")
+                            .toUpperCase();
+                        };
+
+                        data.forEach((schedule) => {
+                        const row = document.createElement("tr");
+                        row.classList.add("border-t");
+
+                        // Data
+                        const teacherName =
+                            schedule.teacher_name || "Tidak diketahui";
+                        const teacherPhoto = schedule.teacher_photo;
+                        const teacherInitials = getInitials(teacherName);
+
+                         // Data siswa saat ini di jadwal
+                        const currentStudentId = schedule.student_id;
+                        const currentStudentName = schedule.student_name || "Tidak diketahui";
+                        const currentStudentPhoto = schedule.student_photo;
+                        const currentStudentInitials = getInitials(currentStudentName);
+
+                        // Buat opsi dropdown siswa
+                        const optionsHTML = students
+                        .map((student) => {
+                        const selected = student.id === currentStudentId ? "selected" : "";
+                        return `<option value="${student.id}" ${selected}>${student.name}</option>`;
+                        })
+                        .join("");
+                 
+                 
+                        // Ganti kolom siswa jadi dropdown
+                        // Jika mau, kamu juga bisa tambahkan foto siswa di sebelah dropdown
+                        const studentSelectHTML = `
+                        <select class="student-select border rounded px-2 py-1 text-sm" data-schedule-id="${schedule.id}">
+                        ${optionsHTML}
+                        </select>
+                    `;
+
+                  /* HTML foto atau inisial siswa
+                  const studentProfileHTML = studentPhoto
+                    ? `<img
+                          alt="Photo of ${studentName}"
+                          class="w-8 h-8 rounded-full object-cover"
+                          height="28"
+                          src="${studentPhoto}"
+                          width="28"
+                        />`
+                    : `<span
+                          class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center select-none"
+                        >${studentInitials}</span>`;*/
+
+                        // Susun baris tabel
+                        row.innerHTML = `
+                            <td class="py-3 px-4">${schedule.day}</td>
+                            <td class="py-3 px-4">${schedule.time}</td>
+                            <td class="py-3 px-4">
+                                <div class="flex items-center space-x-2">
+                                ${teacherProfileHTML}
+                                <span class="font-semibold text-gray-900">${teacherName}</span>
+                                </div>
+                            </td>
+                            <td class="py-3 px-4">
+                            ${studentSelectHTML}
+                            </td>
+                        `;
+
+                        tbody.appendChild(row);
+                        });
+
+                        // Event listener untuk dropdown siswa ketika diganti
+                        document.querySelectorAll(".student-select").forEach((select) => {
+                            select.addEventListener("change", (e) => {
+                            const scheduleId = e.target.dataset.scheduleId;
+                            const newStudentId = e.target.value;
+
+                            // Kirim update ke backend, misalnya pake fetch POST/PUT
+                            fetch(`/api/update_schedule_student`, {
+                                method: "POST",
+                                headers: { "Content-Type": "application/json" },
+                                body: JSON.stringify({ scheduleId, newStudentId }),
+                            })
+                                .then((res) => {
+                                if (!res.ok) throw new Error("Gagal update siswa");
+                                return res.json();
+                                })
+                                .then((response) => {
+                                console.log("Update berhasil:", response);
+                                })
+                                .catch((err) => {
+                                console.error("Error update:", err);
+                                alert("Gagal mengubah siswa. Silakan coba lagi.");
+                                });
+                            });
+                        });
+                    });
                 })
                 .catch((error) => {
-                  console.error("Error detail:", error);
-                  const tbody = document.querySelector("tbody");
-                  tbody.innerHTML =
+                    console.error("Error detail:", error);
+                    const tbody = document.querySelector("tbody");
+                    tbody.innerHTML =
                     '<tr><td colspan="4" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
                 });
+            })
+            .catch((error) => {
+              console.error("Error fetch siswa:", error);
+              const tbody = document.querySelector("tbody");
+              tbody.innerHTML =
+                '<tr><td colspan="4" class="text-center text-red-500 py-4">Gagal memuat data siswa.</td></tr>';
             });
-          </script>
+        </script>
       </main>
       <!-- Main Content End -->
     </div>
