@@ -181,7 +181,7 @@
             let allStudents = [];
 
             try {
-              const response = await fetch("/api/students");
+              const response = await fetch("/teacher/api/students");
               if (!response.ok) {
                 throw new Error("Failed to fetch students");
               }
@@ -363,7 +363,7 @@
               if (selectedStudentId) {
                 try {
                   const response = await fetch(
-                    `/api/students/${selectedStudentId}`,
+                    `/teacher/api/students/${selectedStudentId}`,
                     {
                       method: "DELETE",
                     }
