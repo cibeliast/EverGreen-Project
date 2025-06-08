@@ -5,13 +5,13 @@ import db from '../../db/db.js';
 const router = express.Router();
 
 // Endpoint ambil semua data siswa dari tabel `students`
-router.get('/students', (req, res) => {
+router.get('/api/students', (req, res) => {
     // Optional: validasi session
     if (!req.session.userId || req.session.folderRole !== 'teacher') {
         return res.status(403).json({ message: 'Unauthorized' });
     }
 
-    const sql = 'SELECT * FROM students'; // Sesuaikan nama tabel kamu
+    const sql = 'SELECT * FROM students';
     db.query(sql, (err, results) => {
         if (err) {
             return res.status(500).json({ message: 'Database error', error: err });
@@ -21,7 +21,7 @@ router.get('/students', (req, res) => {
 });
 
 // Endpoint hapus data siswa berdasarkan ID
-router.delete('/students/:id', (req, res) => {
+router.delete('/api/students/:id', (req, res) => {
     const selectedStudentId = req.params.id;
 
     // Optional: validasi session
