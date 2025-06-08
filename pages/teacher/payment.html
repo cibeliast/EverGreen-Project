@@ -137,14 +137,29 @@
 
           <!-- All Schedule & Edit Button -->
           <div class="flex justify-between items-center">
-              <p>Export to: <a href="#"><i class="bi bi-filetype-pdf"></i></a><a href=""><i class="bi bi-filetype-csv"></i></a></p>
+            <p>Export to: <a href="#"><i class="bi bi-filetype-pdf"></i></a><a href=""><i class="bi bi-filetype-csv"></i></a></p>
 
-            <button
-              onclick="showConfirmModal"
-              class="text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition"
-            >
-              <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
-            </button>
+            <div class="flex gap-2">
+              <button
+                onclick="showConfirmModal"
+                class="text-[#FFFFFF] hover:text-[#000000] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] transition"
+              >
+                <i class="bi bi-plus-lg mr-2"></i>Add Payment
+              </button>
+
+              <button
+                onclick="showConfirmModal"
+                class="text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition"
+              >
+                <i class="bi bi-pencil-square mr-2"></i>Edit Payment
+              </button>
+              <button
+                onclick="showConfirmModal"
+                class="text-[#000000] px-3 py-2 text-center bg-[#FFE4E6] rounded-lg font-medium hover:bg-[#E2B0B5] transition"
+              >
+                <i class="bi bi-trash-fill mr-2"></i>Delete Payment
+              </button>
+            </div>
           </div>
 
           <!-- Jadwal -->
