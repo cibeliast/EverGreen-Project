@@ -15,7 +15,8 @@ import changePassword from './routes/changePassword.js';
 import topicsRouter from './routes/api/topics.js';
 import quizzesRouter from './routes/api/quizzes.js';
 import all_schedule from './routes/teacher/all_schedule.js';
-import booked_schedule from './routes/teacher/booked_schedule.js'
+import booked_schedule from './routes/teacher/booked_schedule.js';
+import paymentRouter from './routes/teacher/payment.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -47,6 +48,7 @@ app.use('/api', topicsRouter);
 app.use('/api', quizzesRouter);
 app.use('/api', all_schedule);
 app.use('/api', booked_schedule);
+app.use('/api', paymentRouter);
 
 // Student to
 app.get('/profile', (req, res) => {
@@ -76,6 +78,9 @@ app.get('/booked_schedule', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/booked_schedule.html'));
 });
 
+app.get('/payment', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/teacher/payment.html'));
+});
 
 
 app.listen(PORT, () => {
