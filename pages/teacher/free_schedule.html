@@ -5,7 +5,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Booked Schedule</title>
+    <title>Free Schedule</title>
 
     <!-- Tailwind CSS-->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -141,20 +141,20 @@
         <!-- All Schedule & Edit Button -->
         <div class="flex justify-between items-center">
           <div class="">
-            <button
-              class="text-[#184167] px-3 py-2 text-center bg-[#93B9D6] rounded-lg font-medium transition mr-2"
-            >
-              <i class="bi bi-pencil-square mr-2"></i>Booked
-            </button>
-
-            <a href="/free_schedule">
+            <a href="/booked_schedule">
               <button
                 onclick="showConfirmModal"
                 class="text-[#6C6969] px-3 py-2 text-center bg-[#E8E5E5] rounded-lg font-medium hover:bg-[#ADADAD] hover:text-[#FFFFFF] transition"
               >
-                <i class="bi bi-pencil-square mr-2"></i>Free
+                <i class="bi bi-pencil-square mr-2"></i>Booked
               </button>
             </a>
+
+            <button
+              class="text-[#184167] px-3 py-2 text-center bg-[#93B9D6] rounded-lg font-medium transition mr-2"
+            >
+              <i class="bi bi-pencil-square mr-2"></i>Free
+            </button>
           </div>
 
           <!-- Button Back -->
@@ -168,9 +168,8 @@
         </div>
 
         <p class="text-sm text-[#6b7280]">
-          View and manage all booked sessions that have been assigned to
-          students. Use this page to monitor, reschedule, or reassign students
-          as needed.
+          Browse all available time slots that haven’t been booked yet. Use this
+          page to assign schedules to new or rescheduled students.
         </p>
 
         <!-- Jadwal -->
@@ -215,7 +214,7 @@
         <script>
           document.addEventListener("DOMContentLoaded", async () => {
             const tbody = document.querySelector("tbody");
-        
+
             // Function to get initials from name
             const getInitials = (name) =>
               name
@@ -225,7 +224,7 @@
                     .join("")
                     .toUpperCase()
                 : "-"; // if name is empty, initials are '-'
-        
+
             // Fetch students data
             const students = await fetch("/api/students")
               .then((res) => res.json())
@@ -234,43 +233,42 @@
                 alert("Gagal mengambil data siswa.");
                 return [];
               });
-        
+
             // Fetch schedule data
-            fetch("/api/booked_schedule")
+            fetch("/api/free_schedule")
               .then((res) => {
-                if (!res.ok) throw new Error("Gagal ambil jadwal");
+                if (!res.ok) {
+                  console.error("Response error:", res);
+                  throw new Error("Gagal ambil jadwal");
+                }
                 return res.json();
               })
               .then((schedules) => {
                 tbody.innerHTML = "";
-        
-                // Filter schedules that have a student_id (not null or empty)
-                const validSchedules = schedules.filter(
-                  (s) => s.student_id !== null && s.student_id !== ""
-                );
-        
-                // If there are no valid schedules
-                if (validSchedules.length === 0) {
+
+                if (schedules.length === 0) {
                   tbody.innerHTML =
-                    '<tr><td colspan="5" class="text-center py-4">there is no schedule yet</td></tr>';
+                    '<tr><td colspan="5" class="text-center py-4">There is no available schedule</td></tr>';
                   return;
                 }
-        
-                validSchedules.forEach((schedule) => {
-                  const teacherName = schedule.teacher_name || "Tidak diketahui";
+
+                schedules.forEach((schedule) => {
+                  const teacherName =
+                    schedule.teacher_name || "Tidak diketahui";
                   const teacherInitials = getInitials(teacherName);
                   const studentName =
-                    students.find((s) => s.student_id === schedule.student_id)?.name || ""; // find student name by ID
+                    students.find((s) => s.student_id === schedule.student_id)
+                      ?.name || ""; // find student name by ID
                   const studentInitials = getInitials(studentName);
-        
+
                   const row = document.createElement("tr");
                   row.className = "border-t";
-        
+
                   row.innerHTML = `
                     <!-- Day & Time -->
                     <td class="py-3 px-4">${schedule.day}</td>
                     <td class="py-3 px-4">${schedule.time}</td>
-        
+
                     <!-- Teacher -->
                     <td class="py-3 px-4">
                       <div class="flex items-center space-x-2">
@@ -280,27 +278,33 @@
                         <span class="font-semibold text-gray-900">${teacherName}</span>
                       </div>
                     </td>
-        
+
                     <!-- Student -->
                     <td class="py-3 px-4">
                       <div class="relative inline-block w-full">
-                        <select class="appearance-none bg-transparent w-full pl-10 pr-4 py-2 text-gray-900 font-semibold rounded focus:outline-none cursor-pointer" data-schedule-id="${schedule.schedule_id}">
+                        <select class="appearance-none bg-transparent w-full pl-10 pr-4 py-2 text-gray-900 font-semibold rounded focus:outline-none cursor-pointer" data-schedule-id="${
+                          schedule.schedule_id
+                        }">
                           <option value="">ID - Student</option>
                           ${students
                             .map(
                               (student) => `
-                              <option value="${student.student_id}" ${student.student_id === schedule.student_id ? "selected" : ""}>
-                                ${student.student_id} - ${student.name}
+                              <option value="${student.student_id}" ${
+                                student.student_id === schedule.student_id
+                                  ? "selected"
+                                  : ""
+                              }>
+                                ${student.student_id} - ${student.name} 
                               </option>`
                             )
                             .join("")}
                         </select>
-        
+
                         <!-- Initial Avatar -->
                         <div class="avatar-initial absolute top-0 left-0 w-8 h-8 rounded-full bg-[#C177A6] text-white text-xs font-bold flex items-center justify-center">
                           ${studentInitials}
                         </div>
-        
+
                         <!-- Icon Dropdown -->
                         <div class="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500">
                           <i class="bi bi-chevron-down text-bold"></i>
@@ -308,7 +312,7 @@
                       </div>
                     </td>
                   `;
-        
+
                   tbody.appendChild(row);
                 });
               })
@@ -317,23 +321,14 @@
                 tbody.innerHTML =
                   '<tr><td colspan="5" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
               });
-        
-            // Event listener when dropdown changes (automatic update)
+
+            // Event listener for dropdown change
             tbody.addEventListener("change", (e) => {
               if (e.target.tagName === "SELECT") {
                 const scheduleId = e.target.dataset.scheduleId;
                 const newStudentId = e.target.value || null;
-        
-                // Immediately update the avatar
-                const selectedStudent = students.find(
-                  (s) => s.student_id === newStudentId
-                );
-                const initials = selectedStudent ? getInitials(selectedStudent.name) : "-";
-                const avatar = e.target.closest(".relative").querySelector(".avatar-initial");
-                if (avatar) avatar.textContent = initials;
-        
-                // Send update request to the server
-                fetch("/api/booked_schedule/update", {
+
+                fetch("/api/free_schedule/update", {
                   method: "POST",
                   headers: {
                     "Content-Type": "application/json",
@@ -355,7 +350,6 @@
             });
           });
         </script>
-        
       </main>
       <!-- Main Content End -->
     </div>

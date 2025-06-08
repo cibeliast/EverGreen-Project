@@ -14,7 +14,8 @@ router.get('/all_schedule', (req, res) => {
         SELECT 
         sc.day, sc.time, 
         tc.name AS teacher_name, 
-        st.name AS student_name
+        st.name AS student_name,
+        st.student_id AS student_id
         FROM schedules sc
         JOIN teachers tc ON sc.teacher_id = tc.teacher_id
         JOIN students st ON sc.student_id = st.student_id
