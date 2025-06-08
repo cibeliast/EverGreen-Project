@@ -1,3 +1,5 @@
+<!-- BOOKED SCHEDULE IN CASE DROPDWON GAGAL -->
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -153,12 +155,12 @@
             </button>
           </div>
 
-          <!-- Button Edit SChedule -->
+          <!-- Button Back -->
           <a href="/all_schedule">
             <button
-              class="text-[#000000] px-3 py-2 text-center bg-[#E6D99F] rounded-lg font-medium hover:bg-[#FFF7D4] transition duration-300 transform active:scale-95"
+              class="text-[#000000] px-3 py-2 text-center bg-[#9FD3C7] rounded-lg font-medium hover:bg-[#FFF7D4] transition duration-300 transform active:scale-95"
             >
-              <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
+              <i class="bi bi-arrow-left-circle mr-2"></i>Back
             </button>
           </a>
         </div>
@@ -209,146 +211,165 @@
         <!-- Jadwal End-->
 
         <script>
-          document.addEventListener("DOMContentLoaded", () => {
-              // Ambil data semua siswa dulu
-            fetch("/api/all_schedule")
-              .then((response) => {
-                if (!response.ok) {
-                  throw new Error("Gagal mengambil data jadwal");
-                }
-                return response.json();
+          document.addEventListener("DOMContentLoaded", async () => {
+            const tbody = document.querySelector("tbody");
+        
+            // Fungsi untuk mengambil inisial nama
+            const getInitials = (name) =>
+              name
+                ? name
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase()
+                : "-"; // jika nama kosong, inisialnya tanda '-'
+        
+            // Ambil data siswa
+            const students = await fetch("/api/students")
+              .then((res) => res.json())
+              .catch((err) => {
+                console.error(err);
+                alert("Gagal mengambil data siswa.");
+                return [];
+              });
+        
+            // Ambil data jadwal
+            fetch("/api/booked_schedule")
+              .then((res) => {
+                if (!res.ok) throw new Error("Gagal ambil jadwal");
+                return res.json();
               })
-              .then((students) => {
-                  // Ambil data jadwal setelah data siswa siap
-                  fetch("/api/all_schedule")
-                    .then((res) => {
-                      if (!res.ok) throw new Error("Gagal mengambil data jadwal");
-                      return res.json();
-                    })
-                    .then((data) => {
-                        const tbody = document.querySelector("tbody");
-                        tbody.innerHTML = ""; // Kosongkan isi default
-
-                        if (data.length === 0) {
-                        tbody.innerHTML =
-                            '<tr><td colspan="4" class="text-center py-4">Belum ada jadwal</td></tr>';
-                        return;
-                        }
-
-                        // Fungsi ambil inisial dari nama
-                        const getInitials = (name) => {
-                        return name
-                            .split(" ")
-                            .map((n) => n[0])
-                            .join("")
-                            .toUpperCase();
-                        };
-
-                        data.forEach((schedule) => {
-                        const row = document.createElement("tr");
-                        row.classList.add("border-t");
-
-                        // Data
-                        const teacherName =
-                            schedule.teacher_name || "Tidak diketahui";
-                        const teacherPhoto = schedule.teacher_photo;
-                        const teacherInitials = getInitials(teacherName);
-
-                         // Data siswa saat ini di jadwal
-                        const currentStudentId = schedule.student_id;
-                        const currentStudentName = schedule.student_name || "Tidak diketahui";
-                        const currentStudentPhoto = schedule.student_photo;
-                        const currentStudentInitials = getInitials(currentStudentName);
-
-                        // Buat opsi dropdown siswa
-                        const optionsHTML = students
-                        .map((student) => {
-                        const selected = student.id === currentStudentId ? "selected" : "";
-                        return `<option value="${student.id}" ${selected}>${student.name}</option>`;
-                        })
-                        .join("");
-                 
-                 
-                        // Ganti kolom siswa jadi dropdown
-                        // Jika mau, kamu juga bisa tambahkan foto siswa di sebelah dropdown
-                        const studentSelectHTML = `
-                        <select class="student-select border rounded px-2 py-1 text-sm" data-schedule-id="${schedule.id}">
-                        ${optionsHTML}
+              .then((schedules) => {
+                tbody.innerHTML = "";
+        
+                // Filter jadwal yang student_id-nya ada (tidak null dan tidak string kosong)
+                const validSchedules = schedules.filter(
+                  (s) => s.student_id !== null && s.student_id !== ""
+                );
+        
+                // Kalau semua jadwal kosong (student_id null atau "")
+                if (validSchedules.length === 0) {
+                  tbody.innerHTML =
+                    '<tr><td colspan="5" class="text-center py-4">Belum ada jadwal</td></tr>';
+                  return;
+                }
+        
+                validSchedules.forEach((schedule) => {
+                  const teacherName = schedule.teacher_name || "Tidak diketahui";
+                  const teacherInitials = getInitials(teacherName);
+                  const studentName =
+                    students.find((s) => s.student_id === schedule.student_id)?.name ||
+                    ""; // cari nama student berdasarkan ID, kalau tidak ketemu kosong
+                  const studentInitials = getInitials(studentName);
+        
+                  const row = document.createElement("tr");
+                  row.className = "border-t";
+        
+                  row.innerHTML = `
+                    <!-- Day & Time -->
+                    <td class="py-3 px-4">${schedule.day}</td>
+                    <td class="py-3 px-4">${schedule.time}</td>
+        
+                    <!-- Teacher -->
+                    <td class="py-3 px-4">
+                      <div class="flex items-center space-x-2">
+                        <span class="w-8 h-8 rounded-full bg-[#76A2C4] text-white text-xs font-semibold flex items-center justify-center select-none">
+                          ${teacherInitials}
+                        </span>
+                        <span class="font-semibold text-gray-900">${teacherName}</span>
+                      </div>
+                    </td>
+        
+                    <!-- Student -->
+                    <td class="py-3 px-4">
+                      <div class="relative inline-block w-full">
+        
+                        <!-- Dropdown -->
+                        <select class="appearance-none bg-transparent w-full pl-10 pr-4 py-2 text-gray-900 font-semibold rounded focus:outline-none cursor-pointer" data-schedule-id="${
+                          schedule.schedule_id
+                        }">
+                          <option value="">-- Kosong --</option>
+                          ${students
+                            .map(
+                              (student) => `
+                              <option value="${student.student_id}" ${
+                                student.student_id === schedule.student_id
+                                  ? "selected"
+                                  : ""
+                              }>
+                                ${student.name}
+                              </option>`
+                            )
+                            .join("")}
                         </select>
-                    `;
-
-                  /* HTML foto atau inisial siswa
-                  const studentProfileHTML = studentPhoto
-                    ? `<img
-                          alt="Photo of ${studentName}"
-                          class="w-8 h-8 rounded-full object-cover"
-                          height="28"
-                          src="${studentPhoto}"
-                          width="28"
-                        />`
-                    : `<span
-                          class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center select-none"
-                        >${studentInitials}</span>`;*/
-
-                        // Susun baris tabel
-                        row.innerHTML = `
-                            <td class="py-3 px-4">${schedule.day}</td>
-                            <td class="py-3 px-4">${schedule.time}</td>
-                            <td class="py-3 px-4">
-                                <div class="flex items-center space-x-2">
-                                ${teacherProfileHTML}
-                                <span class="font-semibold text-gray-900">${teacherName}</span>
-                                </div>
-                            </td>
-                            <td class="py-3 px-4">
-                            ${studentSelectHTML}
-                            </td>
-                        `;
-
-                        tbody.appendChild(row);
-                        });
-
-                        // Event listener untuk dropdown siswa ketika diganti
-                        document.querySelectorAll(".student-select").forEach((select) => {
-                            select.addEventListener("change", (e) => {
-                            const scheduleId = e.target.dataset.scheduleId;
-                            const newStudentId = e.target.value;
-
-                            // Kirim update ke backend, misalnya pake fetch POST/PUT
-                            fetch(`/api/update_schedule_student`, {
-                                method: "POST",
-                                headers: { "Content-Type": "application/json" },
-                                body: JSON.stringify({ scheduleId, newStudentId }),
-                            })
-                                .then((res) => {
-                                if (!res.ok) throw new Error("Gagal update siswa");
-                                return res.json();
-                                })
-                                .then((response) => {
-                                console.log("Update berhasil:", response);
-                                })
-                                .catch((err) => {
-                                console.error("Error update:", err);
-                                alert("Gagal mengubah siswa. Silakan coba lagi.");
-                                });
-                            });
-                        });
-                    });
-                })
-                .catch((error) => {
-                    console.error("Error detail:", error);
-                    const tbody = document.querySelector("tbody");
-                    tbody.innerHTML =
-                    '<tr><td colspan="4" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
+        
+                        <!-- Initial Avatar -->
+                        <div class="avatar-initial absolute top-0 left-0 w-8 h-8 rounded-full bg-[#C177A6] text-white text-xs font-bold flex items-center justify-center z-10">
+                          ${studentInitials}
+                        </div>
+        
+                        <!-- Icon Dropdown -->
+                        <div class="pointer-events-none absolute top-1/2 right-3 transform -translate-y-1/2 text-gray-500">
+                          <i class="bi bi-chevron-down text-bold"></i>
+                        </div>
+                      </div>
+                    </td>
+                  `;
+        
+                  tbody.appendChild(row);
                 });
-            })
-            .catch((error) => {
-              console.error("Error fetch siswa:", error);
-              const tbody = document.querySelector("tbody");
-              tbody.innerHTML =
-                '<tr><td colspan="4" class="text-center text-red-500 py-4">Gagal memuat data siswa.</td></tr>';
+              })
+              .catch((err) => {
+                console.error("Gagal ambil data jadwal:", err);
+                tbody.innerHTML =
+                  '<tr><td colspan="5" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
+              });
+        
+            // Event listener saat dropdown diganti (update otomatis)
+            tbody.addEventListener("change", (e) => {
+              if (e.target.tagName === "SELECT") {
+                const scheduleId = e.target.dataset.scheduleId;
+                const newStudentId = e.target.value || null;
+
+        
+                fetch("/api/booked_schedule/update", {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify({ scheduleId, newStudentId }),
+                })
+                  .then((res) => {
+                    if (!res.ok) throw new Error("Gagal update data");
+                    return res.json();
+                  })
+                  .then(() => {
+                    // Cari data siswa berdasarkan ID, kalau kosong berarti kosongi avatar juga
+                    const selectedStudent = students.find(
+                      (s) => s.student_id === newStudentId
+                    );
+                    const initials = selectedStudent
+                      ? getInitials(selectedStudent.name)
+                      : "-";
+        
+                    // Ganti avatar inisial
+                    const avatar = e.target
+                      .closest(".relative")
+                      .querySelector(".avatar-initial");
+                    if (avatar) avatar.textContent = initials;
+        
+                    alert("Data siswa berhasil diperbarui!");
+                  })
+                  .catch(() => {
+                    alert("Gagal memperbarui jadwal");
+                  });
+              }
             });
+          });
         </script>
+        
+        
+        
       </main>
       <!-- Main Content End -->
     </div>
