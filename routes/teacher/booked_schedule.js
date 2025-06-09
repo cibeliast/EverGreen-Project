@@ -12,9 +12,10 @@ router.get('/booked_schedule', (req, res) => {
 
     const sql = `
         SELECT 
-        sc.day, sc.time, 
+        sc.schedule_id, sc.day, sc.time, 
         tc.name AS teacher_name, 
-        st.name AS student_name
+        st.name AS student_name,
+        st.student_id AS student_id
         FROM schedules sc
         JOIN teachers tc ON sc.teacher_id = tc.teacher_id
         JOIN students st ON sc.student_id = st.student_id
@@ -29,7 +30,8 @@ router.get('/booked_schedule', (req, res) => {
             WHEN 'Sunday' THEN 7
             ELSE 999
         END;
-`;
+    `;
+
 
     db.query(sql, (err, results) => {
         if(err){
@@ -38,5 +40,46 @@ router.get('/booked_schedule', (req, res) => {
         res.json(results);
     });
 });
+
+// Endpoint untuk update siswa di jadwal
+router.post('/booked_schedule/update', (req, res) => {
+    const { scheduleId } = req.body;
+    let { newStudentId } = req.body;
+
+    if (!req.session.userId || req.session.folderRole !== 'teacher') {
+        return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    // Ubah string kosong jadi null agar query tidak error
+    if (newStudentId === "" || newStudentId === null) {
+        newStudentId = null;
+    }
+
+    console.log("Received Schedule ID:", scheduleId);
+    console.log("Received New Student ID:", newStudentId);
+
+    const sql = 'UPDATE schedules SET student_id = ? WHERE schedule_id = ?';
+    db.query(sql, [newStudentId, scheduleId], (err, result) => {
+        if (err) {
+            console.error("Database error:", err);
+            return res.status(500).json({ message: 'Database error', error: err });
+        }
+
+        res.json({ message: 'Schedule updated successfully' });
+    });
+});
+
+  
+
+
+// Endpoint ambil semua siswa dari API
+router.get('/students', (req, res) => {
+    const sql = `SELECT student_id, name FROM students`;
+    db.query(sql, (err, results) => {
+      if (err) return res.status(500).json({ message: 'Database error', error: err });
+      res.json(results);
+    });
+  });
+  
 
 export default router;

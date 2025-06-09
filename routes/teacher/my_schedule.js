@@ -4,7 +4,7 @@ import db from '../../db/db.js';
 const router = express.Router();
 
 // Endpoint ambil data jadwal (day & time), nama guru, nama murid
-router.get('/all_schedule', (req, res) => {
+router.get('/my_schedule', (req, res) => {
     // Validasi session
     if(!req.session.userId || req.session.folderRole !== 'teacher'){
         return res.status(403).json({ message: 'Unauthorized'});
@@ -12,7 +12,7 @@ router.get('/all_schedule', (req, res) => {
 
     const sql = `
         SELECT 
-        sc.day, sc.time, 
+        sc.schedule_id, sc.day, sc.time, 
         tc.name AS teacher_name, 
         st.name AS student_name,
         st.student_id AS student_id
@@ -30,7 +30,8 @@ router.get('/all_schedule', (req, res) => {
             WHEN 'Sunday' THEN 7
             ELSE 999
         END;
-`;
+    `;
+
 
     db.query(sql, (err, results) => {
         if(err){
@@ -39,5 +40,14 @@ router.get('/all_schedule', (req, res) => {
         res.json(results);
     });
 });
+
+
+
+
+
+
+
+
+
 
 export default router;

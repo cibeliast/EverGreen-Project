@@ -17,6 +17,8 @@ import quizzesRouter from './routes/api/quizzes.js';
 import all_schedule from './routes/teacher/all_schedule.js';
 import booked_schedule from './routes/teacher/booked_schedule.js';
 import paymentRouter from './routes/teacher/payment.js';
+import free_schedule from './routes/teacher/free_schedule.js';
+import my_schedule from './routes/teacher/my_schedule.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -49,6 +51,9 @@ app.use('/api', quizzesRouter);
 app.use('/api', all_schedule);
 app.use('/api', booked_schedule);
 app.use('/api', paymentRouter);
+app.use('/api', free_schedule); 
+app.use('/api', my_schedule);
+
 
 // Student to
 app.get('/profile', (req, res) => {
@@ -69,6 +74,7 @@ app.get('/teacher/students', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/students.html'));
 });
 
+// 2. Schedule
 app.get('/all_schedule', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/all_schedule.html'));
 });
@@ -78,6 +84,15 @@ app.get('/booked_schedule', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/booked_schedule.html'));
 });
 
+app.get('/free_schedule', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/teacher/free_schedule.html'));
+});
+
+app.get('/my_schedule', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/teacher/my_schedule.html'));
+});
+
+// 3. Payments
 app.get('/payment', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/payment.html'));
 });

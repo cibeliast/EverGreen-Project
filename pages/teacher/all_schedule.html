@@ -63,7 +63,7 @@
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/students"
+              href="/teacher/students"
             >
               <i class="bi bi-people-fill"></i>
               <span class="title">Students</span>
@@ -131,7 +131,7 @@
             href="#"
             >All schedule
           </a>
-          <a class="text-[#7D7B7B] font-normal pb-1 text-md" href="#"
+          <a class="text-[#7D7B7B] font-normal pb-1 text-md" href="/my_schedule"
             >My schedule
           </a>
         </nav>
@@ -217,6 +217,8 @@
                     .toUpperCase();
                 };
 
+                console.log("Jadwal diterima:", data);
+
                 data.forEach((schedule) => {
                   const row = document.createElement("tr");
                   row.classList.add("border-t");
@@ -255,23 +257,29 @@
                           width="28"
                         />`
                     : `<span
-                          class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center select-none"
+                          class="w-8 h-8 rounded-full bg-[#C177A6] text-white text-xs font-semibold flex items-center justify-center select-none"
                         >${studentInitials}</span>`;
 
                   // Susun baris tabel
                   row.innerHTML = `
                       <td class="py-3 px-4">${schedule.day}</td>
                       <td class="py-3 px-4">${schedule.time}</td>
+
+                      <!-- Teacher -->
                       <td class="py-3 px-4">
                         <div class="flex items-center space-x-2">
                           ${teacherProfileHTML}
                           <span class="font-semibold text-gray-900">${teacherName}</span>
                         </div>
                       </td>
+
+                      <!-- Student -->
                       <td class="py-3 px-4">
                         <div class="flex items-center space-x-2">
                           ${studentProfileHTML}
-                          <span class="font-semibold text-gray-900">${studentName}</span>
+                            <span class="font-semibold text-gray-900">${schedule.student_id} - 
+                              ${studentName}
+                            </span>
                         </div>
                       </td>
                     `;
