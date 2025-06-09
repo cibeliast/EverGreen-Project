@@ -141,7 +141,7 @@
 
             <div class="flex gap-2">
               <button
-                onclick="showConfirmModal"
+                onclick="openPaymentModal()"
                 class="text-[#FFFFFF] hover:text-[#000000] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] transition"
               >
                 <i class="bi bi-plus-lg mr-2"></i>Add Payment
@@ -205,14 +205,6 @@
                 </thead>
                 <tbody id="paymentTableBody" class="text-gray-700">
                   <!-- Data jadwal di sini -->
-                  <tr>
-                      <td class="py-3 px-4">1</td>
-                      <td class="py-3 px-4">2</td>
-                      <td class="py-3 px-4">3</td>
-                      <td class="py-3 px-4">4</td>
-                      <td class="py-3 px-4">5</td>
-                      <td class="py-3 px-4">6</td>
-                  </tr>
                 </tbody>
               </table>
             </div>
@@ -224,9 +216,90 @@
       </div>
       <!-- KOTAKAN UTAMA SMUA end -->
 
+      <!-- Confirm Modal -->
+      <!-- Modal Tambah Pembayaran -->
+      <div
+        id="paymentModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      >
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+          <h2 class="text-xl font-semibold mb-6 text-center">Add Payment History</h2>
+
+          <form id="paymentForm" class="space-y-4">
+            <!-- Tanggal -->
+            <div>
+              <label class="block mb-1 text-start">Date</label>
+              <input
+                type="date"
+                name="date"
+                class="w-full border rounded px-3 py-2"
+                required
+              />
+            </div>
+
+            <!-- Siswa -->
+            <div>
+              <label class="block mb-1 text-start">Student</label>
+              <select
+                id="studentSelect"
+                name="student"
+                class="w-full border rounded px-3 py-2"
+                required
+              >
+                <option value="">ID - Student</option>
+              </select>
+            </div>
+
+            <!-- Total & Nominal (dalam 1 baris) -->
+            <div class="flex gap-4">
+              <div class="w-1/2">
+                <label class="block mb-1 text-start">Total Meeting(s)</label>
+                <input
+                  type="number"
+                  name="total_meetings"
+                  id="totalMeetings"
+                  class="w-full border rounded px-3 py-2"
+                  required
+                />
+              </div>
+              <div class="w-1/2">
+                <label class="block mb-1 text-start">Nominal (Rp)</label>
+                <input
+                  type="text"
+                  name="nominal"
+                  id="nominalValue"
+                  class="w-full border rounded px-3 py-2 bg-gray-100"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- Tombol -->
+            <div class="flex justify-between gap-4 mt-4">
+              <button
+                type="button"
+                onclick="closePaymentModal()"
+                class="w-1/2 bg-white border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                class="w-1/2 bg-[#9FD3C7] text-black px-4 py-2 rounded hover:bg-[#57998A] hover:text-white transition"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+
+
       <!-- JS -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
       <script>
+        // SHOW PAYMENTS
         document.addEventListener("DOMContentLoaded", () => {
           fetch("/api/payment")
             .then((response) => {
@@ -298,8 +371,44 @@
                 '<tr><td colspan="6" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
             });
         });
-        </script>
 
+        // ADD PAYMENTS
+        function openPaymentModal() {
+          document.getElementById("paymentModal").classList.remove("hidden");
+        }
+
+        function closePaymentModal() {
+          document.getElementById("paymentModal").classList.add("hidden");
+        }
+
+        // Hitung nominal otomatis
+        document.getElementById("totalMeetings").addEventListener("input", function () {
+          const total = parseInt(this.value) || 0;
+          const nominal = total * 50000;
+          document.getElementById("nominalValue").value = nominal.toLocaleString("id-ID");
+        });
+
+        // Tangani submit form
+        document.getElementById("paymentForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          // Ambil data form
+          const formData = new FormData(this);
+          const data = Object.fromEntries(formData.entries());
+
+          // Bisa dikirim ke backend lewat fetch/axios/submit form biasa
+          console.log("Data pembayaran:", data);
+
+          // Tutup modal
+          closePaymentModal();
+
+          // Reset form (opsional)
+          this.reset();
+          document.getElementById("nominalValue").value = "";
+        });
+
+        // DROPDOWN STUDENT
+        </script>
     </body>
   </html>
 
