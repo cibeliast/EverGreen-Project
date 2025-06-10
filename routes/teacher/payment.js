@@ -81,5 +81,34 @@ router.put('/payment/:id', (req, res) => {
   });
 });
 
+router.delete('/payment/:id', (req, res) => {
+  const teacherId = req.session.userId;
+  const paymentId = req.params.id;
+ 
+  console.log('Payment: ', paymentId);
+
+  if (!teacherId || req.session.folderRole !== 'teacher') {
+    return res.status(403).json({ message: 'Unauthorized' });
+  }
+
+  const sql = `
+    DELETE FROM payments 
+    WHERE payment_id = ? AND teacher_id = ?
+  `;
+
+  db.query(sql, [paymentId, teacherId], (err, result) => {
+    if (err) {
+      console.error('Gagal hapus payment:', err);
+      return res.status(500).json({ message: 'Gagal hapus payment' });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: 'Payment tidak ditemukan atau bukan milik guru ini' });
+    }
+
+    res.json({ message: 'Payment berhasil dihapus' });
+  });
+});
+
 
 export default router;
