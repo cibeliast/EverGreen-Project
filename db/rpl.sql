@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 06, 2025 at 06:20 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Generation Time: Jun 10, 2025 at 03:47 AM
+-- Server version: 10.4.28-MariaDB
+-- PHP Version: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -89,12 +89,12 @@ CREATE TABLE `schedules` (
 --
 
 INSERT INTO `schedules` (`schedule_id`, `student_id`, `teacher_id`, `day`, `time`) VALUES
-(1, NULL, 1, 'Monday', '10:00:00'),
-(2, NULL, 1, 'Wednesday', '14:00:00'),
-(3, 1, 1, 'Tuesday', '09:00:00'),
-(4, 2, 2, 'Thursday', '11:00:00'),
-(5, 3, 1, 'Friday', '13:00:00'),
-(6, 11, 1, 'Friday', '17:00:00'),
+(1, 11, 1, 'Monday', '10:00:00'),
+(2, 11, 1, 'Wednesday', '14:00:00'),
+(3, 11, 1, 'Tuesday', '09:00:00'),
+(4, 11, 2, 'Thursday', '11:00:00'),
+(5, 11, 1, 'Friday', '13:00:00'),
+(6, 1, 1, 'Friday', '17:00:00'),
 (7, 11, 2, 'Thursday', '17:00:00');
 
 -- --------------------------------------------------------
@@ -122,11 +122,6 @@ INSERT INTO `students` (`student_id`, `name`, `email`, `username`, `password`, `
 (1, 'Rina Putri', 'rina@student.com', 'rina123', 'pass123', '089876543210', 'Jl. Anggrek No.5', 3),
 (2, 'Dina Laras', 'dina@student.com', 'dinal', 'pass123', '089812345678', 'Jl. Melati No.8', 2),
 (3, 'Toni Setiawan', 'toni@student.com', 'tonis', 'pass123', '089876543211', 'Jl. Kamboja No.3', 1),
-(4, NULL, 'ketty@example.com', 'kettyuiop', '$2b$10$BDF0.XV6lh7.aPYLCFpD/et6UKYOEVXQrV4YHx.P1790RVGUlPN5m', NULL, NULL, NULL),
-(5, NULL, 'kettyiuop@email.com', 'poiuy', '$2b$10$Ys0r3myOMsHlGaAfsPasD.y2/NGLkJLaBy9erw32uHHvOlc9Cmmr6', NULL, NULL, NULL),
-(6, NULL, 'kipli@gmail.com', 'kipliy', '$2b$10$zBqtxT2SpVNJKDFyqBpaDOkNLnTg19zTgszBXIiXD09tCEG5HVtlW', NULL, NULL, NULL),
-(7, NULL, 'kettyuiop@email.com', 'kiplii', '$2b$10$GIhaTSDr458ttbCXz31Xw.oJoZqHa.lvdBOBRK1RH27Nc.BpQtFea', NULL, NULL, NULL),
-(10, NULL, 'evergreen@example.com', 'evergreen', '$2b$10$kIrg5wSTHVCT3n1yf2SblOO4g04iDbUig/VwiGe/QFc/O5bgz6KmO', NULL, NULL, NULL),
 (11, 'Kitibella', 'kibel@email.com', 'kibel', '$2b$10$gXzu9ZWiDNisPSwawnPOQeY/7soGU4uhRmypvbD/qk/iXr2qzsPOy', '', 'Jl. Jalan Yukk', NULL);
 
 -- --------------------------------------------------------
@@ -176,17 +171,18 @@ INSERT INTO `teachers` (`teacher_id`, `name`, `email`, `username`, `password`, `
 CREATE TABLE `topics` (
   `topic_id` int(11) NOT NULL,
   `name` varchar(20) NOT NULL,
-  `description` text NOT NULL
+  `description` text NOT NULL,
+  `picture` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `topics`
 --
 
-INSERT INTO `topics` (`topic_id`, `name`, `description`) VALUES
-(1, 'Tenses', 'Basic to advanced English tenses.'),
-(2, 'Vocabulary', 'Daily vocabulary enrichment.'),
-(3, 'Speaking', 'Improve speaking confidence.');
+INSERT INTO `topics` (`topic_id`, `name`, `description`, `picture`) VALUES
+(1, 'Tenses', 'Basic to advanced English tenses.', '/assets/book.png'),
+(2, 'Vocabulary', 'Daily vocabulary enrichment.', '/assets/rak.png'),
+(3, 'Speaking', 'Improve speaking confidence.aaaaaaku anak yang baik namaku ketty teemn cibel. kmu syp???', '/assets/quizzes.png');
 
 -- --------------------------------------------------------
 
