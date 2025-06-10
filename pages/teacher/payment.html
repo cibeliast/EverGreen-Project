@@ -148,7 +148,8 @@
               </button>
 
               <button
-                onclick="showConfirmModal"
+                id="editToggleBtn"
+                onclick="toggleEditMode()"
                 class="text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition"
               >
                 <i class="bi bi-pencil-square mr-2"></i>Edit Payment
@@ -223,13 +224,14 @@
         class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
       >
         <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
-          <h2 class="text-xl font-semibold mb-6 text-center">Add Payment History</h2>
+          <h2 id="modalTitle" class="text-xl font-semibold mb-6 text-center">Add Payment History</h2>
 
           <form id="paymentForm" class="space-y-4">
             <!-- Tanggal -->
             <div>
               <label class="block mb-1 text-start">Date</label>
               <input
+                id="dateInput"
                 type="date"
                 name="date"
                 class="w-full border rounded px-3 py-2"
@@ -285,6 +287,7 @@
               </button>
               <button
                 type="submit"
+                id="submitBtn"
                 class="w-1/2 bg-[#9FD3C7] text-black px-4 py-2 rounded hover:bg-[#57998A] hover:text-white transition"
               >
                 Save
@@ -299,34 +302,23 @@
       <!-- JS -->
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
       <script>
-        // =========================
-        // FETCH & TAMPILKAN PAYMENT
-        // =========================
+        let isEdit = false;
+        let currentEditId = null;
+
         function fetchAndRenderPayments() {
           fetch("/api/payment")
             .then((response) => {
-              if (!response.ok) {
-                throw new Error("Gagal mengambil data jadwal");
-              }
+              if (!response.ok) throw new Error("Gagal mengambil data jadwal");
               return response.json();
             })
             .then((data) => {
-              const tbody = document.querySelector("tbody");
+              const tbody = document.getElementById("paymentTableBody");
               tbody.innerHTML = "";
 
               if (data.length === 0) {
-                tbody.innerHTML =
-                  '<tr><td colspan="6" class="text-center py-4">Belum ada data</td></tr>';
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Belum ada data</td></tr>`;
                 return;
               }
-
-              const getInitials = (name) => {
-                return name
-                  .split(" ")
-                  .map((n) => n[0])
-                  .join("")
-                  .toUpperCase();
-              };
 
               data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
@@ -336,130 +328,256 @@
 
                 const studentName = item.student_name || "Tidak diketahui";
                 const studentPhoto = item.student_photo;
-                const studentInitials = getInitials(studentName);
+                const initials = studentName
+                  .split(" ")
+                  .map((n) => n[0])
+                  .join("")
+                  .toUpperCase();
 
-                const studentProfileHTML = studentPhoto
-                  ? `<img alt="Photo of ${studentName}" class="w-8 h-8 rounded-full object-cover" height="28" src="${studentPhoto}" width="28" />`
-                  : `<span class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center select-none">${studentInitials}</span>`;
+                const profileHTML = studentPhoto
+                  ? `<img alt="${studentName}" class="w-8 h-8 rounded-full object-cover" src="${studentPhoto}" />`
+                  : `<span class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center">${initials}</span>`;
+
+                // Checkbox with data attributes for edit
+                const checkboxHTML = editModeActive
+                  ? `
+                    <input
+                      type="checkbox"
+                      onchange="handleCheckboxEdit(this)"
+                      data-payment-id="${item.payment_id}"
+                      data-student-id="${item.student_id}"
+                      data-total-meetings="${item.total_meetings}"
+                      data-nominal="${item.nominal}"
+                      data-date="${item.date}"
+                    />
+                  `
+                  : "";
+
+
+                
+                row.classList.add("border-t");
 
                 row.innerHTML = `
+                  ${editModeActive ? `<td class="py-3 px-4 text-center">${checkboxHTML}</td>` : ""}
                   <td class="py-3 px-4 text-center">${index + 1}</td>
                   <td class="py-3 px-4">
                     <div class="flex items-center space-x-2">
-                      ${studentProfileHTML}
+                      ${profileHTML}
                       <span class="font-semibold text-gray-900">${studentName}</span>
                     </div>
                   </td>
-                  <td class="py-3 px-4 text-center">${item.total_meetings || 0}</td>
+                  <td class="py-3 px-4 text-center">${item.total_meetings}</td>
                   <td class="py-3 px-4 text-center">${item.nominal ? "Rp " + item.nominal.toLocaleString("id-ID") : "-"}</td>
-                  <td class="py-3 px-4 text-center">${item.date || "-"}</td>
+                  <td class="py-3 px-4 text-center">${item.date}</td>
                   <td class="py-3 px-4">${item.note || "-"}</td>
                 `;
 
+                // SET SETELAH innerHTML
+                row.dataset.paymentId = item.payment_id;
+                row.dataset.studentId = item.student_id;
+                row.dataset.totalMeetings = item.total_meetings;
+                row.dataset.nominal = item.nominal;
+                row.dataset.date = item.date;
+
+                console.log('Payment ID:', item.payment_id);
+
+
                 tbody.appendChild(row);
+                if (!editModeActive) {
+                  disableEditMode(); // PANGGIL DI SINI SETELAH DOM UPDATE
+                }
               });
             })
             .catch((error) => {
-              console.error("Error detail:", error);
-              const tbody = document.querySelector("tbody");
-              tbody.innerHTML =
-                '<tr><td colspan="6" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
+              console.error("Error:", error);
+              document.getElementById("paymentTableBody").innerHTML =
+                '<tr><td colspan="7" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
             });
         }
 
-        document.addEventListener("DOMContentLoaded", () => {
-          fetchAndRenderPayments();
+        // Handle form submit
+        document.getElementById("paymentForm").addEventListener("submit", function (e) {
+          e.preventDefault();
 
-          // FETCH STUDENTS FOR DROPDOWN
-          fetch("/api/booked_schedule")
-            .then((response) => response.json())
-            .then((data) => {
-              const select = document.getElementById("studentSelect");
-              const uniqueStudentsMap = new Map();
+          const formData = new FormData(this);
+          const payload = {
+            date: formData.get("date"),
+            student_id: formData.get("student_id"),
+            nominal: formData.get("nominal").replace(/\./g, "").replace(/,/g, ""),
+            total_meetings: formData.get("total_meetings"),
+          };
 
-              data.forEach((entry) => {
-                if (entry.student_id && !uniqueStudentsMap.has(entry.student_id)) {
-                  uniqueStudentsMap.set(entry.student_id, entry.student_name);
-                }
-              });
+          if (isEdit) {
+            payload.payment_id = currentEditId;
+          }
 
-              uniqueStudentsMap.forEach((name, id) => {
-                const option = document.createElement("option");
-                option.value = id;
-                option.textContent = `${id} - ${name}`;
-                select.appendChild(option);
-              });
+          const url = isEdit ? `/api/payment/${currentEditId}` : "/api/add_payment";
+          const method = isEdit ? "PUT" : "POST";
+
+          fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("Gagal simpan data");
+              return res.json();
             })
-            .catch((error) => {
-              console.error("Error fetching booked students:", error);
+            .then(() => {
+              alert(isEdit ? "Data berhasil diubah!" : "Payment berhasil ditambahkan!");
+              closePaymentModal();
+              this.reset();
+              document.getElementById("nominalValue").value = "";
+              isEdit = false;
+              currentEditId = null;
+              editModeActive = false;
+              const btn = document.getElementById("editToggleBtn");
+              btn.classList.add("bg-[#FFF7D4]");
+              btn.classList.remove("bg-[#E6D99F]");
+              btn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Payment';
+              fetchAndRenderPayments();
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("Terjadi kesalahan.");
             });
         });
 
-        // =================
-        // MODAL OPEN & CLOSE
-        // =================
+        function handleCheckboxEdit(checkbox) {
+          if (checkbox.checked) {
+            showEditModal({
+              id: checkbox.dataset.id,
+              studentId: checkbox.dataset.studentId,
+              totalMeetings: checkbox.dataset.totalMeetings,
+              nominal: checkbox.dataset.nominal,
+              date: checkbox.dataset.date,
+            });
+          }
+        }
+
+        // Isi form untuk mode edit
+        function showEditModal({ studentId, totalMeetings, nominal, date, id }) {
+          console.log("SHOW EDIT MODAL DIPANGGIL");
+          console.log({ studentId, totalMeetings, nominal, date, id });
+          isEdit = true;
+          currentEditId = id;
+
+          document.getElementById("studentSelect").value = studentId;
+          document.getElementById("totalMeetings").value = totalMeetings;
+          document.getElementById("nominalValue").value = parseInt(nominal).toLocaleString("id-ID");
+          document.getElementById("dateInput").value = date;
+
+          document.getElementById("modalTitle").textContent = "Edit Payment";
+          document.getElementById("submitBtn").textContent = "Update";
+          openPaymentModal();
+        }
+
+        // Modal open/close
         function openPaymentModal() {
           document.getElementById("paymentModal").classList.remove("hidden");
         }
 
         function closePaymentModal() {
           document.getElementById("paymentModal").classList.add("hidden");
+          document.getElementById("modalTitle").textContent = "Tambah Payment";
+          document.getElementById("submitBtn").textContent = "Tambah";
+          isEdit = false;
+          currentEditId = null;
         }
 
-        // ==========================
-        // HITUNG NOMINAL OTOMATIS
-        // ==========================
+        // Enable edit mode
+        function enableEditMode() {
+          const tableBody = document.getElementById("paymentTableBody");
+          const rows = tableBody.querySelectorAll("tr");
+
+          if (tableBody.querySelector("td input[type='checkbox']")) return;
+
+          rows.forEach((row) => {
+            const checkboxCell = document.createElement("td");
+            checkboxCell.classList.add("py-3", "px-4", "text-center");
+            checkboxCell.innerHTML = `<input type="checkbox" class="edit-checkbox">`;
+            row.prepend(checkboxCell);
+          });
+
+          const theadRow = document.querySelector("thead tr");
+          if (theadRow) {
+            const th = document.createElement("th");
+            th.classList.add("py-3", "px-4", "font-semibold", "sticky", "top-0", "bg-[#1F2A44]", "z-10", "edit-checkbox-header");
+            theadRow.prepend(th);
+          }
+
+          document.querySelectorAll(".edit-checkbox").forEach((checkbox) => {
+            checkbox.addEventListener("change", function () {
+              const checked = document.querySelectorAll(".edit-checkbox:checked");
+              if (checked.length === 1) {
+                const row = checked[0].closest("tr");
+
+                const id = row.dataset.paymentId;
+                const studentId = row.dataset.studentId;
+                const totalMeetings = row.dataset.totalMeetings;
+                const nominal = row.dataset.nominal;
+                const date = row.dataset.date;
+
+
+                showEditModal({ studentId, totalMeetings, nominal, date, id });
+              }
+            });
+          });
+        }
+
+        function disableEditMode() {
+          document.querySelectorAll(".edit-checkbox").forEach(cb => cb.closest("td").remove());
+          const headerCheckbox = document.querySelector(".edit-checkbox-header");
+          if (headerCheckbox) headerCheckbox.remove();
+        }
+
+        // Hitung nominal otomatis
         document.getElementById("totalMeetings").addEventListener("input", function () {
           const total = parseInt(this.value) || 0;
-          const nominal = total * 50000;
-          document.getElementById("nominalValue").value = nominal.toLocaleString("id-ID");
+          document.getElementById("nominalValue").value = (total * 50000).toLocaleString("id-ID");
         });
 
-        // =====================
-        // FORM SUBMIT PAYMENT
-        // =====================
-        document.getElementById("paymentForm").addEventListener("submit", function (e) {
-          e.preventDefault();
+        // Edit toggle
+        let editModeActive = false;
+        function toggleEditMode() {
+          const btn = document.getElementById("editToggleBtn");
+          if (!editModeActive) {
+            enableEditMode();
+            btn.classList.add("bg-[#E6D99F]");
+            btn.classList.remove("bg-[#FFF7D4]");
+            btn.innerHTML = '<i class="bi bi-x-circle mr-2"></i>Cancel Edit';
+          } else {
+            disableEditMode();
+            btn.classList.add("bg-[#FFF7D4]");
+            btn.classList.remove("bg-[#E6D99F]");
+            btn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Payment';
+          }
+          editModeActive = !editModeActive;
+        }
 
-          const formData = new FormData(this);
-          const date = formData.get("date");
-          const student_id = formData.get("student_id");
-          const nominal = formData.get("nominal").replace(/\./g, "").replace(/,/g, "");
-          const total_meetings = formData.get("total_meetings");
-
-          const payload = {
-            date,
-            student_id,
-            nominal,
-            total_meetings,
-          };
-
-          console.log("Payload being sent:", payload);
-
-          fetch("/api/add_payment", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(payload),
-          })
-            .then((res) => {
-              if (!res.ok) throw new Error("Failed to add payment");
-              return res.json();
-            })
-            .then((response) => {
-              alert("Payment added successfully!");
-              closePaymentModal();
-              this.reset();
-              document.getElementById("nominalValue").value = "";
-              fetchAndRenderPayments(); // Refresh tampilan
-            })
-            .catch((err) => {
-              console.error(err);
-              alert("Error saving payment.");
+        // DOM ready
+        document.addEventListener("DOMContentLoaded", () => {
+          fetchAndRenderPayments();
+          fetch("/api/booked_schedule")
+            .then((res) => res.json())
+            .then((data) => {
+              const select = document.getElementById("studentSelect");
+              const map = new Map();
+              data.forEach((e) => {
+                if (e.student_id && !map.has(e.student_id)) {
+                  map.set(e.student_id, e.student_name);
+                }
+              });
+              map.forEach((name, id) => {
+                const option = document.createElement("option");
+                option.value = id;
+                option.textContent = `${id} - ${name}`;
+                select.appendChild(option);
+              });
             });
         });
       </script>
+
 
     </body>
   </html>

@@ -14,9 +14,9 @@ router.get('/payment', (req, res) => {
 
   const sql = `
     SELECT 
-      s.name AS student_name,
+      s.name AS student_name, s.student_id AS student_id,
       COUNT(DISTINCT sc.schedule_id) AS total_meetings,
-      p.nominal,
+      p.nominal, p.payment_id AS payment_id,
       DATE_FORMAT(p.date, '%Y-%m-%d') AS date, -- Format langsung di SQL (YYYY-MM-DD)
       p.note
     FROM students s
@@ -57,6 +57,27 @@ router.post('/add_payment', (req, res) => {
     }
 
     res.status(200).json({ message: 'Payment added' });
+  });
+});
+
+router.put('/payment/:id', (req, res) => {
+  const teacher_id = req.session.userId;
+  const { payment_id, student_id, total_meetings, nominal, date } = req.body;
+  console.log('Teacher ID  UPdate', teacher_id);
+  const note = `Paid for ${total_meetings} session`;
+
+  const sql = `
+    UPDATE payments
+    SET student_id = ?, teacher_id = ?, nominal = ?, date = ?, note = ?
+    WHERE payment_id = ?
+  `;
+
+  db.query(sql, [student_id, teacher_id, nominal, date, note, payment_id], (err, result) => {
+    if (err) {
+      console.error('Gagal update payment:', err);
+      return res.status(500).json({ message: 'Gagal update payment' });
+    }
+    res.json({ message: 'Payment berhasil diupdate' });
   });
 });
 
