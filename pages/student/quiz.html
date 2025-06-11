@@ -101,7 +101,7 @@
             const row = `
               <tr>
                 <td>${index + 1}</td>
-                <td><a href="do-quiz.html?quiz_id=${quiz.quiz_id}">Start Quiz #${index + 1}</a></td>
+                <td><a href="${quiz.quiz_link}" target="_blank">Start Quiz #${index + 1}</a></td>
                 <td>${quiz.score ?? '-'}</td>
               </tr>
             `;
