@@ -70,6 +70,10 @@ app.get('/quiz', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/quiz.html'));
 });
 
+app.get('/forgot-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/forgot-password/forgot-password.html'));
+});
+
 // Sidebar guru ke 
 // 1. Students
 app.get('/teacher/students', (req, res) => {
