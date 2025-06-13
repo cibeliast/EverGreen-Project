@@ -492,7 +492,7 @@
                 if (!res.ok)
                   throw new Error(data.error || "Failed to update topic");
 
-                alert("Topic successfully deleted!");
+                alert("Topic successfully updated!");
                 window.location.reload();
               } catch (err) {
                 alert(err.message);
@@ -575,6 +575,16 @@
               document.getElementById("addTopicModal").classList.add("hidden");
               document.getElementById("addTopicForm").reset();
             });
+
+            document.getElementById("editTopicName").addEventListener("input", async (e) => {
+              const title = e.target.value.trim();
+              if (title.length < 3) return;
+            
+              const imageUrl = await fetchUnsplashImage(title);
+              document.getElementById("editTopicPreviewImage").src = imageUrl;
+              document.getElementById("editTopicPicture").value = imageUrl;
+            });
+            
         </script>
       </main>
       <!-- Main Content End -->

@@ -29,6 +29,60 @@ router.get('/topicTeacher/:id', (req, res) => {
   });
 });
 
+// ✅ INSERT topic (POST)
+router.post('/topicTeacher', (req, res) => {
+  const { name, description, picture } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ error: "Topic name is required" });
+  }
+
+  db.query(
+    'INSERT INTO topics (name, description, picture) VALUES (?, ?, ?)',
+    [name, description || null, picture || null],
+    (err, result) => {
+      if (err) {
+        console.error("Database error:", err);
+        return res.status(500).json({ error: err.message });
+      }
+
+      res.json({
+        message: "Topic added successfully",
+        topic_id: result.insertId
+      });
+    }
+  );
+});
+
+// ✅ UPDATE topic (PUT)
+router.put('/topicTeacher/:id', (req, res) => {
+  const topic_id = req.params.id;
+  const { name, description, picture } = req.body;
+
+  if (!name) {
+    return res.status(400).json({ error: 'Topic name is required' });
+  }
+
+  const query = `
+    UPDATE topics
+    SET name = ?, description = ?, picture = ?
+    WHERE topic_id = ?
+  `;
+
+  db.query(query, [name, description || null, picture || null, topic_id], (err, result) => {
+    if (err) {
+      console.error('SQL UPDATE error:', err);
+      return res.status(500).json({ error: err.message });
+    }
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: 'Topic not found' });
+    }
+
+    res.json({ message: 'Topic updated successfully' });
+  });
+});
+
 // ✅ DELETE topic by ID
 router.delete('/topicTeacher/:id', (req, res) => {
   const topic_id = req.params.id;
@@ -47,31 +101,5 @@ router.delete('/topicTeacher/:id', (req, res) => {
     res.json({ message: 'Topic deleted successfully' });
   });
 });
-
-// ✅ INSERT topic (dengan gambar Unsplash)
-router.post('/topicTeacher', (req, res) => {
-  const { name, description, picture } = req.body;
-
-  if (!name) {
-    return res.status(400).json({ error: "Topic name is required" });
-  }
-
-  db.query(
-    'INSERT INTO topics (name, description, picture) VALUES (?, ?, ?)',
-    [name, description || null, picture || null],
-    (err, result) => {
-      if (err) {
-        console.error("Database error:", err); // Tambahkan log untuk kesalahan
-        return res.status(500).json({ error: err.message });
-      }
-
-      res.json({
-        message: "Topic added successfully",
-        topic_id: result.insertId
-      });
-    }
-  );
-});
-
 
 export default router;
