@@ -48,8 +48,6 @@ router.delete('/topicTeacher/:id', (req, res) => {
   });
 });
 
-console.log("Received data:", req.body);
-
 // ✅ INSERT topic (dengan gambar Unsplash)
 router.post('/topicTeacher', (req, res) => {
   const { name, description, picture } = req.body;
@@ -74,7 +72,6 @@ router.post('/topicTeacher', (req, res) => {
     }
   );
 });
-console.log("Received data:", req.body);
 
 
 export default router;

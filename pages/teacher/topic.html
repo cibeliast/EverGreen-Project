@@ -29,13 +29,10 @@
 
   <body class="bg-[#F9FAFB] min-h-screen p-4">
     <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row gap-10">
-      <!-- KOTAKAN UTAMA SMUA -->
       <!-- Sidebar Start -->
       <nav
         class="bg-[#1F2A44] rounded-xl w-full md:w-60 flex flex-col justify-between p-6 text-[#a3c0d9] h-[calc(100vh-3rem)]"
       >
-        <!-- Nav Atas Start-->
-        <!-- LOGO -->
         <div>
           <a
             id="brandTitle"
@@ -44,9 +41,7 @@
           >
             <span>EverGreen</span>
           </a>
-
           <hr class="border-[#ffffff] mb-5" />
-
           <nav class="flex flex-col gap-5 text-sm">
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
@@ -55,7 +50,6 @@
               <i class="bi bi-grid-1x2"></i>
               <span class="title">Dashboard</span>
             </a>
-
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
               href="/all_schedule"
@@ -63,7 +57,6 @@
               <i class="bi bi-calendar3"></i>
               <span class="title">Schedules</span>
             </a>
-
             <a
               class="flex items-center gap-3 text-[#FFFFFF]"
               href="/teacher/students"
@@ -71,12 +64,10 @@
               <i class="bi bi-people"></i>
               <span class="title">Students</span>
             </a>
-
             <a class="flex items-center gap-3 text-[#9FD3C7]" href="">
               <i class="bi bi-question-circle-fill"></i>
               <span class="title">Quizzes</span>
             </a>
-
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
               href="/payment"
@@ -86,10 +77,7 @@
             </a>
           </nav>
         </div>
-        <!-- Nav Atas End-->
-
         <div>
-          <!-- Nav Bawah Start-->
           <hr class="border-[#ffffff] mb-6" />
           <nav class="flex flex-col gap-5 text-sm font-semibold text-[#a3c0d9]">
             <a
@@ -99,7 +87,6 @@
               <i class="bi bi-person-circle"></i>
               <span class="title">Profile</span>
             </a>
-
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
               href="#"
@@ -109,13 +96,11 @@
             </a>
           </nav>
         </div>
-        <!-- Nav bawah End-->
       </nav>
       <!-- Sidebar End -->
 
       <!-- Main Content Start -->
       <main class="flex-1 flex flex-col gap-6 pt-8 pr-7">
-        <!-- Main Judul -->
         <section>
           <h2 class="text-3xl font-extrabold text-[#111827] mb-1">
             Quizzes Topic
@@ -127,7 +112,6 @@
         </section>
 
         <hr />
-        <!-- Garis -->
 
         <!-- Search Form -->
         <form class="d-flex" role="search" id="searchForm">
@@ -159,7 +143,6 @@
         ></div>
 
         <!-- Confirm Modal -->
-        <!-- Delete Modal -->
         <div
           id="confirmModal"
           class="fixed inset-0 hidden bg-[#000000] bg-opacity-50 flex items-center justify-center z-50"
@@ -186,276 +169,413 @@
           </div>
         </div>
 
-       <!-- Add Topic Modal -->
-<div
-id="addTopicModal"
-class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50"
->
-<div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-  <h2 class="text-xl font-semibold mb-4 text-center">Add New Topic</h2>
-  <form id="addTopicForm" class="space-y-4">
-    <div>
-      <label for="topicName" class="block font-medium mb-1">Topic Name</label>
-      <input
-        type="text"
-        id="topicName"
-        name="topicName"
-        required
-        class="w-full border border-gray-300 px-3 py-2 rounded"
-      />
-    </div>
-    <div>
-      <label for="topicDescription" class="block font-medium mb-1">Description</label>
-      <textarea
-        id="topicDescription"
-        name="topicDescription"
-        rows="3"
-        class="w-full border border-gray-300 px-3 py-2 rounded"
-      ></textarea>
-    </div>
-    <div>
-      <label class="block font-medium mb-1">Preview Gambar Otomatis</label>
-      <img
-        id="topicPreviewImage"
-        src="assets/topics/default.jpg"
-        alt="Preview Gambar"
-        class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"
-      />
-      <input type="hidden" id="topicPicture" name="picture" />
-    </div>
-    <div class="flex justify-end gap-4 pt-2">
-      <button
-        type="button"
-        id="cancelAddTopic"
-        class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
-      >
-        Cancel
-      </button>
-      <button
-        type="submit"
-        class="bg-[#67998D] hover:bg-[#4f7b70] text-white px-4 py-2 rounded"
-      >
-        Save
-      </button>
-    </div>
-  </form>
-</div>
-</div>
-
-
-<!-- Script -->
-<script>
-const UNSPLASH_ACCESS_KEY = 'JMIdPmlrr-wQNmeRStnLgRNGUQ6k4yh4PCyn-ZTg3xc'; // Ganti dengan Access Key Unsplash Anda
-
-async function fetchUnsplashImage(query) {
-  const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&client_id=${UNSPLASH_ACCESS_KEY}`;
-  
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    
-    if (data.results && data.results.length > 0) {
-      return data.results[0].urls.small;
-    } else {
-      return "assets/topics/default.jpg"; // Gambar default jika tidak ada hasil
-    }
-  } catch (err) {
-    console.error("Gagal fetch gambar:", err);
-    return "assets/topics/default.jpg"; // Gambar default jika terjadi kesalahan
-  }
-}
-
-let selectedTopicId = null;
-
-document.addEventListener("DOMContentLoaded", async () => {
-  const cardContainer = document.getElementById("cardContainer");
-  const searchInput = document.getElementById("searchInput");
-  let allTopics = [];
-
-  try {
-    const response = await fetch("/api/topicTeacher");
-    if (!response.ok) throw new Error("Failed to fetch topics");
-    allTopics = await response.json();
-    renderTopics(allTopics); // render awal
-  } catch (error) {
-    console.error("Fetch error:", error);
-    cardContainer.innerHTML = "<p>Error loading topics.</p>";
-  }
-
-  // Render topic cards
-  function renderTopics(topics, isSearching = false) {
-    cardContainer.innerHTML = ""; // clear cards
-
-    if (topics.length === 0) {
-      const emptyMsg = document.createElement("p");
-      emptyMsg.className = "text-center text-gray-500 col-span-full";
-      emptyMsg.textContent = "No topics found.";
-      cardContainer.appendChild(emptyMsg);
-      return;
-    }
-
-    topics.forEach((topic) => {
-      const card = document.createElement("div");
-      card.className = "bg-white rounded-3xl shadow p-3 w-full h-[320px] relative";
-
-      card.innerHTML = `
-        <img src="${topic.picture}" alt="topic" class="rounded-2xl mb-3 w-full h-40 object-cover" />
-        <div class="flex justify-between items-start mt-4">
-          <p class="text-sm text-gray-600 mb-2 line-clamp-2">${topic.description || "No description provided."}</p>
-          <div class="relative">
-            <button onclick="toggleMenu(this)">
-              <i class="bi bi-three-dots-vertical text-[#67998D] hover:text-black text-2xl font-bold"></i>
-            </button>
-            <div class="menu hidden absolute right-0 mt-2 rounded-xl shadow-md p-2 w-[170px] bg-white z-50 flex flex-col items-center">
-              <h2 class="text-lg font-semibold mb-2 text-[#000000]">Action</h2>
-              <div class="right-0 mt-2 w-full bg-[#FFF7D4] rounded whitespace-nowrap">
-                <button onclick="editTopic('${topic.topic_id}')" class="text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
-                  <i class="bi bi-pencil-square mr-2"></i>Edit Topic
+        <!-- Add Topic Modal -->
+        <div
+          id="addTopicModal"
+          class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50"
+        >
+          <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+            <h2 class="text-xl font-semibold mb-4 text-center">
+              Add New Topic
+            </h2>
+            <form id="addTopicForm" class="space-y-4">
+              <div>
+                <label for="topicName" class="block font-medium mb-1"
+                  >Topic Name</label
+                >
+                <input
+                  type="text"
+                  id="topicName"
+                  name="topicName"
+                  required
+                  class="w-full border border-gray-300 px-3 py-2 rounded"
+                />
+              </div>
+              <div>
+                <label for="topicDescription" class="block font-medium mb-1"
+                  >Description</label
+                >
+                <textarea
+                  id="topicDescription"
+                  name="topicDescription"
+                  rows="3"
+                  class="w-full border border-gray-300 px-3 py-2 rounded"
+                ></textarea>
+              </div>
+              <div>
+                <label class="block font-medium mb-1"
+                  >Preview Gambar Otomatis</label
+                >
+                <img
+                  id="topicPreviewImage"
+                  src="assets/topics/default.jpg"
+                  alt="Preview Gambar"
+                  class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"
+                />
+                <input type="hidden" id="topicPicture" name="picture" />
+              </div>
+              <div class="flex justify-end gap-4 pt-2">
+                <button
+                  type="button"
+                  id="cancelAddTopic"
+                  class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="bg-[#67998D] hover:bg-[#4f7b70] text-white px-4 py-2 rounded"
+                >
+                  Save
                 </button>
               </div>
-              <div class="right-0 mt-2 w-full whitespace-nowrap bg-[#FFE4E6] rounded">
-                <button onclick="confirmDelete('${topic.topic_id}')" class="text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
-                  <i class="bi bi-trash3-fill mr-2"></i>Delete Topic
-                </button>
-              </div>
-            </div>
+            </form>
           </div>
         </div>
-        <h2 class="text-xl font-bold text-[#67998D]">${topic.name}</h2>
-      `;
 
-      cardContainer.appendChild(card);
-    });
+        <!-- Edit Topic Modal -->
+        <div
+          id="editTopicModal"
+          class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50"
+        >
+          <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
+            <h2 class="text-xl font-semibold mb-4 text-center">Edit Topic</h2>
+            <form id="editTopicForm" class="space-y-4">
+              <div>
+                <label for="editTopicName" class="block font-medium mb-1"
+                  >Topic Name</label
+                >
+                <input
+                  type="text"
+                  id="editTopicName"
+                  name="editTopicName"
+                  required
+                  class="w-full border border-gray-300 px-3 py-2 rounded"
+                />
+              </div>
+              <div>
+                <label for="editTopicDescription" class="block font-medium mb-1"
+                  >Description</label
+                >
+                <textarea
+                  id="editTopicDescription"
+                  name="editTopicDescription"
+                  rows="3"
+                  class="w-full border border-gray-300 px-3 py-2 rounded"
+                ></textarea>
+              </div>
+              <div>
+                <label class="block font-medium mb-1">Preview Gambar</label>
+                <img
+                  id="editTopicPreviewImage"
+                  src="assets/topics/default.jpg"
+                  alt="Preview Gambar"
+                  class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"
+                />
+                <input type="hidden" id="editTopicPicture" name="editPicture" />
+              </div>
+              <div class="flex justify-end gap-4 pt-2">
+                <button
+                  type="button"
+                  id="cancelEditTopic"
+                  class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="bg-[#67998D] hover:bg-[#4f7b70] text-white px-4 py-2 rounded"
+                >
+                  Update
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
 
-    // Tambahkan Add Topic card hanya jika bukan sedang mencari
-    if (!isSearching) {
-      cardContainer.appendChild(renderAddCard());
-    }
-  }
+        <script>
+          // ==== Klik overlay nutup menu ====
+          document
+            .getElementById("menuOverlay")
+            .addEventListener("click", () => {
+              document.getElementById("menuOverlay").classList.add("hidden");
+              const allMenus = document.querySelectorAll(".menu");
+              allMenus.forEach((menu) => menu.classList.add("hidden"));
+            });
 
-  // Add Topic Card
-  function renderAddCard() {
-    const addCard = document.createElement("div");
-    addCard.className = "bg-[#C9D8D5] rounded-3xl shadow w-full h-[320px] flex flex-col items-center justify-center p-5 hover:bg-[#ACCBC5] transition cursor-pointer";
-    addCard.onclick = () => {
-      document.getElementById("addTopicModal").classList.remove("hidden");
-    };
+          const UNSPLASH_ACCESS_KEY =
+            "JMIdPmlrr-wQNmeRStnLgRNGUQ6k4yh4PCyn-ZTg3xc";
 
-    addCard.innerHTML = `
-      <i class="bi bi-plus-square text-7xl text-[#1F2A44]"></i>
-      <h2 class="text-2xl font-semibold text-[#1F2A44] mt-2 text-center">Add New Topic</h2>
-      <p class="text-sm text-[#7D7B7B] mt-1 text-center">Add your own topic to quiz your students!</p>
-    `;
-    return addCard;
-  }
+          async function fetchUnsplashImage(query) {
+            const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+              query
+            )}&per_page=1&client_id=${UNSPLASH_ACCESS_KEY}`;
 
-  // Search input listener
-  searchInput.addEventListener("input", () => {
-    const keyword = searchInput.value.trim().toLowerCase();
-    const filtered = allTopics.filter((t) => (t.name || "").toLowerCase().includes(keyword));
-    const isSearching = keyword.length > 0;
-    renderTopics(filtered, isSearching);
-  });
+            try {
+              const res = await fetch(url);
+              const data = await res.json();
+              return (
+                data.results?.[0]?.urls?.small || "assets/topics/default.jpg"
+              );
+            } catch {
+              return "assets/topics/default.jpg";
+            }
+          }
 
-  // Update preview gambar otomatis saat judul diketik
-  document.getElementById("topicName").addEventListener("input", async (e) => {
-    const title = e.target.value.trim();
-    if (title.length < 3) return;
+          let selectedTopicId = null;
 
-    const imageUrl = await fetchUnsplashImage(title);
-    document.getElementById("topicPreviewImage").src = imageUrl;
-    document.getElementById("topicPicture").value = imageUrl;
-  });
-});
+          document.addEventListener("DOMContentLoaded", async () => {
+            const cardContainer = document.getElementById("cardContainer");
+            const searchInput = document.getElementById("searchInput");
+            let allTopics = [];
 
-// 3-dots menu toggle
-function toggleMenu(button) {
-  const allMenus = document.querySelectorAll(".menu");
-  const overlay = document.getElementById("menuOverlay");
+            try {
+              const response = await fetch("/api/topicTeacher");
+              if (!response.ok) throw new Error("Failed to fetch topics");
+              allTopics = await response.json();
+              renderTopics(allTopics);
+            } catch (err) {
+              console.error(err);
+              cardContainer.innerHTML = "<p>Error loading topics.</p>";
+            }
 
-  allMenus.forEach((menu) => {
-    if (!menu.contains(button)) menu.classList.add("hidden");
-  });
+            function renderTopics(topics, isSearching = false) {
+              cardContainer.innerHTML = "";
 
-  const menu = button.nextElementSibling;
-  if (menu) {
-    const isHidden = menu.classList.contains("hidden");
-    menu.classList.toggle("hidden");
-    overlay.classList.toggle("hidden", !isHidden);
-  }
-}
+              if (topics.length === 0) {
+                const empty = document.createElement("p");
+                empty.className = "text-center text-gray-500 col-span-full";
+                empty.textContent = "No topics found.";
+                cardContainer.appendChild(empty);
+                return;
+              }
 
-// Edit topic
-function editTopic(id) {
-  window.location.href = `/edit-topic/${id}`;
-}
+              topics.forEach((topic) => {
+                const card = document.createElement("div");
+                card.className =
+                  "bg-white rounded-3xl shadow p-3 w-full h-[320px] relative";
 
-function confirmDelete(id) {
-  console.log("Confirming delete for topic ID:", id);
-  selectedTopicId = id;
-  document.getElementById("confirmModal").classList.remove("hidden");
-}
+                card.innerHTML = `
+                  <img src="${
+                    topic.picture
+                  }" class="rounded-2xl mb-3 w-full h-40 object-cover" />
+                  <div class="flex justify-between items-start mt-4">
+                    <p class="text-sm text-gray-600 mb-2 line-clamp-2">${
+                      topic.description || "No description provided."
+                    }</p>
+                    <div class="relative">
+                      <button onclick="toggleMenu(this)">
+                        <i class="bi bi-three-dots-vertical text-[#67998D] hover:text-black text-2xl font-bold"></i>
+                      </button>
+                      <div class="menu hidden absolute right-0 mt-2 rounded-xl shadow-md p-2 w-[170px] bg-white z-50 flex flex-col items-center">
+                        <h2 class="text-lg font-semibold mb-2 text-[#000000]">Action</h2>
+                        <div class="w-full bg-[#FFF7D4] rounded whitespace-nowrap">
+                          <button onclick="openEditModal('${
+                            topic.topic_id
+                          }', '${topic.name}', '${topic.description}', '${
+                  topic.picture
+                }')" class="text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
+                            <i class="bi bi-pencil-square mr-2"></i>Edit Topic
+                          </button>
+                        </div>
+                        <div class="w-full bg-[#FFE4E6] mt-2 rounded whitespace-nowrap">
+                          <button onclick="confirmDelete('${
+                            topic.topic_id
+                          }')" class="text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
+                            <i class="bi bi-trash3-fill mr-2"></i>Delete Topic
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <h2 class="text-xl font-bold text-[#67998D]">${
+                    topic.name
+                  }</h2>
+                `;
+                cardContainer.appendChild(card);
+              });
 
-document.getElementById("confirmNo").addEventListener("click", () => {
-  selectedTopicId = null;
-  document.getElementById("confirmModal").classList.add("hidden");
-});
+              if (!isSearching) {
+                cardContainer.appendChild(renderAddCard());
+              }
+            }
 
-document.getElementById("confirmYes").addEventListener("click", async () => {
-  console.log("Deleting topic with ID:", selectedTopicId);
-  if (!selectedTopicId) return;
+            function renderAddCard() {
+              const addCard = document.createElement("div");
+              addCard.className =
+                "bg-[#C9D8D5] rounded-3xl shadow w-full h-[320px] flex flex-col items-center justify-center p-5 hover:bg-[#ACCBC5] transition cursor-pointer";
+              addCard.onclick = () => {
+                document
+                  .getElementById("addTopicModal")
+                  .classList.remove("hidden");
+              };
+              addCard.innerHTML = `
+                <i class="bi bi-plus-square text-7xl text-[#1F2A44]"></i>
+                <h2 class="text-2xl font-semibold text-[#1F2A44] mt-2 text-center">Add New Topic</h2>
+                <p class="text-sm text-[#7D7B7B] mt-1 text-center">Add your own topic to quiz your students!</p>
+              `;
+              return addCard;
+            }
 
-  try {
-    const response = await fetch(`/api/topicTeacher/${selectedTopicId}`, { method: "DELETE" });
-    const data = await response.json();
-    console.log("Delete response:", response.status, data);
+            searchInput.addEventListener("input", () => {
+              const keyword = searchInput.value.trim().toLowerCase();
+              const filtered = allTopics.filter((t) =>
+                (t.name || "").toLowerCase().includes(keyword)
+              );
+              renderTopics(filtered, keyword.length > 0);
+            });
 
-    if (!response.ok) {
-      throw new Error(data.error || "Failed to delete topic");
-    }
+            document
+              .getElementById("topicName")
+              .addEventListener("input", async (e) => {
+                const title = e.target.value.trim();
+                if (title.length < 3) return;
 
-    location.reload();
-  } catch (err) {
-    console.error(err);
-    alert("Failed to delete topic.");
-  }
-});
+                const imageUrl = await fetchUnsplashImage(title);
+                document.getElementById("topicPreviewImage").src = imageUrl;
+                document.getElementById("topicPicture").value = imageUrl;
+              });
+          });
 
-// Tutup modal Add Topic
-document.getElementById("cancelAddTopic").addEventListener("click", () => {
-  document.getElementById("addTopicModal").classList.add("hidden");
-  document.getElementById("addTopicForm").reset();
-  document.getElementById("topicPreviewImage").src = "assets/topics/default.jpg"; // Reset gambar preview
-});
+          function toggleMenu(button) {
+            const allMenus = document.querySelectorAll(".menu");
+            const overlay = document.getElementById("menuOverlay");
 
-// Submit form Add Topic
-document.getElementById("addTopicForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+            allMenus.forEach((menu) => {
+              if (!menu.contains(button)) menu.classList.add("hidden");
+            });
 
-  const name = document.getElementById("topicName").value.trim();
-  const description = document.getElementById("topicDescription").value.trim();
-  const picture = document.getElementById("topicPicture").value.trim();
+            const menu = button.nextElementSibling;
+            if (menu) {
+              const isHidden = menu.classList.contains("hidden");
+              menu.classList.toggle("hidden");
+              overlay.classList.toggle("hidden", !isHidden);
+            }
+          }
 
-  try {
-    const response = await fetch("/api/topicTeacher", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ name, description, picture }),
-    });
+          function openEditModal(id, name, description, picture) {
+            selectedTopicId = id;
+            document.getElementById("editTopicName").value = name;
+            document.getElementById("editTopicDescription").value = description;
+            document.getElementById("editTopicPicture").value = picture;
+            document.getElementById("editTopicPreviewImage").src = picture;
+            document
+              .getElementById("editTopicModal")
+              .classList.remove("hidden");
+          }
 
-    const result = await response.json();
-    if (!response.ok) throw new Error(result.error || "Failed to add topic");
+          document
+            .getElementById("editTopicForm")
+            .addEventListener("submit", async (e) => {
+              e.preventDefault();
+              const name = document
+                .getElementById("editTopicName")
+                .value.trim();
+              const description = document
+                .getElementById("editTopicDescription")
+                .value.trim();
+              const picture = document
+                .getElementById("editTopicPicture")
+                .value.trim();
 
-    document.getElementById("addTopicModal").classList.add("hidden");
-    location.reload();
-  } catch (err) {
-    alert(err.message);
-  }
-});
-</script>
+              try {
+                const res = await fetch(
+                  `/api/topicTeacher/${selectedTopicId}`,
+                  {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ name, description, picture }),
+                  }
+                );
 
+                const data = await res.json();
+                if (!res.ok)
+                  throw new Error(data.error || "Failed to update topic");
+
+                alert("Topic successfully deleted!");
+                window.location.reload();
+              } catch (err) {
+                alert(err.message);
+              }
+            });
+
+          document
+            .getElementById("cancelEditTopic")
+            .addEventListener("click", () => {
+              document.getElementById("editTopicModal").classList.add("hidden");
+              document.getElementById("editTopicForm").reset();
+            });
+
+          function confirmDelete(id) {
+            selectedTopicId = id;
+            document.getElementById("confirmModal").classList.remove("hidden");
+          }
+
+          document.getElementById("confirmNo").addEventListener("click", () => {
+            selectedTopicId = null;
+            document.getElementById("confirmModal").classList.add("hidden");
+          });
+
+          document
+            .getElementById("confirmYes")
+            .addEventListener("click", async () => {
+              if (!selectedTopicId) return;
+
+              try {
+                const res = await fetch(
+                  `/api/topicTeacher/${selectedTopicId}`,
+                  {
+                    method: "DELETE",
+                  }
+                );
+                const data = await res.json();
+                if (!res.ok)
+                  throw new Error(data.error || "Failed to delete topic");
+
+                alert("Topic successfully deleted!");
+                window.location.reload();
+              } catch (err) {
+                alert("Failed to delete topic.");
+              }
+            });
+
+          document
+            .getElementById("addTopicForm")
+            .addEventListener("submit", async (e) => {
+              e.preventDefault();
+              const name = document.getElementById("topicName").value.trim();
+              const description = document
+                .getElementById("topicDescription")
+                .value.trim();
+              const picture = document
+                .getElementById("topicPicture")
+                .value.trim();
+
+              try {
+                const res = await fetch("/api/topicTeacher", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ name, description, picture }),
+                });
+
+                const data = await res.json();
+                if (!res.ok)
+                  throw new Error(data.error || "Failed to add topic");
+
+                alert("Topic successfully added!");
+                window.location.reload();
+              } catch (err) {
+                alert("Failed to add topic.");
+              }
+            });
+
+          document
+            .getElementById("cancelAddTopic")
+            .addEventListener("click", () => {
+              document.getElementById("addTopicModal").classList.add("hidden");
+              document.getElementById("addTopicForm").reset();
+            });
+        </script>
       </main>
       <!-- Main Content End -->
     </div>
