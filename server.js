@@ -57,11 +57,27 @@ app.use('/api', my_schedule);
 app.use('/api', topicTeacher);
 
 
-// Student to
 app.get('/profile', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
 });
 
+app.get('/forgot-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/forgot-password/forgot-password.html'));
+});
+
+app.get('/check-email', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/forgot-password/check-email.html'));
+});
+
+app.get('/reset-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/forgot-password/reset-password.html'));
+});
+
+app.get('/success-password', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/forgot-password/success-password.html'));
+});
+
+// Student to
 app.get('/topic', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/topic.html'));
 });
@@ -70,9 +86,6 @@ app.get('/quiz', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/student/quiz.html'));
 });
 
-app.get('/forgot-password', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages/forgot-password/forgot-password.html'));
-});
 
 // Sidebar guru ke 
 // 1. Students
