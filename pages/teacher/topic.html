@@ -126,7 +126,7 @@
 
         <!-- Card Container -->
         <div
-          class="max-h-[480px] overflow-y-auto rounded-lg scroll-container p-2"
+          class="max-h-[520px] overflow-y-auto rounded-lg scroll-container p-2"
         >
           <div
             id="cardContainer"
@@ -193,7 +193,8 @@
               </div>
               <div>
                 <label for="topicDescription" class="block font-medium mb-1"
-                  >Description</label>
+                  >Description</label
+                >
                 <textarea
                   id="topicDescription"
                   name="topicDescription"
@@ -208,11 +209,12 @@
                   id="topicPreviewImage"
                   src="assets/topics/default.jpg"
                   alt="Preview Gambar"
-                  class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"/>
+                  class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"
+                />
                 <input type="hidden" id="topicPicture" name="picture" />
               </div>
 
-              <div class="flex justify-center gap-4 pt-3 ">
+              <div class="flex justify-center gap-4 pt-3">
                 <button
                   type="button"
                   id="cancelAddTopic"
@@ -239,6 +241,7 @@
           <div class="bg-white p-6 rounded-lg shadow-md w-full max-w-md">
             <h2 class="text-xl font-semibold mb-4 text-center">Edit Topic</h2>
             <form id="editTopicForm" class="space-y-4">
+              <!-- Topic Name -->
               <div>
                 <label for="editTopicName" class="block font-medium mb-1"
                   >Topic Name</label
@@ -251,6 +254,8 @@
                   class="w-full border border-gray-300 px-3 py-2 rounded"
                 />
               </div>
+
+              <!-- description -->
               <div>
                 <label for="editTopicDescription" class="block font-medium mb-1"
                   >Description</label
@@ -263,18 +268,51 @@
                 ></textarea>
               </div>
 
+              <!-- Preview Image -->
               <div>
-                <label class="block font-medium mb-1">Preview Gambar</label>
-                <img id="editTopicPreviewImage" src="assets/topics/default.jpg" alt="Preview Gambar"
-                  class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"/>
-                  <input type="hidden" id="editTopicPicture" name="editPicture" />
+                <label class="block font-medium mb-1">Image Preview</label>
+                <img
+                  id="editTopicPreviewImage"
+                  src="assets/topics/default.jpg"
+                  alt="Preview Gambar"
+                  class="w-full h-40 object-cover rounded-lg border border-gray-300 mb-2"
+                />
+                <input type="hidden" id="editTopicPicture" name="editPicture" />
               </div>
 
-              <div class="flex justify-end gap-4 pt-2">
-                <button type="button" id="cancelEditTopic" class="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded">Cancel</button>
+              <div>
+                <label for="editImageSearch" class="block font-reguler mb-1"
+                  >Search for a new image</label
+                >
+                <input
+                  type="text"
+                  id="editImageSearch"
+                  class="w-full border border-gray-300 px-3 py-2 rounded text-base"
+                  placeholder="Enter keyword for image"
+                />
+                <button
+                  type="button"
+                  id="fetchNewImage"
+                  class="w-full mt-2 bg-[#9FD3C7] text-[#000000] px-3 py-2 rounded hover:bg-[#57998A] text-left hover:text-white"
+                >
+                  Fetch New Image
+                </button>
+              </div>
+
+              <div class="flex justify-end gap-4 pt-4">
+                <button
+                  type="button"
+                  id="cancelEditTopic"
+                  class="w-[190px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
+                >
+                  Cancel
+                </button>
                 <button
                   type="submit"
-                  class="bg-[#67998D] hover:bg-[#4f7b70] text-white px-4 py-2 rounded">Update</button>
+                  class="w-[190px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white"
+                >
+                  Update
+                </button>
               </div>
             </form>
           </div>
@@ -290,10 +328,13 @@
               allMenus.forEach((menu) => menu.classList.add("hidden"));
             });
 
-          const UNSPLASH_ACCESS_KEY = "JMIdPmlrr-wQNmeRStnLgRNGUQ6k4yh4PCyn-ZTg3xc";
+          const UNSPLASH_ACCESS_KEY =
+            "JMIdPmlrr-wQNmeRStnLgRNGUQ6k4yh4PCyn-ZTg3xc";
 
           async function fetchUnsplashImage(query) {
-            const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(query)}&per_page=1&client_id=${UNSPLASH_ACCESS_KEY}`;
+            const url = `https://api.unsplash.com/search/photos?query=${encodeURIComponent(
+              query
+            )}&per_page=1&client_id=${UNSPLASH_ACCESS_KEY}`;
 
             try {
               const res = await fetch(url);
@@ -305,6 +346,25 @@
               return "assets/topics/default.jpg";
             }
           }
+
+          document
+            .getElementById("fetchNewImage")
+            .addEventListener("click", async () => {
+              const keyword = document
+                .getElementById("editImageSearch")
+                .value.trim();
+              if (keyword.length < 3) {
+                alert(
+                  "Please enter at least 3 characters to search for an image."
+                );
+                return;
+              }
+
+              const newImageUrl = await fetchUnsplashImage(keyword);
+              document.getElementById("editTopicPreviewImage").src =
+                newImageUrl;
+              document.getElementById("editTopicPicture").value = newImageUrl; // Update hidden input with new image URL
+            });
 
           let selectedTopicId = null;
 
@@ -325,28 +385,35 @@
 
             function renderTopics(topics, isSearching = false) {
               cardContainer.innerHTML = ""; // clear cards
-          
+
               if (topics.length === 0) {
-                  const emptyMsg = document.createElement("p");
-                  emptyMsg.className = "text-center text-gray-500 col-span-full";
-                  emptyMsg.textContent = "No topics found.";
-                  cardContainer.appendChild(emptyMsg);
-                  return;
+                const emptyMsg = document.createElement("p");
+                emptyMsg.className = "text-center text-gray-500 col-span-full";
+                emptyMsg.textContent = "No topics found.";
+                cardContainer.appendChild(emptyMsg);
+                return;
               }
-          
+
               topics.forEach((topic) => {
                 const card = document.createElement("div");
-                card.className = "bg-white rounded-3xl shadow p-3 w-full h-[320px] relative";
-            
+                card.className =
+                  "bg-white rounded-3xl shadow p-3 w-full h-[320px] relative";
+
                 // Tambahkan event listener untuk mengarahkan ke halaman quiz
                 card.onclick = () => {
-                    window.location.href = `/quiz.html?topicId=${topic.topic_id}`; // Ganti dengan URL halaman quiz Anda
+                  window.location.href = `/quiz.html?topicId=${topic.topic_id}`; // Ganti dengan URL halaman quiz Anda
                 };
-            
+
                 card.innerHTML = `
-                    <img src="${topic.picture}" alt="topic" class="rounded-2xl mb-3 w-full h-40 object-cover cursor-pointer hover:opacity-80 transition duration-200" onclick="event.stopPropagation(); window.location.href='/quiz.html?topicId=${topic.topic_id}'" />
+                    <img src="${
+                      topic.picture
+                    }" alt="topic" class="rounded-2xl mb-3 w-full h-40 object-cover cursor-pointer hover:opacity-80 transition duration-200" onclick="event.stopPropagation(); window.location.href='/quiz.html?topicId=${
+                  topic.topic_id
+                }'" />
                     <div class="flex justify-between items-start mt-4">
-                        <p class="text-sm text-gray-600 mb-2 line-clamp-2">${topic.description || "No description provided."}</p>
+                        <p class="text-sm text-gray-600 mb-2 line-clamp-2">${
+                          topic.description || "No description provided."
+                        }</p>
                         <div class="relative">
                             <button onclick="toggleMenu(this); event.stopPropagation();">
                                 <i class="bi bi-three-dots-vertical text-[#67998D] hover:text-black text-2xl font-bold"></i>
@@ -354,31 +421,39 @@
                             <div class="menu hidden absolute right-0 mt-2 rounded-xl shadow-md p-2 w-[170px] bg-white z-50 flex flex-col items-center">
                                 <h2 class="text-lg font-semibold mb-2 text-[#000000]">Action</h2>
                                 <div class="right-0 mt-2 w-full bg-[#FFF7D4] rounded whitespace-nowrap">
-                                    <button onclick="openEditModal('${topic.topic_id}', '${topic.name}', '${topic.description}', '${topic.picture}')" class="text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
+                                    <button onclick="openEditModal('${
+                                      topic.topic_id
+                                    }', '${topic.name}', '${
+                  topic.description
+                }', '${
+                  topic.picture
+                }'); event.stopPropagation();" class="text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
                                         <i class="bi bi-pencil-square mr-2"></i>Edit Topic
                                     </button>
                                 </div>
                                 <div class="right-0 mt-2 w-full whitespace-nowrap bg-[#FFE4E6] rounded">
-                                    <button onclick="confirmDelete('${topic.topic_id}')" class="text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
+                                    <button onclick="confirmDelete('${
+                                      topic.topic_id
+                                    }'); event.stopPropagation();" class="text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
                                         <i class="bi bi-trash3-fill mr-2"></i>Delete Topic
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-[#67998D]">${topic.name}</h2>
+                    <h2 class="text-xl font-bold text-[#67998D]">${
+                      topic.name
+                    }</h2>
                 `;
-            
+
                 cardContainer.appendChild(card);
-            });
-            
-          
+              });
+
               // Tambahkan Add Topic card hanya jika bukan sedang mencari
               if (!isSearching) {
-                  cardContainer.appendChild(renderAddCard());
+                cardContainer.appendChild(renderAddCard());
               }
-          }
-          
+            }
 
             function renderAddCard() {
               const addCard = document.createElement("div");
@@ -556,17 +631,21 @@
               document.getElementById("addTopicForm").reset();
             });
 
-            document.getElementById("editTopicName").addEventListener("input", async (e) => {
+          document
+            .getElementById("editTopicName")
+            .addEventListener("input", async (e) => {
               const title = e.target.value.trim();
               if (title.length < 3) return;
-            
+
               const imageUrl = await fetchUnsplashImage(title);
               document.getElementById("editTopicPreviewImage").src = imageUrl;
               document.getElementById("editTopicPicture").value = imageUrl;
             });
         </script>
-      </main><!-- Main Content End -->
-    </div><!-- KOTAKAN UTAMA SMUA end -->
+      </main>
+      <!-- Main Content End -->
+    </div>
+    <!-- KOTAKAN UTAMA SMUA end -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
