@@ -56,7 +56,7 @@ app.use('/api', paymentRouter);
 app.use('/api', free_schedule); 
 app.use('/api', my_schedule);
 app.use('/api', topicTeacher);
-app.use('/api', quizTeacherTeacher);
+app.use('/api', quizTeacher);
 
 
 app.get('/profile', (req, res) => {
