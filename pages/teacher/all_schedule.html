@@ -50,7 +50,7 @@
           <nav class="flex flex-col gap-5 text-sm">
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
+              href="/dashboard/teacher"
             >
               <i class="bi bi-grid-1x2"></i>
               <span class="title">Dashboard</span>
@@ -65,7 +65,7 @@
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
               href="/teacher/students"
             >
-              <i class="bi bi-people-fill"></i>
+              <i class="bi bi-people"></i>
               <span class="title">Students</span>
             </a>
 
@@ -154,33 +154,17 @@
         <div>
           <!-- Schedule Table -->
           <div
-            class="max-h-[492px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md"
-          >
+            class="max-h-[492px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
             <table class="min-w-full text-sm text-left">
               <thead class="bg-[#1F2A44] text-white">
                 <tr>
-                  <th
-                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                  >
-                    Day
-                  </th>
-                  <th
-                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                  >
-                    Time
-                  </th>
-                  <th
-                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                  >
-                    Teacher
-                  </th>
-                  <th
-                    class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                  >
-                    Student
-                  </th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Day</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Time</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Teacher</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Student</th>
                 </tr>
               </thead>
+
               <tbody id="scheduleTableBody" class="text-gray-700">
                 <!-- Data jadwal di sini -->
               </tbody>
@@ -191,8 +175,7 @@
 
         <script>
           document.addEventListener("DOMContentLoaded", () => {
-            fetch("/api/all_schedule")
-              .then((response) => {
+            fetch("/api/all_schedule").then((response) => {
                 if (!response.ok) {
                   throw new Error("Gagal mengambil data jadwal");
                 }
