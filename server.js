@@ -5,6 +5,7 @@ import bcrypt from 'bcrypt';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { devNull } from 'os';
+import dotenv from 'dotenv';
 import session from 'express-session';
 import authRoutes from './routes/authRoutes.js'
 import dashboard from './routes/dashboard.js'
@@ -21,7 +22,6 @@ import free_schedule from './routes/teacher/free_schedule.js';
 import my_schedule from './routes/teacher/my_schedule.js';
 import topicTeacher from './routes/teacher/topic.js';
 import quizTeacher from './routes/teacher/quiz.js';
-import dotenv from 'dotenv';
 import forgotPasswordRouter from './routes/forgot-password/forgot-password.js';
 import resetPasswordRouter from './routes/forgot-password/reset-password.js';
 
