@@ -20,6 +20,7 @@ import paymentRouter from './routes/teacher/payment.js';
 import free_schedule from './routes/teacher/free_schedule.js';
 import my_schedule from './routes/teacher/my_schedule.js';
 import topicTeacher from './routes/teacher/topic.js';
+import quizTeacher from './routes/teacher/quiz.js';
 import dotenv from 'dotenv';
 import forgotPasswordRouter from './routes/forgot-password/forgot-password.js';
 import resetPasswordRouter from './routes/forgot-password/reset-password.js';
@@ -60,6 +61,7 @@ app.use('/api', paymentRouter);
 app.use('/api', free_schedule); 
 app.use('/api', my_schedule);
 app.use('/api', topicTeacher);
+app.use('/api', quizTeacher);
 app.use('/api', forgotPasswordRouter);
 app.use('/', resetPasswordRouter);
 
@@ -117,6 +119,10 @@ app.get('/my_schedule', (req, res) => {
 // 3. Topic
 app.get('/topicTeacher', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/teacher/topic.html'));
+});
+
+app.get('/quizTeacher', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/teacher/quiz.html'));
 });
 
 // 4. Payments
