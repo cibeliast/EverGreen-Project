@@ -56,7 +56,7 @@
               <span class="title">Dashboard</span>
             </a>
 
-            <a class="flex items-center gap-3 text-[#9FD3C7]" href="">
+            <a class="flex items-center gap-3 text-[#ffffff]" href="/all_schedule">
               <i class="bi bi-calendar3"></i>
               <span class="title">Schedules</span>
             </a>
@@ -70,10 +70,10 @@
             </a>
 
             <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+              class="flex items-center gap-3 text-[#9FD3C7] hover:text-[#9FD3C7] transition-colors"
               href="/topicTeacher"
             >
-              <i class="bi bi-question-circle"></i>
+              <i class="bi bi-question-circle-fill"></i>
               <span class="title">Quizzes</span>
             </a>
 
@@ -117,38 +117,40 @@
       <main class="flex-1 flex flex-col gap-6 pt-8 pr-7">
         <!-- Main Judul -->
         <section>
-          <h2 class="text-3xl font-extrabold text-[#111827] mb-1">Schedules</h2>
-          <p class="text-sm text-[#6b7280]">
-            Create and manage your schedules and students.
+          <h2
+            id="topicTitle"
+            class="text-3xl font-extrabold text-[#111827] mb-1"
+          >
+            Loading Quiz..
+          </h2>
+          <p id="topicDescription" class="text-sm text-[#6b7280]">
+            Organize and assign vocabulary quizzes to enhance student learning.
           </p>
         </section>
 
-        <!-- Navigasi All Schedule & My Schedule -->
-        <nav class="flex space-x-6 border-b border-gray-300 select-none">
-          <a
-            aria-current="page"
-            class="text-[#67998D] font-semibold border-b-2 border-[#67998D] pb-1 text-md"
-            href="#"
-            >All schedule
-          </a>
-          <a class="text-[#7D7B7B] font-normal pb-1 text-md" href="/my_schedule"
-            >My schedule
-          </a>
-        </nav>
+        <hr />
 
         <!-- Button All Quiz & Action Start -->
         <div class="flex justify-end items-center">
           <div class="flex justify-between items-center gap-3">
             <a id="add-Btn">
-              <button class="whitespace-nowrap text-[#FFFFFF] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] hover:text-[#000000] transition transition-all duration-300"><i class="bi bi-plus-lg mr-2"></i>Add Quiz</button>
+              <button
+                class="whitespace-nowrap text-[#FFFFFF] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] hover:text-[#000000] transition transition-all duration-300"
+              >
+                <i class="bi bi-plus-lg mr-2"></i>Add Quiz
+              </button>
             </a>
 
-            <a href="/booked_schedule" id="edit-Btn">
-              <button class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#CEE8E2] rounded-lg font-medium hover:bg-[#9FD3C7] transition transition-all duration-300"><i class="bi bi-pencil-square mr-2"></i>Action</button>
+            <a href="" id="edit-Btn">
+              <button
+                class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#CEE8E2] rounded-lg font-medium hover:bg-[#9FD3C7] transition transition-all duration-300"
+              >
+                <i class="bi bi-pencil-square mr-2"></i>Action
+              </button>
             </a>
           </div>
-
-        </div> <!-- Button All Quiz & Action End -->
+        </div>
+        <!-- Button All Quiz & Action End -->
 
         <!-- Jadwal -->
         <div>
@@ -164,103 +166,181 @@
                 </tr>
               </thead>
 
-              <tbody id="scheduleTableBody" class="text-gray-700">
+              <tbody id="quizTableBody" class="text-gray-700">
                 <!-- Data jadwal di sini -->
-                <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">1</td>
-                    <td class="py-3 px-6">Exercise 1</td>
-                    <td class="py-3 px-6">Result 1</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">2</td>
-                    <td class="py-3 px-6">Exercise 2</td>
-                    <td class="py-3 px-6">Result 2</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">3</td>
-                    <td class="py-3 px-6">Exercise 3</td>
-                    <td class="py-3 px-6">Result 3</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">4</td>
-                    <td class="py-3 px-6">Exercise 4</td>
-                    <td class="py-3 px-6">Result 4</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
-                  <tr class="border-b border-gray-200">
-                    <td class="py-3 px-6">5</td>
-                    <td class="py-3 px-6">Exercise 5</td>
-                    <td class="py-3 px-6">Result 5</td>
-                  </tr>
               </tbody>
             </table>
           </div>
         </div>
         <!-- Jadwal End-->
 
+        <!-- Add Quiz Modal -->
+        <div
+          id="addQuizModal"
+          class="hidden fixed inset-0 bg-[#000000] bg-opacity-50 flex items-center justify-center z-20">
+          <div
+            class="bg-[#FFFFFF] p-8 rounded-2xl shadow-md text-center max-w-md w-full">
+            <h2 class="text-2xl mb-4 font-bold">Add Quiz Link</h2>
+            <form id="addQuizForm" class="space-y-4">
+              <!-- Quiz Link -->
+              <div>
+                <label for="addQuizName" class="block mb-1 text-left font-medium">Quiz Link (Google Form)</label>
+                <input type="text" id="addQuizName" name="addQuizName" required class="w-full border border-gray-300 px-3 py-2 rounded" placeholder="Form"/>
+              </div>
 
+              <!-- Result Link -->
+              <div>
+                <label for="addResultName" class="block mb-1 text-left font-medium">Result Link (Google Spreadsheet)</label>
+                <input type="text" id="addResultName" name="addResultName" required class="w-full border border-gray-300 px-3 py-2 rounded" placeholder="Spreadsheet"/>
+              </div>
+
+              <!-- Button -->
+              <div class="flex justify-end gap-4 pt-4">
+                <button type="button" id="cancelAddQuiz" class="w-[190px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition">Cancel</button>
+
+                <button type="submit" class="w-[190px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white">Add Quiz</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <!-- Edit Topic MOdal -->
+        <div id="editQuizModal" class="hidden fixed inset-0 bg-[#000000] bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-[#FFFFFF] p-6 rounded-lg shadow-md w-full max-w-md">
+            <h2 class="text-xl font-semibold mb-4 text-center">Edit Quiz Link</h2>
+            <form action="editQuizForm" class="space-y-4">
+              <!-- Quiz Link -->
+              <div>
+                <label for="editQuizName" class="block font-medium mb-1">Quiz Link (Google Form)</label>
+                <input type="text" id="editQuizName" name="editQuizName" required class="w-full border border-gray-300 px-3 py-2 rounded"/>
+              </div>
+
+              <!-- Result Link -->
+              <div>
+                <label for="editResultName" class="block font-medium mb-1">Quiz Link (Google Form)</label>
+                <input type="text" id="editResultName"
+                  name="editResultName" required class="w-full border border-gray-300 px-3 py-2 rounded"/>
+              </div>
+
+              <!-- Button -->
+              <div class="flex justify-end gap-4 pt-4">
+                <button type="button" id="cancelEditQuiz" class="w-[190px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition">Cancel</button>
+
+                <button type="submit" class="w-[190px] bg-[#9FD3C7] border-2 border-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white">Update</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <script>
+          document.addEventListener("DOMContentLoaded", () => {
+            const getParam = (param) => new URLSearchParams(location.search).get(param);
+            const topicId = getParam("topic_id");
+        
+            const quizTable = document.getElementById("quizTableBody");
+            const topicTitle = document.getElementById("topicTitle");
+            //const topicDescription = document.getElementById("topicDescription");
+        
+            const addBtn = document.getElementById("add-Btn");
+            const addModal = document.getElementById("addQuizModal");
+            const cancelAdd = document.getElementById("cancelAddQuiz");
+            const addForm = document.getElementById("addQuizForm");
+        
+            // ==== 1. TAMPILKAN JUDUL & DESKRIPSI TOPIK ====
+            async function fetchTopicDetail() {
+              try {
+                const res = await fetch(`/api/topicTeacher/${topicId}`, {
+                  credentials: 'include'
+                });
+                const topic = await res.json();
+                topicTitle.textContent = topic.name || "Topic - Quiz";
+                //topicDescription.textContent = topic.topic_description || "No description available.";
+              } catch (err) {
+                console.error("Gagal fetch topik:", err);
+              }
+            }
+        
+            // ==== 2. TAMPILKAN DAFTAR QUIZ DARI DB ====
+            async function fetchQuizData() {
+              try {
+                const res = await fetch(`/api/quizTeacher?topic_id=${topicId}`, {
+                  credentials: 'include'
+                });
+                const data = await res.json();
+                quizTable.innerHTML = ""; // Kosongkan tabel
+        
+                if (data.length === 0) {
+                  quizTable.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">There is no quiz</td></tr>`;
+                  return;
+                }
+        
+                data.forEach((quiz, index) => {
+                  const row = document.createElement("tr");
+                  row.classList.add("border-t");
+                  row.innerHTML = `
+                    <td class="py-3 px-4">${index + 1}</td>
+                    <td class="py-3 px-4"><a href="${quiz.quiz_link}" target="_blank" class="text-blue-600 underline">Quiz Form ${index + 1}</a></td>
+                    <td class="py-3 px-4"><a href="${quiz.result_link}" target="_blank" class="text-green-600 underline">Result Sheet ${index + 1}</a></td>
+                  `;
+                  quizTable.appendChild(row);
+                });
+              } catch (err) {
+                console.error("Gagal fetch quiz:", err);
+              }
+            }
+        
+            // ==== 3. MODAL TAMBAH QUIZ ====
+            addBtn.addEventListener("click", () => addModal.classList.remove("hidden"));
+            cancelAdd.addEventListener("click", () => {
+              addModal.classList.add("hidden");
+              addForm.reset();
+            });
+        
+            // ==== 4. SIMPAN QUIZ KE DB ====
+            addForm.addEventListener("submit", async (e) => {
+              e.preventDefault();
+              const quizLink = document.getElementById("addQuizName").value.trim();
+              const resultLink = document.getElementById("addResultName").value.trim();
+              if (!quizLink || !resultLink) return alert("Mohon isi semua field.");
+        
+              try {
+                const res = await fetch('/api/quizTeacher', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                  },
+                  credentials: 'include',
+                  body: JSON.stringify({ quizLink, resultLink, topicId })
+                });
+        
+                const data = await res.json();
+                if (data.success) {
+                  await fetchQuizData(); // Refresh table
+                  alert("Quiz successfully added!");
+                  addForm.reset();
+                  addModal.classList.add("hidden");
+                } else {
+                  alert("❌ Gagal menyimpan quiz.");
+                }
+              } catch (err) {
+                console.error("DETAIL ERROR:", err);
+                alert("❌ Terjadi kesalahan saat menyimpan.");
+              }
+            });
+        
+            // ==== 5. LOAD SAAT PERTAMA KALI ====
+            fetchTopicDetail();
+            fetchQuizData();
+          });
+        </script>
+        
+        
+        
         
       </main>
       <!-- Main Content End -->
     </div>
     <!-- KOTAKAN UTAMA SMUA end -->
-
-    
-      
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
