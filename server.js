@@ -20,6 +20,11 @@ import paymentRouter from './routes/teacher/payment.js';
 import free_schedule from './routes/teacher/free_schedule.js';
 import my_schedule from './routes/teacher/my_schedule.js';
 import topicTeacher from './routes/teacher/topic.js';
+import dotenv from 'dotenv';
+import forgotPasswordRouter from './routes/forgot-password/forgot-password.js';
+import resetPasswordRouter from './routes/forgot-password/reset-password.js';
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -55,6 +60,8 @@ app.use('/api', paymentRouter);
 app.use('/api', free_schedule); 
 app.use('/api', my_schedule);
 app.use('/api', topicTeacher);
+app.use('/api', forgotPasswordRouter);
+app.use('/', resetPasswordRouter);
 
 
 app.get('/profile', (req, res) => {
@@ -67,10 +74,6 @@ app.get('/forgot-password', (req, res) => {
 
 app.get('/check-email', (req, res) => {
   res.sendFile(path.join(__dirname, 'pages/forgot-password/check-email.html'));
-});
-
-app.get('/reset-password', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages/forgot-password/reset-password.html'));
 });
 
 app.get('/success-password', (req, res) => {
