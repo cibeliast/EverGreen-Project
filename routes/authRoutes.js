@@ -102,6 +102,8 @@ router.post ('/login', (req, res) => {
         req.session.username = user.username;
         req.session.role = role;
         req.session.folderRole = role.slice(0, -1);
+
+        console.log("Session setelah login:", req.session);
         
         return res.redirect('/dashboard');
     });
