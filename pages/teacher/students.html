@@ -362,30 +362,53 @@
           document
             .getElementById("confirmYes")
             .addEventListener("click", async () => {
-              if (selectedStudentId) {
-                try {
-                  const response = await fetch(
-                    `/api/students/${selectedStudentId}`,
-                    {
-                      method: "DELETE",
-                    }
-                  );
-                  if (!response.ok) {
-                    throw new Error("Failed to delete student");
-                  }
+              if (!selectedStudentId) return;
+
+              fetch (`/teacher/students/${selectedStudentId}`, {
+                method: "DELETE",
+              })
+                .then(response => {
+                  if (!response.ok) throw new Error("Failed delete student");
+                  return response.json();
+                })
+                .then(() => {
                   alert("Data siswa berhasil dihapus.");
                   location.reload();
-                } catch (error) {
-                  console.error("Error deleting student:", error);
+                })
+                .catch(err => {
+                  console.error("Error deleting student:", err);
                   alert("Gagal menghapus data siswa.");
-                } finally {
-                  document
-                    .getElementById("confirmModal")
-                    .classList.add("hidden");
+                })
+                .finally(() => {
+                  document.getElementById("confirmModal").classList.add("hidden");
                   document.body.classList.remove("modal-open");
                   selectedStudentId = null;
-                }
-              }
+                });
+              // if (selectedStudentId) {
+              //   try {
+              //     console.log('Selected student from HTML: ', selectedStudentId)
+              //     const response = await fetch(
+              //       `/api/students/${selectedStudentId}`,
+              //       {
+              //         method: "DELETE",
+              //       }
+              //     );
+              //     if (!response.ok) {
+              //       throw new Error("Failed to delete student");
+              //     }
+              //     alert("Data siswa berhasil dihapus.");
+              //     location.reload();
+              //   } catch (error) {
+              //     console.error("Error deleting student:", error);
+              //     alert("Gagal menghapus data siswa.");
+              //   } finally {
+              //     document
+              //       .getElementById("confirmModal")
+              //       .classList.add("hidden");
+              //     document.body.classList.remove("modal-open");
+              //     selectedStudentId = null;
+              //   }
+              // }
             });
 
           document.getElementById("confirmNo").addEventListener("click", () => {

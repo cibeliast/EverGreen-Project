@@ -21,7 +21,7 @@ router.get('/api/students', (req, res) => {
 });
 
 // Endpoint hapus data siswa berdasarkan ID
-router.delete('/api/students/:id', (req, res) => {
+router.delete('/students/:id', (req, res) => {
     const selectedStudentId = req.params.id;
 
     // Optional: validasi session
