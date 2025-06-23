@@ -421,30 +421,22 @@
                             </button>
                             <div class="menu hidden absolute right-0 mt-2 rounded-xl shadow-md p-2 w-[170px] bg-white z-50 flex flex-col items-center">
                                 <h2 class="text-lg font-semibold mb-2 text-[#000000]">Action</h2>
+
                                 <div class="right-0 mt-2 w-full bg-[#FFF7D4] rounded whitespace-nowrap">
-                                    <button onclick="openEditModal('${
-                                      topic.topic_id
-                                    }', '${topic.name}', '${
-                  topic.description
-                }', '${
-                  topic.picture
-                }'); event.stopPropagation();" class="text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
+                                    <button onclick="openEditModal('${topic.topic_id}', '${topic.name}', '${topic.description}', '${topic.picture}'); event.stopPropagation();" class="text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
                                         <i class="bi bi-pencil-square mr-2"></i>Edit Topic
                                     </button>
                                 </div>
+                                
                                 <div class="right-0 mt-2 w-full whitespace-nowrap bg-[#FFE4E6] rounded">
-                                    <button onclick="confirmDelete('${
-                                      topic.topic_id
-                                    }'); event.stopPropagation();" class="text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
+                                    <button onclick="confirmDelete('${topic.topic_id}'); event.stopPropagation();" class="text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
                                         <i class="bi bi-trash3-fill mr-2"></i>Delete Topic
                                     </button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h2 class="text-xl font-bold text-[#67998D]">${
-                      topic.name
-                    }</h2>
+                    <h2 class="text-xl font-bold text-[#67998D]">${topic.name}</h2>
                 `;
 
                 cardContainer.appendChild(card);
