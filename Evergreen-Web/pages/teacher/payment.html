@@ -1,0 +1,874 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <title>Payment History</title>
+
+      <!-- Tailwind CSS-->
+      <script src="https://cdn.tailwindcss.com"></script>
+
+      <!-- Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com" />
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+      <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet"
+      />
+
+      <!-- BS + BS Icons -->
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+      />
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+        rel="stylesheet"
+      />
+
+      <!-- EXPORT PDF -->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    </head>
+
+    <body class="bg-[#F9FAFB] min-h-screen p-4">
+      <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row gap-10">
+        <!-- KOTAKAN UTAMA SMUA -->
+        <!-- Sidebar Start -->
+        <nav
+          class="bg-[#1F2A44] rounded-xl w-full md:w-60 flex flex-col justify-between p-6 text-[#a3c0d9] h-[calc(100vh-3rem)]"
+        >
+          <!-- Nav Atas Start-->
+          <!-- LOGO -->
+          <div>
+            <a
+              id="brandTitle"
+              class="text-white d-block font-extrabold text-lg mb-4 mt-2 text-center"
+              href=""
+            >
+              <span>EverGreen</span>
+            </a>
+
+            <hr class="border-[#ffffff] mb-5" />
+
+            <nav class="flex flex-col gap-5 text-sm">
+              <a
+                class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+                href="/dashboard/teacher"
+              >
+                <i class="bi bi-grid-1x2"></i>
+                <span class="title">Dashboard</span>
+              </a>
+
+              <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="/all_schedule">
+                <i class="bi bi-calendar3"></i>
+                <span class="title">Schedules</span>
+              </a>
+
+              <a
+                class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+                href="/teacher/students"
+              >
+                <i class="bi bi-people"></i>
+                <span class="title">Students</span>
+              </a>
+
+              <a
+                class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+                href="/topicTeacher"
+              >
+                <i class="bi bi-question-circle"></i>
+                <span class="title">Quizzes</span>
+              </a>
+
+              <a
+                class="flex items-center gap-3 text-[#9FD3C7]"
+                href=""
+              >
+                <i class="bi bi-credit-card-2-back-fill"></i>
+                <span class="title">Payment History</span>
+              </a>
+            </nav>
+          </div>
+          <!-- Nav Atas End-->
+
+          <div>
+            <!-- Nav Bawah Start-->
+            <hr class="border-[#ffffff] mb-6" />
+            <nav class="flex flex-col gap-5 text-sm font-semibold text-[#a3c0d9]">
+              <a
+                class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+                href="#"
+              >
+                <i class="bi bi-person-circle"></i>
+                <span class="title">Profile</span>
+              </a>
+
+              <a
+                class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+                href="#"
+              >
+                <i class="bi bi-box-arrow-right"></i>
+                <span class="title">Log out</span>
+              </a>
+            </nav>
+          </div>
+          <!-- Nav bawah End-->
+        </nav>
+        <!-- Sidebar End -->
+
+        <!-- Main Content Start -->
+        <main class="flex-1 flex flex-col gap-6 pt-8 pr-7">
+          <!-- Main Judul -->
+          <section>
+            <h2 class="text-3xl font-extrabold text-[#111827] mb-1">Payment History</h2>
+            <p class="text-sm text-[#6b7280]">
+              View and monitor student payment statuses at a glance.
+            </p>
+          </section>
+          
+          <hr/>
+
+          <div class="total-income bg-[#C6E8D7] p-4 rounded-3xl space-y-3">
+            <p class="flex items-center">
+              <i class="bi bi-cash-coin mr-2 text-[#48796D]"></i>Your Income (April 2025)
+            </p>
+            <div class="flex flex-col items-center gap-2">
+              <h2 class="text-3xl font-extrabold text-[#111827] mb-1">Rp5.000.000</h2>
+              <p class="text-sm">70 lessons, 15 students</p>
+            </div>
+          </div>
+
+          <!-- All Payment & Edit Button -->
+          <div class="flex justify-between items-center">
+            <p>Export to: <a href="#" onclick="exportTableToPdf()" title="Export to PDF"><i class="bi bi-filetype-pdf"></i></a><a href=""onclick="exportTableToCsv()" title="Export to CSV"><i class="bi bi-filetype-csv"></i></a></p>
+
+            <div class="flex gap-2">
+              <button
+                onclick="openPaymentModal()"
+                class="text-[#FFFFFF] hover:text-[#000000] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] transition"
+              >
+                <i class="bi bi-plus-lg mr-2"></i>Add Payment
+              </button>
+
+              <button
+                id="editToggleBtn"
+                onclick="toggleEditMode()"
+                class="text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition"
+              >
+                <i class="bi bi-pencil-square mr-2"></i>Edit Payment
+              </button>
+              <button
+                id="deleteToggleBtn"
+                onclick="toggleDeleteMode()"
+                class="text-[#000000] px-3 py-2 text-center bg-[#FFE4E6] rounded-lg font-medium hover:bg-[#E2B0B5] transition"
+              >
+                <i class="bi bi-trash-fill mr-2"></i>Delete Payment
+              </button>
+            </div>
+          </div>
+
+          <!-- Jadwal -->
+          <div>
+            <!-- Payment Table -->
+            <div
+              class="max-h-[500px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md"
+            >
+              <table class="min-w-full text-sm text-left">
+                <thead class="bg-[#1F2A44] text-white">
+                  <tr>
+                    <th
+                      class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                    >
+                      No
+                    </th>
+                    <th
+                      class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                    >
+                      Student
+                    </th>
+                    <th
+                      class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                    >
+                      Total meetings
+                    </th>
+                    <th
+                      class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                    >
+                      Nominal
+                    </th>
+                    <th
+                      class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                    >
+                      Payment date
+                    </th>
+                    <th
+                      class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
+                    >
+                      Notes
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="paymentTableBody" class="text-gray-700">
+                  <!-- Data jadwal di sini -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- Jadwal End-->
+
+        </main>
+        <!-- Main Content End -->
+      </div>
+      <!-- KOTAKAN UTAMA SMUA end -->
+
+      <!-- Confirm Modal -->
+      <!-- Modal Tambah Pembayaran -->
+      <div
+        id="paymentModal"
+        class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden"
+      >
+        <div class="bg-white rounded-lg p-6 w-full max-w-md shadow-lg">
+          <h2 id="modalTitle" class="text-xl font-semibold mb-6 text-center">Add Payment History</h2>
+
+          <form id="paymentForm" class="space-y-4">
+            <!-- Tanggal -->
+            <div>
+              <label class="block mb-1 text-start">Date</label>
+              <input
+                id="dateInput"
+                type="date"
+                name="date"
+                class="w-full border rounded px-3 py-2"
+                required
+              />
+            </div>
+
+            <!-- Siswa -->
+            <div>
+              <label class="block mb-1 text-start">Student</label>
+              <select
+                id="studentSelect"
+                name="student_id"
+                class="w-full border rounded px-3 py-2"
+                required
+              >
+                <option value="">ID - Student</option>
+              </select>
+            </div>
+
+            <!-- Total & Nominal (dalam 1 baris) -->
+            <div class="flex gap-4">
+              <div class="w-1/2">
+                <label class="block mb-1 text-start">Total Meeting(s)</label>
+                <input
+                  type="number"
+                  name="total_meetings"
+                  id="totalMeetings"
+                  class="w-full border rounded px-3 py-2"
+                  required
+                />
+              </div>
+              <div class="w-1/2">
+                <label class="block mb-1 text-start">Nominal (Rp)</label>
+                <input
+                  type="number"
+                  name="nominal"
+                  id="nominalValue"
+                  class="w-full border rounded px-3 py-2 bg-gray-100"
+                  readonly
+                />
+              </div>
+            </div>
+
+            <!-- Tombol -->
+            <div class="flex justify-between gap-4 mt-4">
+              <button
+                type="button"
+                onclick="closePaymentModal()"
+                class="w-1/2 bg-white border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                id="submitBtn"
+                class="w-1/2 bg-[#9FD3C7] text-black px-4 py-2 rounded hover:bg-[#57998A] hover:text-white transition"
+              >
+                Save
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Modal Konfirm Delete -->
+        <div
+          id="confirmModal"
+          class="fixed inset-0 hidden bg-[#000000] bg-opacity-50 flex items-center justify-center z-50"
+        >
+          <div
+            class="bg-white p-6 rounded-lg shadow-md text-center max-w-sm w-full"
+          >
+            <h2 class="mb-4 text-xl font-semibold">Delete Payment</h2>
+            <p class="mb-3">Are you sure you want to delete this payment?</p>
+            <div class="flex justify-center gap-4">
+              <button
+                id="confirmNo"
+                class="w-[140px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
+              >
+                No
+              </button>
+
+              <button
+                id="confirmYes"
+                class="w-[140px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white"
+              >
+                Yes
+              </button>
+            </div>
+          </div>
+
+
+
+      <!-- JS -->
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+      <script>
+        let isEdit = false;
+        let currentEditId = null;
+        let deleteModeActive = false;
+        let selectedDeleteId = null;
+
+        function updateIncomeSummary(payments) {
+    const today = new Date();
+    const currentMonth = today.getMonth() + 1; // getMonth() is 0-indexed
+    const currentYear = today.getFullYear();
+
+    // Filter pembayaran untuk bulan dan tahun saat ini
+    const currentMonthPayments = payments.filter(payment => {
+        const paymentDate = new Date(payment.date);
+        return paymentDate.getMonth() + 1 === currentMonth && paymentDate.getFullYear() === currentYear;
+    });
+
+    let totalNominal = 0;
+    let totalLessons = 1;
+    const uniqueStudents = new Set(); // Menggunakan Set untuk menyimpan siswa unik
+
+    currentMonthPayments.forEach(payment => {
+        totalNominal += parseInt(payment.nominal);
+        totalLessons += payment.total_meetings;
+        uniqueStudents.add(payment.student_id); // Menambahkan ID siswa ke Set
+    });
+
+    // Format nominal ke Rupiah
+    const formattedNominal = totalNominal.toLocaleString("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0
+    });
+
+    // Update elemen HTML
+    document.querySelector(".total-income p:first-child").innerHTML = `
+        <i class="bi bi-cash-coin mr-2 text-[#48796D]"></i>Your Income (${today.toLocaleString('en-ID', { month: 'long', year: 'numeric' })})
+    `;
+    document.querySelector(".total-income h2").textContent = formattedNominal;
+    document.querySelector(".total-income p:last-child").textContent = `${totalLessons} lessons, ${uniqueStudents.size} students`;
+}
+
+
+        function fetchAndRenderPayments() {
+    fetch("/api/payment")
+        .then((response) => {
+            if (!response.ok) throw new Error("Gagal mengambil data jadwal");
+            return response.json();
+        })
+        .then((data) => {
+            const tbody = document.getElementById("paymentTableBody");
+            tbody.innerHTML = "";
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Belum ada data</td></tr>`;
+                updateIncomeSummary([]); // Panggil dengan array kosong jika tidak ada data
+                return;
+            }
+
+            data.sort((a, b) => new Date(a.date) - new Date(b.date));
+
+            data.forEach((item, index) => {
+                const row = document.createElement("tr");
+                row.classList.add("border-t");
+
+                const studentName = item.student_name || "Tidak diketahui";
+                const studentPhoto = item.student_photo;
+                const initials = studentName
+                    .split(" ")
+                    .map((n) => n[0])
+                    .join("")
+                    .toUpperCase();
+
+                const profileHTML = studentPhoto
+                    ? `<img alt="${studentName}" class="w-8 h-8 rounded-full object-cover" src="${studentPhoto}" />`
+                    : `<span class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center">${initials}</span>`;
+
+                const checkboxHTML = editModeActive
+                    ? `
+                        <input
+                            type="checkbox"
+                            onchange="handleCheckboxEdit(this)"
+                            data-payment-id="${item.payment_id}"
+                            data-student-id="${item.student_id}"
+                            data-total-meetings="${item.total_meetings}"
+                            data-nominal="${item.nominal}"
+                            data-date="${item.date}"
+                        />
+                      `
+                    : "";
+
+                row.innerHTML = `
+                    ${editModeActive || deleteModeActive ? `<td class="py-3 px-4 text-center">${editModeActive ? checkboxHTML : `<input type="checkbox" class="delete-checkbox" data-payment-id="${item.payment_id}">`}</td>` : ""}
+                    <td class="py-3 px-4 text-center">${index + 1}</td>
+                    <td class="py-3 px-4">
+                        <div class="flex items-center space-x-2">
+                            ${profileHTML}
+                            <span class="font-semibold text-gray-900">${studentName}</span>
+                        </div>
+                    </td>
+                    <td class="py-3 px-4 text-center">${item.total_meetings}</td>
+                    <td class="py-3 px-4 text-center">${item.nominal ? "Rp " + parseInt(item.nominal).toLocaleString("id-ID") : "-"}</td>
+                    <td class="py-3 px-4 text-center">${item.date}</td>
+                    <td class="py-3 px-4">${item.note || "-"}</td>
+                `;
+
+                row.dataset.paymentId = item.payment_id;
+                row.dataset.studentId = item.student_id;
+                row.dataset.totalMeetings = item.total_meetings;
+                row.dataset.nominal = item.nominal;
+                row.dataset.date = item.date;
+
+                tbody.appendChild(row);
+            });
+            // Panggil updateIncomeSummary setelah data tabel di-render
+            updateIncomeSummary(data);
+
+            // Pastikan mode edit/delete diatur setelah DOM diupdate
+            if (editModeActive) {
+                enableEditMode();
+            } else if (deleteModeActive) {
+                enableDeleteMode();
+            }
+        })
+        .catch((error) => {
+            console.error("Error:", error);
+            document.getElementById("paymentTableBody").innerHTML =
+                '<tr><td colspan="7" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
+            updateIncomeSummary([]); // Panggil dengan array kosong jika ada error
+        });
+}
+        // Handle form submit
+        document.getElementById("paymentForm").addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const formData = new FormData(this);
+          const payload = {
+            date: formData.get("date"),
+            student_id: formData.get("student_id"),
+            nominal: formData.get("nominal").replace(/\./g, "").replace(/,/g, ""),
+            total_meetings: formData.get("total_meetings"),
+          };
+
+          if (isEdit) {
+            payload.payment_id = currentEditId;
+          }
+
+          const url = isEdit ? `/api/payment/${currentEditId}` : "/api/add_payment";
+          const method = isEdit ? "PUT" : "POST";
+
+          fetch(url, {
+            method,
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(payload),
+          })
+            .then((res) => {
+              if (!res.ok) throw new Error("Gagal simpan data");
+              return res.json();
+            })
+            .then(() => {
+              alert(isEdit ? "Data berhasil diubah!" : "Payment berhasil ditambahkan!");
+              closePaymentModal();
+              this.reset();
+              document.getElementById("nominalValue").value = "";
+              isEdit = false;
+              currentEditId = null;
+              editModeActive = false;
+              const btn = document.getElementById("editToggleBtn");
+              btn.classList.add("bg-[#FFF7D4]");
+              btn.classList.remove("bg-[#E6D99F]");
+              btn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Payment';
+              fetchAndRenderPayments();
+            })
+            .catch((err) => {
+              console.error(err);
+              alert("Terjadi kesalahan.");
+            });
+        });
+
+        function handleCheckboxEdit(checkbox) {
+          if (checkbox.checked) {
+            showEditModal({
+              id: checkbox.dataset.id,
+              studentId: checkbox.dataset.studentId,
+              totalMeetings: checkbox.dataset.totalMeetings,
+              nominal: checkbox.dataset.nominal,
+              date: checkbox.dataset.date,
+            });
+          }
+        }
+
+        // Isi form untuk mode edit
+        function showEditModal({ studentId, totalMeetings, nominal, date, id }) {
+          console.log("SHOW EDIT MODAL DIPANGGIL");
+          console.log({ studentId, totalMeetings, nominal, date, id });
+          isEdit = true;
+          currentEditId = id;
+
+          document.getElementById("studentSelect").value = studentId;
+          document.getElementById("totalMeetings").value = totalMeetings;
+          document.getElementById("nominalValue").value = parseInt(nominal).toLocaleString("id-ID");
+          document.getElementById("dateInput").value = date;
+
+          document.getElementById("modalTitle").textContent = "Edit Payment";
+          document.getElementById("submitBtn").textContent = "Update";
+          openPaymentModal();
+        }
+
+        // Modal open/close
+        function openPaymentModal() {
+          document.getElementById("paymentModal").classList.remove("hidden");
+        }
+
+        function closePaymentModal() {
+          document.getElementById("paymentModal").classList.add("hidden");
+          document.getElementById("modalTitle").textContent = "Tambah Payment";
+          document.getElementById("submitBtn").textContent = "Tambah";
+          isEdit = false;
+          currentEditId = null;
+        }
+
+        // Enable edit mode
+        function enableEditMode() {
+          const tableBody = document.getElementById("paymentTableBody");
+          const rows = tableBody.querySelectorAll("tr");
+
+          if (tableBody.querySelector("td input[type='checkbox']")) return;
+
+          rows.forEach((row) => {
+            const checkboxCell = document.createElement("td");
+            checkboxCell.classList.add("py-3", "px-4", "text-center");
+            checkboxCell.innerHTML = `<input type="checkbox" class="edit-checkbox">`;
+            row.prepend(checkboxCell);
+          });
+
+          const theadRow = document.querySelector("thead tr");
+          if (theadRow) {
+            const th = document.createElement("th");
+            th.classList.add("py-3", "px-4", "font-semibold", "sticky", "top-0", "bg-[#1F2A44]", "z-10", "edit-checkbox-header");
+            theadRow.prepend(th);
+          }
+
+          document.querySelectorAll(".edit-checkbox").forEach((checkbox) => {
+            checkbox.addEventListener("change", function () {
+              const checked = document.querySelectorAll(".edit-checkbox:checked");
+              if (checked.length === 1) {
+                const row = checked[0].closest("tr");
+
+                const id = row.dataset.paymentId;
+                const studentId = row.dataset.studentId;
+                const totalMeetings = row.dataset.totalMeetings;
+                const nominal = row.dataset.nominal;
+                const date = row.dataset.date;
+
+
+                showEditModal({ studentId, totalMeetings, nominal, date, id });
+              }
+            });
+          });
+        }
+
+        function disableEditMode() {
+          document.querySelectorAll(".edit-checkbox").forEach(cb => cb.closest("td").remove());
+          const headerCheckbox = document.querySelector(".edit-checkbox-header");
+          if (headerCheckbox) headerCheckbox.remove();
+        }
+
+        // Hitung nominal otomatis
+        document.getElementById("totalMeetings").addEventListener("input", function () {
+          const total = parseInt(this.value) || 0;
+          document.getElementById("nominalValue").value = (total * 50000).toLocaleString("id-ID");
+        });
+
+        // Edit toggle
+        let editModeActive = false;
+        function toggleEditMode() {
+          const btn = document.getElementById("editToggleBtn");
+          if (!editModeActive) {
+            enableEditMode();
+            btn.classList.add("bg-[#E6D99F]");
+            btn.classList.remove("bg-[#FFF7D4]");
+            btn.innerHTML = '<i class="bi bi-x-circle mr-2"></i>Cancel Edit';
+          } else {
+            disableEditMode();
+            btn.classList.add("bg-[#FFF7D4]");
+            btn.classList.remove("bg-[#E6D99F]");
+            btn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Payment';
+          }
+          editModeActive = !editModeActive;
+        }
+
+        // DOM ready
+        document.addEventListener("DOMContentLoaded", () => {
+          fetchAndRenderPayments();
+          fetch("/api/booked_schedule")
+            .then((res) => res.json())
+            .then((data) => {
+              const select = document.getElementById("studentSelect");
+              const map = new Map();
+              data.forEach((e) => {
+                if (e.student_id && !map.has(e.student_id)) {
+                  map.set(e.student_id, e.student_name);
+                }
+              });
+              map.forEach((name, id) => {
+                const option = document.createElement("option");
+                option.value = id;
+                option.textContent = `${id} - ${name}`;
+                select.appendChild(option);
+              });
+            });
+        });
+      
+        function toggleDeleteMode() {
+          const btn = document.getElementById("deleteToggleBtn");
+
+          if (!deleteModeActive) {
+            enableDeleteMode();
+            btn.classList.add("bg-[#E2B0B5]");
+            btn.classList.remove("bg-[#FFE4E6]");
+            btn.innerHTML = '<i class="bi bi-x-circle mr-2"></i>Cancel Delete';
+          } else {
+            disableDeleteMode();
+            btn.classList.remove("bg-[#E2B0B5]");
+            btn.classList.add("bg-[#FFE4E6]");
+            btn.innerHTML = '<i class="bi bi-trash-fill mr-2"></i>Delete Payment';
+          }
+
+          deleteModeActive = !deleteModeActive;
+        }
+
+        function enableDeleteMode() {
+          const tableBody = document.getElementById("paymentTableBody");
+          const rows = tableBody.querySelectorAll("tr");
+
+          if (tableBody.querySelector("td input[type='checkbox'].delete-checkbox")) return;
+
+          rows.forEach((row) => {
+            const checkboxCell = document.createElement("td");
+            checkboxCell.classList.add("py-3", "px-4", "text-center");
+            checkboxCell.innerHTML = `<input type="checkbox" class="delete-checkbox">`;
+            row.prepend(checkboxCell);
+          });
+
+          const theadRow = document.querySelector("thead tr");
+          if (theadRow) {
+            const th = document.createElement("th");
+            th.classList.add("py-3", "px-4", "font-semibold", "sticky", "top-0", "bg-[#1F2A44]", "z-10", "delete-checkbox-header");
+            theadRow.prepend(th);
+          }
+
+          document.querySelectorAll(".delete-checkbox").forEach((checkbox) => {
+            checkbox.addEventListener("change", function () {
+              const checked = document.querySelectorAll(".delete-checkbox:checked");
+              if (checked.length === 1) {
+                const row = checked[0].closest("tr");
+                selectedDeleteId = row.dataset.paymentId;
+                showConfirmModal();
+              }
+            });
+          });
+        }
+
+        function disableDeleteMode() {
+          document.querySelectorAll(".delete-checkbox").forEach(cb => cb.closest("td").remove());
+          const headerCheckbox = document.querySelector(".delete-checkbox-header");
+          if (headerCheckbox) headerCheckbox.remove();
+          selectedDeleteId = null;
+        }
+
+        function showConfirmModal() {
+          document.getElementById("confirmModal").classList.remove("hidden");
+        }
+
+        function closeConfirmModal() {
+          document.getElementById("confirmModal").classList.add("hidden");
+        }
+
+        document.getElementById("confirmNo").addEventListener("click", () => {
+          closeConfirmModal();
+          document.querySelectorAll(".delete-checkbox:checked").forEach(cb => cb.checked = false);
+        });
+
+        document.getElementById("confirmYes").addEventListener("click", () => {
+          if (!selectedDeleteId) return;
+
+          fetch(`/api/payment/${selectedDeleteId}`, {
+            method: "DELETE",
+          })
+            .then(res => {
+              if (!res.ok) throw new Error("Gagal hapus data");
+              return res.json();
+            })
+            .then(() => {
+              alert("Payment berhasil dihapus!");
+              closeConfirmModal();
+              fetchAndRenderPayments();
+              toggleDeleteMode(); // reset mode
+            })
+            .catch(err => {
+              console.error(err);
+              alert("Gagal menghapus payment.");
+            });
+        });
+
+        function exportTableToPdf() {
+    const { jsPDF } = window.jspdf; // Mendapatkan jsPDF dari window
+
+    const input = document.getElementById('paymentTableBody').closest('table'); // Targetkan elemen tabel
+    const filename = `Payment_History_${new Date().toLocaleDateString('id-ID')}.pdf`;
+
+    html2canvas(input, {
+        scale: 2, // Meningkatkan skala untuk kualitas gambar yang lebih baik
+        useCORS: true // Penting jika ada gambar (seperti foto siswa) dari domain lain
+    }).then(canvas => {
+        const imgData = canvas.toDataURL('image/png'); // Konversi canvas menjadi data URL gambar
+        const pdf = new jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for A4 size
+
+        const imgWidth = 200; // Lebar gambar di PDF (sesuaikan)
+        const pageHeight = pdf.internal.pageSize.height;
+        const imgHeight = canvas.height * imgWidth / canvas.width;
+        let heightLeft = imgHeight;
+        let position = 0; // Posisi vertikal di halaman PDF
+
+        pdf.addImage(imgData, 'PNG', 5, position, imgWidth, imgHeight); // Tambahkan gambar ke PDF
+        heightLeft -= pageHeight;
+
+        while (heightLeft >= 0) {
+            position = heightLeft - imgHeight;
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 5, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+        }
+
+        pdf.save(filename); // Unduh file PDF
+    }).catch(error => {
+        console.error("Error exporting to PDF:", error);
+        alert("Gagal mengekspor tabel ke PDF. Periksa konsol untuk detailnya.");
+    });
+}
+
+function exportTableToCsv() {
+    const table = document.getElementById('paymentTableBody').closest('table');
+    if (!table) {
+        alert("Tabel pembayaran tidak ditemukan!");
+        return;
+    }
+
+    const rows = table.querySelectorAll('tr'); // Dapatkan semua baris (header dan body)
+    let csvContent = "data:text/csv;charset=utf-8,"; // Tipe data dan encoding
+
+    // Dapatkan header tabel
+    const headerCells = table.querySelector('thead tr').querySelectorAll('th');
+    const header = Array.from(headerCells)
+                        .filter(th => !th.classList.contains('edit-checkbox-header') && !th.classList.contains('delete-checkbox-header')) // Filter header checkbox
+                        .map(th => `"${th.textContent.trim()}"`)
+                        .join(',');
+    csvContent += header + "\r\n"; // Tambahkan header ke CSV
+
+    // Dapatkan data dari body tabel
+    rows.forEach(row => {
+        // Lewati baris yang tidak memiliki data (misal: "Belum ada data")
+        if (row.children.length <= 1) { // Jika hanya ada 1 kolom (misal "No") atau kurang, kemungkinan itu bukan data
+            return;
+        }
+
+        // Ambil sel dari setiap baris, filter sel checkbox jika ada
+        const cells = Array.from(row.querySelectorAll('td'))
+                           .filter(td => !td.querySelector('input[type="checkbox"]')); // Filter sel yang berisi checkbox
+        
+        const rowData = cells.map(cell => {
+            let text = cell.textContent.trim();
+            // Hapus karakter non-ASCII yang mungkin muncul dari ikon
+            text = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim(); 
+            // Handle koma di dalam teks dengan mengapitnya dalam tanda kutip ganda
+            return `"${text.replace(/"/g, '""')}"`;
+        }).join(',');
+        csvContent += rowData + "\r\n"; // Tambahkan baris data ke CSV
+    });
+
+    // Buat link download
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", `Payment_History_${new Date().toLocaleDateString('id-ID')}.csv`);
+    document.body.appendChild(link); // Penting: link harus ada di DOM agar bisa di-klik secara programatis
+    link.click(); // Klik link untuk memulai download
+    document.body.removeChild(link); // Hapus link setelah selesai
+}
+      </script>
+
+      
+
+    </body>
+  </html>
+
+  <!-- CSS -->
+  <style>
+    body {
+      font-family: "Poppins", sans-serif;
+    }
+
+    #brandTitle {
+      font-size: 30px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none; /* ini penting kalau pakai <a> */
+    }
+
+    .navbar-custom {
+      background-color: #1f2a44;
+      margin: 15px;
+      border-radius: 15px;
+      font-weight: bolder;
+      letter-spacing: 0.5px;
+    }
+
+    .scroll-container {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-container {
+      cursor: grab;
+    }
+
+    .scroll-container:active {
+      cursor: grabbing;
+    }
+  </style>

@@ -1,0 +1,41 @@
+/project-root
+│
+├── public/
+│   ├── assets/
+│   │   └── images, icons, etc.
+│   ├── css/
+│   │   └── style.css
+│   └── js/
+│       └── (optional js files)
+│
+├── views/              <-- Kalau pakai template engine (EJS, Pug, dsb)
+│
+├── pages/
+│   ├── auth/           <-- Halaman untuk login, signup, forgot password
+│   │   ├── login.html
+│   │   ├── signup.html
+│   │   └── forgot-password.html
+│
+│   ├── guru/
+│   │   ├── dashboard.html
+│   │   ├── profile.html
+│   │   ├── penjadwalan.html
+│   │   ├── payment.html
+│   │   └── quiz.html
+│
+│   ├── siswa/
+│   │   ├── dashboard.html
+│   │   ├── profile.html
+│   │   └── quiz.html
+│
+├── routes/
+│   ├── auth.js         <-- Router utk login/signup
+│   ├── guru.js         <-- Route khusus guru
+│   └── siswa.js        <-- Route khusus siswa
+│
+├── controllers/        <-- (optional) logic khusus, bagus buat modularisasi
+│
+├── models/             <-- (optional) model untuk DB
+│
+├── server.js
+└── package.json
