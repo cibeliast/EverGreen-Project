@@ -18,18 +18,20 @@ router.post('/signup', async (req, res) => {
     const {email, username, role, password} = req.body;
 
     try {
-        const checkQuery = `SELECT * FROM ${role} WHERE email = ? OR username = ?`;
-        db.query(checkQuery, [email, username], async (err, results) => {
+       const checkQuery = `
+        (SELECT email, username FROM students WHERE email = ? OR username = ?)
+        UNION
+        (SELECT email, username FROM teachers WHERE email = ? OR username = ?)
+        `;
+
+        db.query(checkQuery, [email, username, email, username], async (err, results) => {
             if (err) {
-                // console.error('Error checking existing user: ', err);
-                // return res.status(500).send('Error checking existing user');
                 return res.redirect('signup?error=Please enter valid data!');
             }
 
             if (results.length > 0) {
                 const existingUser = results[0];
                 if (existingUser.email === email) {
-                    // return res.status(400).send('E-mail already used!');
                     return res.redirect('signup?error=Email already used!');
                 } else if (existingUser.username === username) {
                     return res.redirect('signup?error=Username already used!');
@@ -67,14 +69,12 @@ router.get('/login', (req, res) => {
 
 // Route POST login
 router.post ('/login', (req, res) => {
-    const {username, password, role} = req.body;
+    const {username, password} = req.body;
 
-    if (!role) {
-        return res.status(400).send('Role is missing!');
-    }
-
-    const query = `SELECT * FROM ${role} WHERE username = ?`;
-    db.query(query, [username], async (err, results) => {
+    const query = `(SELECT student_id AS id, name, username, password, 'students' AS role FROM students WHERE username = ?)
+    UNION
+    (SELECT teacher_id AS id, name, username, password, 'teachers' AS role FROM teachers WHERE username = ?) LIMIT 1`;
+    db.query(query, [username, username], async (err, results) => {
         if (err) {
             console.error(err);
             return res.status(500).send('Database error');
@@ -84,28 +84,19 @@ router.post ('/login', (req, res) => {
         }
  
         const user = results[0];
-        const match = await bcrypt.compare(password, user.password);
-        if (!match) {
-           return res.redirect('login?error=Invalid password!');
-        }
+const match = await bcrypt.compare(password, user.password);
+if (!match) {
+   return res.redirect('login?error=Invalid password!');
+}
 
-        let userId;
-        if (role === 'students') {
-            userId = user.student_id;
-        } else if (role === 'teachers') {
-            userId = user.teacher_id;
-        } else {
-            return res.status(400).send('Invalid role');
-        }
+req.session.userId = user.id; // GANTI INI
+req.session.username = user.username;
+req.session.role = user.role;
+req.session.folderRole = user.role.slice(0, -1); // "students" jadi "student"
 
-        req.session.userId = userId;
-        req.session.username = user.username;
-        req.session.role = role;
-        req.session.folderRole = role.slice(0, -1);
+console.log("Session setelah login:", req.session);
+return res.redirect('/dashboard');
 
-        console.log("Session setelah login:", req.session);
-        
-        return res.redirect('/dashboard');
     });
 });
 
