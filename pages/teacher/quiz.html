@@ -31,27 +31,18 @@
     <div class="max-w-[1600px] mx-auto flex flex-col md:flex-row gap-10">
       <!-- KOTAKAN UTAMA SMUA -->
       <!-- Sidebar Start -->
-      <nav
-        class="bg-[#1F2A44] rounded-xl w-full md:w-60 flex flex-col justify-between p-6 text-[#a3c0d9] h-[calc(100vh-3rem)]"
-      >
+      <nav class="bg-[#1F2A44] rounded-xl w-full md:w-60 flex flex-col justify-between p-6 text-[#a3c0d9] h-[calc(100vh-3rem)]">
         <!-- Nav Atas Start-->
         <!-- LOGO -->
         <div>
-          <a
-            id="brandTitle"
-            class="text-white d-block font-extrabold text-lg mb-4 mt-2 text-center"
-            href=""
-          >
+          <a id="brandTitle" class="text-white d-block font-extrabold text-lg mb-4 mt-2 text-center" href="">
             <span>EverGreen</span>
           </a>
 
           <hr class="border-[#ffffff] mb-5" />
 
           <nav class="flex flex-col gap-5 text-sm">
-            <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
-            >
+            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="#">
               <i class="bi bi-grid-1x2"></i>
               <span class="title">Dashboard</span>
             </a>
@@ -61,68 +52,48 @@
               <span class="title">Schedules</span>
             </a>
 
-            <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/teacher/students"
-            >
+            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="/teacher/students">
               <i class="bi bi-people-fill"></i>
               <span class="title">Students</span>
             </a>
 
-            <a
-              class="flex items-center gap-3 text-[#9FD3C7] hover:text-[#9FD3C7] transition-colors"
-              href="/topicTeacher"
-            >
+            <a class="flex items-center gap-3 text-[#9FD3C7] hover:text-[#9FD3C7] transition-colors" href="/topicTeacher">
               <i class="bi bi-question-circle-fill"></i>
               <span class="title">Quizzes</span>
             </a>
 
-            <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/payment"
-            >
+            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="/payment">
               <i class="bi bi-credit-card-2-back"></i>
               <span class="title">Payment History</span>
             </a>
           </nav>
-        </div>
-        <!-- Nav Atas End-->
+        </div><!-- Nav Atas End-->
 
         <div>
           <!-- Nav Bawah Start-->
           <hr class="border-[#ffffff] mb-6" />
           <nav class="flex flex-col gap-5 text-sm font-semibold text-[#a3c0d9]">
-            <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
-            >
+            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="#">
               <i class="bi bi-person-circle"></i>
               <span class="title">Profile</span>
             </a>
 
-            <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
-            >
+            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="#">
               <i class="bi bi-box-arrow-right"></i>
               <span class="title">Log out</span>
             </a>
           </nav>
-        </div>
-        <!-- Nav bawah End-->
-      </nav>
-      <!-- Sidebar End -->
+        </div><!-- Nav bawah End-->
+      </nav><!-- Sidebar End -->
+
+      <!-- Overlay for popup -->
+      <div id="overlay" class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"></div>
 
       <!-- Main Content Start -->
       <main class="flex-1 flex flex-col gap-6 pt-8 pr-7">
         <!-- Main Judul -->
         <section>
-          <h2
-            id="topicTitle"
-            class="text-3xl font-extrabold text-[#111827] mb-1"
-          >
-            Loading Quiz..
-          </h2>
+          <h2 id="topicTitle" class="text-3xl font-extrabold text-[#111827] mb-1">Loading Quiz..</h2>
           <p id="topicDescription" class="text-sm text-[#6b7280]">
             Organize and assign vocabulary quizzes to enhance student learning.
           </p>
@@ -134,17 +105,13 @@
         <div class="flex justify-end items-center">
           <div class="flex justify-between items-center gap-3">
             <a id="add-Btn">
-              <button
-                class="whitespace-nowrap text-[#FFFFFF] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] hover:text-[#000000] transition transition-all duration-300"
-              >
+              <button class="whitespace-nowrap text-[#FFFFFF] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] hover:text-[#000000] transition transition-all duration-300">
                 <i class="bi bi-plus-lg mr-2"></i>Add Quiz
               </button>
             </a>
 
-            <a href="" id="edit-Btn">
-              <button
-                class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#CEE8E2] rounded-lg font-medium hover:bg-[#9FD3C7] transition transition-all duration-300"
-              >
+            <a>
+              <button id="action-Btn" class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#CEE8E2] rounded-lg font-medium hover:bg-[#9FD3C7] transition transition-all duration-300">
                 <i class="bi bi-pencil-square mr-2"></i>Action
               </button>
             </a>
@@ -155,8 +122,7 @@
         <!-- Jadwal -->
         <div>
           <!-- Schedule Table -->
-          <div
-            class="max-h-[492px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
+          <div class="max-h-[492px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
             <table class="min-w-full text-sm text-left">
               <thead class="bg-[#1F2A44] text-white">
                 <tr>
@@ -175,11 +141,8 @@
         <!-- Jadwal End-->
 
         <!-- Add Quiz Modal -->
-        <div
-          id="addQuizModal"
-          class="hidden fixed inset-0 bg-[#000000] bg-opacity-50 flex items-center justify-center z-20">
-          <div
-            class="bg-[#FFFFFF] p-8 rounded-2xl shadow-md text-center max-w-md w-full">
+        <div id="addQuizModal" class="hidden fixed inset-0 bg-[#000000] bg-opacity-50 flex items-center justify-center z-20">
+          <div class="bg-[#FFFFFF] p-8 rounded-2xl shadow-md text-center max-w-md w-full">
             <h2 class="text-2xl mb-4 font-bold">Add Quiz Link</h2>
             <form id="addQuizForm" class="space-y-4">
               <!-- Quiz Link -->
@@ -198,16 +161,33 @@
               <div class="flex justify-end gap-4 pt-4">
                 <button type="button" id="cancelAddQuiz" class="w-[190px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition">Cancel</button>
 
-                <button type="submit" class="w-[190px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white">Add Quiz</button>
+                <button type="submit"class="w-[190px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white">Add Quiz</button>
               </div>
             </form>
+          </div>
+        </div>
+
+        <!-- Action Popup Template -->
+        <div id="actionPopupTemplate" class="hidden absolute right-0 mt-2 rounded-xl shadow-md p-2 w-[170px] bg-white z-50 flex flex-col items-center">
+          <h2 class="text-lg font-semibold mb-2 text-[#000000]">Action</h2>
+          <div class="right-0 mt-2 w-full bg-[#FFF7D4] rounded whitespace-nowrap">
+            <button class="edit-btn text-[#000000] px-4 py-2 w-full text-left hover:bg-[#E6D99F] rounded">
+              <i class="bi bi-pencil-square mr-2"></i>Edit Quiz
+            </button>
+          </div>
+          <div class="right-0 mt-2 w-full whitespace-nowrap bg-[#FFE4E6] rounded">
+            <button class="delete-btn text-[#000000] px-3 py-2 w-full text-left hover:bg-[#E2B0B5] rounded">
+              <i class="bi bi-trash3-fill mr-2"></i>Delete Quiz
+            </button>
           </div>
         </div>
 
         <!-- Edit Topic MOdal -->
         <div id="editQuizModal" class="hidden fixed inset-0 bg-[#000000] bg-opacity-50 flex items-center justify-center z-50">
           <div class="bg-[#FFFFFF] p-6 rounded-lg shadow-md w-full max-w-md">
-            <h2 class="text-xl font-semibold mb-4 text-center">Edit Quiz Link</h2>
+            <h2 class="text-xl font-semibold mb-4 text-center">
+              Edit Quiz Link
+            </h2>
             <form action="editQuizForm" class="space-y-4">
               <!-- Quiz Link -->
               <div>
@@ -218,8 +198,7 @@
               <!-- Result Link -->
               <div>
                 <label for="editResultName" class="block font-medium mb-1">Quiz Link (Google Form)</label>
-                <input type="text" id="editResultName"
-                  name="editResultName" required class="w-full border border-gray-300 px-3 py-2 rounded"/>
+                <input type="text"id="editResultName" name="editResultName" required class="w-full border border-gray-300 px-3 py-2 rounded"/>
               </div>
 
               <!-- Button -->
@@ -236,45 +215,43 @@
           document.addEventListener("DOMContentLoaded", () => {
             const getParam = (param) => new URLSearchParams(location.search).get(param);
             const topicId = getParam("topic_id");
-        
+
             const quizTable = document.getElementById("quizTableBody");
             const topicTitle = document.getElementById("topicTitle");
-            //const topicDescription = document.getElementById("topicDescription");
-        
             const addBtn = document.getElementById("add-Btn");
             const addModal = document.getElementById("addQuizModal");
+            const actionBtn = document.getElementById("action-Btn");
             const cancelAdd = document.getElementById("cancelAddQuiz");
             const addForm = document.getElementById("addQuizForm");
-        
-            // ==== 1. TAMPILKAN JUDUL & DESKRIPSI TOPIK ====
+            const overlay = document.getElementById("overlay");
+
+            let isActionMode = false;
+
+            // ==== 1. FETCH TOPIC ====
             async function fetchTopicDetail() {
               try {
-                const res = await fetch(`/api/topicTeacher/${topicId}`, {
-                  credentials: 'include'
-                });
+                const res = await fetch(`/api/topicTeacher/${topicId}`, {credentials: "include",});
                 const topic = await res.json();
                 topicTitle.textContent = topic.name || "Topic - Quiz";
-                //topicDescription.textContent = topic.topic_description || "No description available.";
               } catch (err) {
-                console.error("Gagal fetch topik:", err);
+                console.error("Failed fetch topic:", err);
               }
             }
-        
+
             // ==== 2. TAMPILKAN DAFTAR QUIZ DARI DB ====
             async function fetchQuizData() {
               try {
-                const res = await fetch(`/api/quizTeacher?topic_id=${topicId}`, {
-                  credentials: 'include'
-                });
+                const res = await fetch(`/api/quizTeacher?topic_id=${topicId}`, {credentials: "include",});
                 const data = await res.json();
                 quizTable.innerHTML = ""; // Kosongkan tabel
-        
+
                 if (data.length === 0) {
                   quizTable.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">There is no quiz</td></tr>`;
                   return;
                 }
-        
+
                 data.forEach((quiz, index) => {
+                  console.log(quiz);
                   const row = document.createElement("tr");
                   row.classList.add("border-t");
                   row.innerHTML = `
@@ -288,31 +265,32 @@
                 console.error("Gagal fetch quiz:", err);
               }
             }
-        
+
             // ==== 3. MODAL TAMBAH QUIZ ====
-            addBtn.addEventListener("click", () => addModal.classList.remove("hidden"));
+            addBtn.addEventListener("click", () =>
+              addModal.classList.remove("hidden")
+            );
             cancelAdd.addEventListener("click", () => {
               addModal.classList.add("hidden");
               addForm.reset();
             });
-        
+
             // ==== 4. SIMPAN QUIZ KE DB ====
             addForm.addEventListener("submit", async (e) => {
               e.preventDefault();
               const quizLink = document.getElementById("addQuizName").value.trim();
               const resultLink = document.getElementById("addResultName").value.trim();
-              if (!quizLink || !resultLink) return alert("Mohon isi semua field.");
-        
+              if (!quizLink || !resultLink)
+                return alert("Mohon isi semua field.");
+
               try {
-                const res = await fetch('/api/quizTeacher', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                  },
-                  credentials: 'include',
-                  body: JSON.stringify({ quizLink, resultLink, topicId })
+                const res = await fetch("/api/quizTeacher", {
+                  method: "POST",
+                  headers: {"Content-Type": "application/json",},
+                  credentials: "include",
+                  body: JSON.stringify({ quizLink, resultLink, topicId }),
                 });
-        
+
                 const data = await res.json();
                 if (data.success) {
                   await fetchQuizData(); // Refresh table
@@ -327,20 +305,260 @@
                 alert("❌ Terjadi kesalahan saat menyimpan.");
               }
             });
-        
-            // ==== 5. LOAD SAAT PERTAMA KALI ====
-            fetchTopicDetail();
-            fetchQuizData();
+
+            // ==== 5. TOGGLE ACTION MODE ====
+            actionBtn.addEventListener("click", async () => {
+              isActionMode = !isActionMode;
+
+              if (isActionMode) {
+                actionBtn.classList.remove("bg-[#CEE8E2]");
+                actionBtn.classList.add("bg-[#9FD3C7]");
+                actionBtn.innerHTML = '<i class="bi bi-x-circle mr-2"></i>Close Action';
+
+                // Add checkbox column to the table
+                const thead = document.querySelector("thead tr");
+                thead.innerHTML = `
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Select</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">No</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Quiz Link</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Result Link</th>
+                `;
+
+                // Fetch and display quiz data with checkboxes
+                await fetchQuizDataWithCheckboxes();
+
+              } else {
+                actionBtn.classList.add("bg-[#CEE8E2]");
+                actionBtn.classList.remove("bg-[#9FD3C7]");
+                actionBtn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Action';
+
+                // Remove checkbox column from the table
+                const thead = document.querySelector("thead tr");
+                thead.innerHTML = `
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">No</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Quiz Link</th>
+                  <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Result Link</th>
+                `;
+
+                // Fetch and display quiz data without checkboxes
+                await fetchQuizData();
+              }
+            });
+
+            // Fetch quiz data with checkboxes
+            async function fetchQuizDataWithCheckboxes() {
+              try {
+                const res = await fetch(`/api/quizTeacher?topic_id=${topicId}`, {credentials: "include",});
+                const data = await res.json();
+                quizTable.innerHTML = ""; // Kosongkan tabel
+
+                if (data.length === 0) {
+                  quizTable.innerHTML = `<tr><td colspan="4" class="text-center py-4 text-gray-500">There is no quiz</td></tr>`;
+                  return;
+                }
+
+                data.forEach((quiz, index) => {
+                  const row = document.createElement("tr");
+                  row.classList.add("border-t");
+                  row.innerHTML = `
+                    <td class="py-3 px-4">
+                      <input type="checkbox" class="quiz-checkbox" data-id="${quiz.quiz_id}" /></td>
+                    <td class="py-3 px-4">${index + 1}</td>
+                    <td class="py-3 px-4"><a href="${quiz.quiz_link}" target="_blank" class="text-blue-600 underline">Quiz Form ${index + 1}</a></td>
+                    <td class="py-3 px-4"><a href="${quiz.result_link}" target="_blank" class="text-green-600 underline">Result Sheet ${index + 1}</a></td>
+                  `;
+                  quizTable.appendChild(row);
+                });
+
+                // Add event listener to checkboxes
+                let currentPopup = null; // untuk menyimpan popup yang aktif
+
+                const checkboxes = document.querySelectorAll(".quiz-checkbox");
+
+                checkboxes.forEach((checkbox) => {
+                  checkbox.addEventListener("change", (e) => {
+                    // Jika sudah ada popup sebelumnya, hapus dulu
+                    if (currentPopup) {
+                      currentPopup.remove();
+                      overlay.classList.add("hidden");
+                    }
+
+                    if (e.target.checked) {
+                      overlay.classList.remove("hidden");
+
+                      checkboxes.forEach((cb) => {
+                        if (cb !== e.target) cb.checked = false;
+                      });
+
+                      const popup = document.getElementById("actionPopupTemplate").cloneNode(true);
+                      popup.classList.remove("hidden");
+                      popup.style.position = "absolute";
+                      const rect = e.target.getBoundingClientRect();
+                      popup.style.top = `${rect.top + window.scrollY}px`;
+                      popup.style.left = `${rect.right + 10}px`;
+
+                      document.body.appendChild(popup);
+                      currentPopup = popup; // Simpan popup aktif
+
+                      // Tombol edit/delete
+                      popup.querySelector(".edit-btn").onclick = () => {
+                        openEditModal(checkbox.dataset.id);
+                        popup.remove();
+                        overlay.classList.add("hidden");
+                        e.target.checked = false;
+                      };
+
+                      popup.querySelector(".delete-btn").onclick = () => {
+                        confirmDelete(checkbox.dataset.id);
+                        popup.remove();
+                        overlay.classList.add("hidden");
+                        e.target.checked = false;
+                      };
+
+                      // Mencegah klik di dalam popup menutup popup
+                      popup.addEventListener("click", (event) => {
+                        event.stopPropagation();
+                      });
+
+                      // Tambahkan listener global hanya sekali, dan biarkan aktif
+                      setTimeout(() => {
+                        const handler = function (event) {
+                          if (!popup.contains(event.target) && event.target !== e.target) {
+                            popup.remove();
+                            overlay.classList.add("hidden");
+                            e.target.checked = false;
+                            currentPopup = null;
+
+                            document.removeEventListener("click", handler);
+                          }
+                        };
+
+                        document.addEventListener("click", handler);
+                      }, 0);
+
+                    } else {
+                      overlay.classList.add("hidden");
+                      if (currentPopup) {
+                        currentPopup.remove();
+                        currentPopup = null;
+                      }
+                    }
+                  });
+                });
+
+              } catch (err) {
+                console.error("Gagal fetch quiz:", err);
+              }
+            }
+
+                        // ==== 6. LOAD SAAT PERTAMA KALI ====
+                        fetchTopicDetail();
+                        fetchQuizData();
+            
+                        // === Edit Quiz Modal ===
+                        async function openEditModal(quizId) {
+                          try {
+                            const res = await fetch(`/api/quizTeacher/${quizId}`, {
+                              method: "GET",
+                              credentials: "include",
+                            });
+                            const quiz = await res.json();
+            
+                            document.getElementById("editQuizName").value = quiz.quiz_link;
+                            document.getElementById("editResultName").value = quiz.result_link;
+                            document.getElementById("editQuizModal").classList.remove("hidden");
+            
+                            const editForm = document.querySelector("#editQuizModal form");
+                            editForm.onsubmit = async function (e) {
+                              e.preventDefault();
+                              const updatedQuizLink = document.getElementById("editQuizName").value.trim();
+                              const updatedResultLink = document.getElementById("editResultName").value.trim();
+            
+                              try {
+                                const updateRes = await fetch(`/api/quizTeacher/${quizId}`, {
+                                  method: "PUT",
+                                  headers: { "Content-Type": "application/json" },
+                                  credentials: "include",
+                                  body: JSON.stringify({
+                                    quizLink: updatedQuizLink,
+                                    resultLink: updatedResultLink,
+                                  }),
+                                });
+            
+                                const updateData = await updateRes.json();
+                                if (updateData.success) {
+                                  alert("✅ Quiz updated successfully.");
+                                  document.getElementById("editQuizModal").classList.add("hidden");
+                                  exitActionMode();
+                                } else {
+                                  alert("❌ Gagal update quiz.");
+                                }
+                              } catch (err) {
+                                console.error("Gagal update:", err);
+                                alert("❌ Terjadi kesalahan.");
+                              }
+                            };
+                          } catch (err) {
+                            console.error("Gagal fetch quiz by ID:", err);
+                            alert("❌ Tidak bisa buka data quiz.");
+                          }
+                        }
+            
+                        // Tombol cancel modal edit
+                        document.getElementById("cancelEditQuiz").addEventListener("click", () => {
+                          document.getElementById("editQuizModal").classList.add("hidden");
+                        });
+            
+                        // === Delete Quiz ===
+                        async function confirmDelete(quizId) {
+                          const confirmHapus = confirm("Apakah kamu yakin ingin menghapus quiz ini?");
+                          if (!confirmHapus) return;
+            
+                          try {
+                            const res = await fetch(`/api/quizTeacher/${quizId}`, {
+                              method: "DELETE",
+                              credentials: "include",
+                            });
+                            const data = await res.json();
+            
+                            if (data.success) {
+                              alert("🗑️ Quiz berhasil dihapus.");
+                              exitActionMode();
+                            } else {
+                              alert("❌ Gagal menghapus quiz.");
+                            }
+                          } catch (err) {
+                            console.error("Gagal hapus quiz:", err);
+                            alert("❌ Terjadi kesalahan saat menghapus.");
+                          }
+                        }
+
+                        function exitActionMode() {
+                        isActionMode = false;
+
+                        actionBtn.classList.add("bg-[#CEE8E2]");
+                        actionBtn.classList.remove("bg-[#9FD3C7]");
+                        actionBtn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Action';
+
+                        // Reset kolom header
+                        const thead = document.querySelector("thead tr");
+                        thead.innerHTML = `
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">No</th>
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Quiz Link</th>
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Result Link</th>
+                        `;
+
+                        // Fetch data tanpa checkbox
+                        fetchQuizData();
+                      }
+
+            
+
+            
           });
         </script>
-        
-        
-        
-        
-      </main>
-      <!-- Main Content End -->
-    </div>
-    <!-- KOTAKAN UTAMA SMUA end -->
+      </main><!-- Main Content End -->
+    </div><!-- KOTAKAN UTAMA SMUA end -->
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
