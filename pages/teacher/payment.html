@@ -340,130 +340,130 @@
         let selectedDeleteId = null;
 
         function updateIncomeSummary(payments) {
-    const today = new Date();
-    const currentMonth = today.getMonth() + 1; // getMonth() is 0-indexed
-    const currentYear = today.getFullYear();
+          const today = new Date();
+          const currentMonth = today.getMonth() + 1; // getMonth() is 0-indexed
+          const currentYear = today.getFullYear();
 
-    // Filter pembayaran untuk bulan dan tahun saat ini
-    const currentMonthPayments = payments.filter(payment => {
-        const paymentDate = new Date(payment.date);
-        return paymentDate.getMonth() + 1 === currentMonth && paymentDate.getFullYear() === currentYear;
-    });
+          // Filter pembayaran untuk bulan dan tahun saat ini
+          const currentMonthPayments = payments.filter(payment => {
+              const paymentDate = new Date(payment.date);
+              return paymentDate.getMonth() + 1 === currentMonth && paymentDate.getFullYear() === currentYear;
+          });
 
-    let totalNominal = 0;
-    let totalLessons = 1;
-    const uniqueStudents = new Set(); // Menggunakan Set untuk menyimpan siswa unik
+          let totalNominal = 0;
+          let totalLessons = 1;
+          const uniqueStudents = new Set(); // Menggunakan Set untuk menyimpan siswa unik
 
-    currentMonthPayments.forEach(payment => {
-        totalNominal += parseInt(payment.nominal);
-        totalLessons += payment.total_meetings;
-        uniqueStudents.add(payment.student_id); // Menambahkan ID siswa ke Set
-    });
+          currentMonthPayments.forEach(payment => {
+              totalNominal += parseInt(payment.nominal);
+              totalLessons += payment.total_meetings;
+              uniqueStudents.add(payment.student_id); // Menambahkan ID siswa ke Set
+          });
 
-    // Format nominal ke Rupiah
-    const formattedNominal = totalNominal.toLocaleString("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0
-    });
+          // Format nominal ke Rupiah
+          const formattedNominal = totalNominal.toLocaleString("id-ID", {
+              style: "currency",
+              currency: "IDR",
+              minimumFractionDigits: 0
+          });
 
-    // Update elemen HTML
-    document.querySelector(".total-income p:first-child").innerHTML = `
-        <i class="bi bi-cash-coin mr-2 text-[#48796D]"></i>Your Income (${today.toLocaleString('en-ID', { month: 'long', year: 'numeric' })})
-    `;
-    document.querySelector(".total-income h2").textContent = formattedNominal;
-    document.querySelector(".total-income p:last-child").textContent = `${totalLessons} lessons, ${uniqueStudents.size} students`;
-}
+          // Update elemen HTML
+          document.querySelector(".total-income p:first-child").innerHTML = `
+              <i class="bi bi-cash-coin mr-2 text-[#48796D]"></i>Your Income (${today.toLocaleString('en-ID', { month: 'long', year: 'numeric' })})
+          `;
+          document.querySelector(".total-income h2").textContent = formattedNominal;
+          document.querySelector(".total-income p:last-child").textContent = `${totalLessons} lessons, ${uniqueStudents.size} students`;
+      }
 
 
         function fetchAndRenderPayments() {
-    fetch("/api/payment")
-        .then((response) => {
-            if (!response.ok) throw new Error("Gagal mengambil data jadwal");
-            return response.json();
-        })
-        .then((data) => {
-            const tbody = document.getElementById("paymentTableBody");
-            tbody.innerHTML = "";
+          fetch("/api/payment")
+              .then((response) => {
+                  if (!response.ok) throw new Error("Gagal mengambil data jadwal");
+                  return response.json();
+              })
+              .then((data) => {
+                  const tbody = document.getElementById("paymentTableBody");
+                  tbody.innerHTML = "";
 
-            if (data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Belum ada data</td></tr>`;
-                updateIncomeSummary([]); // Panggil dengan array kosong jika tidak ada data
-                return;
-            }
+                  if (data.length === 0) {
+                      tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4">Belum ada data</td></tr>`;
+                      updateIncomeSummary([]); // Panggil dengan array kosong jika tidak ada data
+                      return;
+                  }
 
-            data.sort((a, b) => new Date(a.date) - new Date(b.date));
+                  data.sort((a, b) => new Date(a.date) - new Date(b.date));
 
-            data.forEach((item, index) => {
-                const row = document.createElement("tr");
-                row.classList.add("border-t");
+                  data.forEach((item, index) => {
+                      const row = document.createElement("tr");
+                      row.classList.add("border-t");
 
-                const studentName = item.student_name || "Tidak diketahui";
-                const studentPhoto = item.student_photo;
-                const initials = studentName
-                    .split(" ")
-                    .map((n) => n[0])
-                    .join("")
-                    .toUpperCase();
+                      const studentName = item.student_name || "Tidak diketahui";
+                      const studentPhoto = item.student_photo;
+                      const initials = studentName
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase();
 
-                const profileHTML = studentPhoto
-                    ? `<img alt="${studentName}" class="w-8 h-8 rounded-full object-cover" src="${studentPhoto}" />`
-                    : `<span class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center">${initials}</span>`;
+                      const profileHTML = studentPhoto
+                          ? `<img alt="${studentName}" class="w-8 h-8 rounded-full object-cover" src="${studentPhoto}" />`
+                          : `<span class="w-8 h-8 rounded-full bg-[#7F3DD7] text-white text-xs font-semibold flex items-center justify-center">${initials}</span>`;
 
-                const checkboxHTML = editModeActive
-                    ? `
-                        <input
-                            type="checkbox"
-                            onchange="handleCheckboxEdit(this)"
-                            data-payment-id="${item.payment_id}"
-                            data-student-id="${item.student_id}"
-                            data-total-meetings="${item.total_meetings}"
-                            data-nominal="${item.nominal}"
-                            data-date="${item.date}"
-                        />
-                      `
-                    : "";
+                      const checkboxHTML = editModeActive
+                          ? `
+                              <input
+                                  type="checkbox"
+                                  onchange="handleCheckboxEdit(this)"
+                                  data-payment-id="${item.payment_id}"
+                                  data-student-id="${item.student_id}"
+                                  data-total-meetings="${item.total_meetings}"
+                                  data-nominal="${item.nominal}"
+                                  data-date="${item.date}"
+                              />
+                            `
+                          : "";
 
-                row.innerHTML = `
-                    ${editModeActive || deleteModeActive ? `<td class="py-3 px-4 text-center">${editModeActive ? checkboxHTML : `<input type="checkbox" class="delete-checkbox" data-payment-id="${item.payment_id}">`}</td>` : ""}
-                    <td class="py-3 px-4 text-center">${index + 1}</td>
-                    <td class="py-3 px-4">
-                        <div class="flex items-center space-x-2">
-                            ${profileHTML}
-                            <span class="font-semibold text-gray-900">${studentName}</span>
-                        </div>
-                    </td>
-                    <td class="py-3 px-4 text-center">${item.total_meetings}</td>
-                    <td class="py-3 px-4 text-center">${item.nominal ? "Rp " + parseInt(item.nominal).toLocaleString("id-ID") : "-"}</td>
-                    <td class="py-3 px-4 text-center">${item.date}</td>
-                    <td class="py-3 px-4">${item.note || "-"}</td>
-                `;
+                      row.innerHTML = `
+                          ${editModeActive || deleteModeActive ? `<td class="py-3 px-4 text-center">${editModeActive ? checkboxHTML : `<input type="checkbox" class="delete-checkbox" data-payment-id="${item.payment_id}">`}</td>` : ""}
+                          <td class="py-3 px-4 text-center">${index + 1}</td>
+                          <td class="py-3 px-4">
+                              <div class="flex items-center space-x-2">
+                                  ${profileHTML}
+                                  <span class="font-semibold text-gray-900">${studentName}</span>
+                              </div>
+                          </td>
+                          <td class="py-3 px-4 text-center">${item.total_meetings}</td>
+                          <td class="py-3 px-4 text-center">${item.nominal ? "Rp " + parseInt(item.nominal).toLocaleString("id-ID") : "-"}</td>
+                          <td class="py-3 px-4 text-center">${item.date}</td>
+                          <td class="py-3 px-4">${item.note || "-"}</td>
+                      `;
 
-                row.dataset.paymentId = item.payment_id;
-                row.dataset.studentId = item.student_id;
-                row.dataset.totalMeetings = item.total_meetings;
-                row.dataset.nominal = item.nominal;
-                row.dataset.date = item.date;
+                      row.dataset.paymentId = item.payment_id;
+                      row.dataset.studentId = item.student_id;
+                      row.dataset.totalMeetings = item.total_meetings;
+                      row.dataset.nominal = item.nominal;
+                      row.dataset.date = item.date;
 
-                tbody.appendChild(row);
-            });
-            // Panggil updateIncomeSummary setelah data tabel di-render
-            updateIncomeSummary(data);
+                      tbody.appendChild(row);
+                  });
+                  // Panggil updateIncomeSummary setelah data tabel di-render
+                  updateIncomeSummary(data);
 
-            // Pastikan mode edit/delete diatur setelah DOM diupdate
-            if (editModeActive) {
-                enableEditMode();
-            } else if (deleteModeActive) {
-                enableDeleteMode();
-            }
-        })
-        .catch((error) => {
-            console.error("Error:", error);
-            document.getElementById("paymentTableBody").innerHTML =
-                '<tr><td colspan="7" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
-            updateIncomeSummary([]); // Panggil dengan array kosong jika ada error
-        });
-}
+                  // Pastikan mode edit/delete diatur setelah DOM diupdate
+                  if (editModeActive) {
+                      enableEditMode();
+                  } else if (deleteModeActive) {
+                      enableDeleteMode();
+                  }
+              })
+              .catch((error) => {
+                  console.error("Error:", error);
+                  document.getElementById("paymentTableBody").innerHTML =
+                      '<tr><td colspan="7" class="text-center text-red-500 py-4">Terjadi kesalahan saat memuat data.</td></tr>';
+                  updateIncomeSummary([]); // Panggil dengan array kosong jika ada error
+              });
+      }
         // Handle form submit
         document.getElementById("paymentForm").addEventListener("submit", function (e) {
           e.preventDefault();

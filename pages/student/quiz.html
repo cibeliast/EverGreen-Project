@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
-
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body>
@@ -24,16 +24,24 @@
         <a class="nav-link" href="/topic" style="color: #9FD3C7 !important;">Quizzes</a>
       </div>
 
-      <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="username-display"></a>
-          <ul class="dropdown-menu" style="margin-top: 30px;">
-            <li><a class="dropdown-item" href="/profile">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Log out</a></li>
-          </ul>
-        </li>
-      </ul>
+      <div class="relative inline-block text-left">
+          <button id="profileButton" type="button" class="flex items-center gap-2 focus:outline-none">
+            <!-- Satu icon di sini -->
+            <i class="bi bi-person-circle text-white text-xl"></i>
+            <!-- Username tanpa icon lagi -->
+            <span id="username-display" class="text-white">Loading...</span>
+            <!-- Panah dropdown -->
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
+            <a href="/profile" class="block px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Profile</a>
+            <hr class="my-1">
+            <a href="#" class="block px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Log out</a>
+          </div>
+        </div>
     </div>
   </nav>
 
@@ -45,41 +53,72 @@
         .then(data => {
           const display = document.getElementById('username-display');
           if (!data.error) {
-            display.innerHTML = `<i class="bi bi-person-circle"></i> ${data.username}`;
+            display.innerHTML = `${data.username}`;
           } else {
-            display.innerHTML = `<i class="bi bi-person-circle"></i> Guest`;
+            display.innerHTML = `Guest`;
           }
         })
         .catch(err => {
           console.error('Fetch error: ', err);
-          document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> Guest`;
+          document.getElementById('username-display').innerHTML = `Guest`;
         });
     });
   </script>
 
   <br>
-  <h2 id="quiz-topic"></h2>
+  <h2 class="text-3xl font-bold text-center mb-2" id="quiz-topic"></h2>
   <p id="quiz-description"></p>
   <hr>
 
   <div class="dashboard-container">
     <div class="left-schedule">
-      <div class="table-wrapper">
-        <table class="table table-custom" id="table-schedule">
-          <thead>
-            <tr style="background-color: #A69ACA;">
-              <th>No</th>
-              <th>Quiz Link</th>
-              <th>Score</th>
+      <div class="max-h-[500px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
+        <table class="min-w-full text-sm text-left" id="table-schedule">
+          <thead class="bg-[#A69ACA] text-white">
+            <tr>
+              <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">No</th>
+              <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Quiz Link</th>
+              <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Score</th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody class="text-gray-700"></tbody>
         </table>
       </div>
     </div>
   </div>
 
   <script>
+    // PROFILE DROPDOWN
+     document.addEventListener('DOMContentLoaded', () => {
+      const button = document.getElementById('profileButton');
+      const dropdown = document.getElementById('dropdownMenu');
+
+      button.addEventListener('click', () => {
+        dropdown.classList.toggle('hidden');
+      });
+
+      fetch('/api/profile')
+        .then(response => response.json())
+        .then(data => {
+          if (!data.error) {
+            document.getElementById('username-display').textContent = data.username;
+          } else {
+            document.getElementById('username-display').textContent = "Guest";
+          }
+        })
+        .catch(err => {
+          console.error('Fetch error: ', err);
+          document.getElementById('username-display').textContent = "Guest";
+        });
+
+      // Optional: close dropdown when clicking outside
+      window.addEventListener('click', function (e) {
+        if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.add('hidden');
+        }
+      });
+    });
+    
     const params = new URLSearchParams(window.location.search);
     const topic_id = params.get('topic_id');
 
@@ -99,10 +138,10 @@
           tbody.innerHTML = '';
           quizzes.forEach((quiz, index) => {
             const row = `
-              <tr>
-                <td>${index + 1}</td>
-                <td><a href="${quiz.quiz_link}" target="_blank">Start Quiz #${index + 1}</a></td>
-                <td>${quiz.score ?? '-'}</td>
+              <tr class="border-t">
+                <td class="py-3 px-4">${index + 1}</td>
+                <td class="py-3 px-4"><a href="${quiz.quiz_link}" target="_blank">Start Quiz #${index + 1}</a></td>
+                <td class="py-3 px-4">${quiz.score ?? '-'}</td>
               </tr>
             `;
             tbody.insertAdjacentHTML('beforeend', row);
@@ -143,6 +182,7 @@
     color: #7D7B7B;
     text-align: center;
     margin-top: 10px;
+    margin-bottom: 10px;
     }
 
     hr {

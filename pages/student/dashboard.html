@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/main.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <title>Student Dashboard</title>
 </head>
@@ -28,16 +29,24 @@
       </div>
 
       <!-- Right: Username -->
-       <ul class="navbar-nav">
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false" id="username-display"></a>
-          <ul class="dropdown-menu" style="margin-top: 30px;">
-            <li><a class="dropdown-item" href="/profile">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Log out</a></li>
-          </ul>
-        </li>
-      </ul>
+       <div class="relative inline-block text-left">
+          <button id="profileButton" type="button" class="flex items-center gap-2 focus:outline-none">
+            <!-- Satu icon di sini -->
+            <i class="bi bi-person-circle text-white text-xl"></i>
+            <!-- Username tanpa icon lagi -->
+            <span id="username-display" class="text-white">Loading...</span>
+            <!-- Panah dropdown -->
+            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
+            <a href="/profile" class="block px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Profile</a>
+            <hr class="my-1">
+            <a href="#" class="block px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Log out</a>
+          </div>
+        </div>
     </div>
   </nav>
 
@@ -48,27 +57,43 @@
         .then(response => response.json())
         .then(data => {
           if(!data.error) {
-            document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> ${data.username}`;
+            document.getElementById('username-display').innerHTML = `${data.username}`;
           } else {
-            document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> Guest}`;
+            document.getElementById('username-display').innerHTML = `Guest}`;
           }
         })
         .catch(err => {
           console.error('Fetch error: ', err);
-          document.getElementById('username-display').innerHTML = `<i class="bi bi-person-circle"></i> Guest`;
+          document.getElementById('username-display').innerHTML = `Guest`;
         });
     });
   </script>
 
   <br>
 
-  <h2>Student Dashboard</h2>
+  <h2 class="text-3xl font-bold text-center mb-2">Student Dashboard</h2>
   <p>Check your upcoming classes, browse your calendar, and see how you did on recent quizzes.</p>
   <hr>
 
   
   <div class="dashboard-container">
   <div class="left-schedule">
+    <div class="max-h-[500px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
+      <table class="min-w-full text-sm text-left" id="table-schedule">
+        <thead class="bg-[#A69ACA] text-white">
+          <tr>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">No</th>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Day</th>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Time</th>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Teacher</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <div class="left-schedule">
     <div class="table-wrapper">
       <table class="table table-custom" id="table-schedule">
         <thead>
@@ -83,7 +108,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->
 
   <div class="right-top">
 
@@ -120,6 +145,36 @@
   </div>
 
   <script>
+    // PROFILE DROPDOWN
+     document.addEventListener('DOMContentLoaded', () => {
+      const button = document.getElementById('profileButton');
+      const dropdown = document.getElementById('dropdownMenu');
+
+      button.addEventListener('click', () => {
+        dropdown.classList.toggle('hidden');
+      });
+
+      fetch('/api/profile')
+        .then(response => response.json())
+        .then(data => {
+          if (!data.error) {
+            document.getElementById('username-display').textContent = data.username;
+          } else {
+            document.getElementById('username-display').textContent = "Guest";
+          }
+        })
+        .catch(err => {
+          console.error('Fetch error: ', err);
+          document.getElementById('username-display').textContent = "Guest";
+        });
+
+      // Optional: close dropdown when clicking outside
+      window.addEventListener('click', function (e) {
+        if (!button.contains(e.target) && !dropdown.contains(e.target)) {
+          dropdown.classList.add('hidden');
+        }
+      });
+    });
   
     async function fetchJadwal() {
       try {
@@ -134,37 +189,29 @@
   
       if (schedules.length === 0) {
         const tr = document.createElement('tr');
+        tr.classList.add("border-t");
+
         const td = document.createElement('td');
+        td.classList.add("py-3 px-4 text-center");
         td.colSpan = 4;  // colspan supaya menutupi semua kolom
         td.textContent = 'Tidak ada jadwal';
         td.style.textAlign = 'center';
         tr.appendChild(td);
+        
         tbody.appendChild(tr);
         return;
       }
   
       schedules.forEach((schedule, index) => {
         const tr = document.createElement('tr');
-  
-        // No
-        const tdNo = document.createElement('td');
-        tdNo.textContent = index + 1;
-        tr.appendChild(tdNo);
-  
-        // Day
-        const tdDay = document.createElement('td');
-        tdDay.textContent = schedule.day;
-        tr.appendChild(tdDay);
-        
-        // Time
-        const tdTime = document.createElement('td');
-        tdTime.textContent = schedule.time;
-        tr.appendChild(tdTime);
-  
-        // Teacher
-        const tdTeacher = document.createElement('td');
-        tdTeacher.textContent = schedule.teacher_name;
-        tr.appendChild(tdTeacher);
+        tr.classList.add("border-t");
+
+        tr.innerHTML = `
+          <td class="py-3 px-4">${index + 1}</td>
+          <td class="py-3 px-4">${schedule.day}</td>
+          <td class="py-3 px-4">${schedule.time}</td>
+          <td class="py-3 px-4">${schedule.teacher_name}</td>
+        `;
   
         tbody.appendChild(tr);
       });
@@ -270,6 +317,7 @@
       text-align: center;
       font-size: 13px;
       margin-top: 10px;
+      margin-bottom: 10px;
     }
 
     hr {
@@ -362,10 +410,7 @@
     
     .left-schedule {
       grid-row: 1 / span 2; 
-      background-color: #ffffff;
       padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
       overflow: hidden;
       display: flex;
       flex-direction: column;
