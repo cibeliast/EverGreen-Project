@@ -78,6 +78,22 @@
   
   <div class="dashboard-container">
   <div class="left-schedule">
+    <div class="max-h-[500px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden shadow-md">
+      <table class="min-w-full text-sm text-left" id="table-schedule">
+        <thead class="bg-[#A69ACA] text-white">
+          <tr>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">No</th>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Day</th>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Time</th>
+            <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Teacher</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- <div class="left-schedule">
     <div class="table-wrapper">
       <table class="table table-custom" id="table-schedule">
         <thead>
@@ -92,7 +108,7 @@
         </tbody>
       </table>
     </div>
-  </div>
+  </div> -->
 
   <div class="right-top">
 
@@ -173,37 +189,29 @@
   
       if (schedules.length === 0) {
         const tr = document.createElement('tr');
+        tr.classList.add("border-t");
+
         const td = document.createElement('td');
+        td.classList.add("py-3 px-4 text-center");
         td.colSpan = 4;  // colspan supaya menutupi semua kolom
         td.textContent = 'Tidak ada jadwal';
         td.style.textAlign = 'center';
         tr.appendChild(td);
+        
         tbody.appendChild(tr);
         return;
       }
   
       schedules.forEach((schedule, index) => {
         const tr = document.createElement('tr');
-  
-        // No
-        const tdNo = document.createElement('td');
-        tdNo.textContent = index + 1;
-        tr.appendChild(tdNo);
-  
-        // Day
-        const tdDay = document.createElement('td');
-        tdDay.textContent = schedule.day;
-        tr.appendChild(tdDay);
-        
-        // Time
-        const tdTime = document.createElement('td');
-        tdTime.textContent = schedule.time;
-        tr.appendChild(tdTime);
-  
-        // Teacher
-        const tdTeacher = document.createElement('td');
-        tdTeacher.textContent = schedule.teacher_name;
-        tr.appendChild(tdTeacher);
+        tr.classList.add("border-t");
+
+        tr.innerHTML = `
+          <td class="py-3 px-4">${index + 1}</td>
+          <td class="py-3 px-4">${schedule.day}</td>
+          <td class="py-3 px-4">${schedule.time}</td>
+          <td class="py-3 px-4">${schedule.teacher_name}</td>
+        `;
   
         tbody.appendChild(tr);
       });
@@ -402,10 +410,7 @@
     
     .left-schedule {
       grid-row: 1 / span 2; 
-      background-color: #ffffff;
       padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
       overflow: hidden;
       display: flex;
       flex-direction: column;
