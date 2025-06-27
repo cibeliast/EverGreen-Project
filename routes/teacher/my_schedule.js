@@ -41,13 +41,4 @@ router.get('/my_schedule', (req, res) => {
     });
 });
 
-
-
-
-
-
-
-
-
-
 export default router;
