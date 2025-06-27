@@ -379,7 +379,7 @@
         function fetchAndRenderPayments() {
           fetch("/api/payment")
               .then((response) => {
-                  if (!response.ok) throw new Error("Gagal mengambil data jadwal");
+                  if (!response.ok) throw new Error("Failed to fetch schedule data!");
                   return response.json();
               })
               .then((data) => {
@@ -489,11 +489,16 @@
             body: JSON.stringify(payload),
           })
             .then((res) => {
-              if (!res.ok) throw new Error("Gagal simpan data");
+              if (!res.ok) throw new Error("Failed to save data");
               return res.json();
             })
             .then(() => {
-              alert(isEdit ? "Data berhasil diubah!" : "Payment berhasil ditambahkan!");
+              // alert(isEdit ? "Data berhasil diubah!" : "Payment berhasil ditambahkan!");
+              const message = isEdit ? "Payment history updated successfully!" : "Payment history added successfully!";
+              const icon = "/assets/success.png"; // atau ganti dengan icon yang sesuai
+
+              showStatus(message, icon);
+
               closePaymentModal();
               this.reset();
               document.getElementById("nominalValue").value = "";
@@ -508,7 +513,7 @@
             })
             .catch((err) => {
               console.error(err);
-              alert("Terjadi kesalahan.");
+              showStatus(err.message || "Something went wrong!", "/assets/error.png");
             });
         });
 
@@ -586,7 +591,6 @@
                 const totalMeetings = row.dataset.totalMeetings;
                 const nominal = row.dataset.nominal;
                 const date = row.dataset.date;
-
 
                 showEditModal({ studentId, totalMeetings, nominal, date, id });
               }
@@ -723,109 +727,112 @@
             method: "DELETE",
           })
             .then(res => {
-              if (!res.ok) throw new Error("Gagal hapus data");
+              if (!res.ok) throw new Error("Failed to delete data!");
               return res.json();
             })
             .then(() => {
-              alert("Payment berhasil dihapus!");
+              showStatus("Successfully delete payment history!", "/assets/success.png");
               closeConfirmModal();
               fetchAndRenderPayments();
               toggleDeleteMode(); // reset mode
             })
             .catch(err => {
               console.error(err);
-              alert("Gagal menghapus payment.");
+              showStatus(err.message || "Something went wrong!", "/assets/error.png");
             });
         });
 
         function exportTableToPdf() {
-    const { jsPDF } = window.jspdf; // Mendapatkan jsPDF dari window
+          const { jsPDF } = window.jspdf; // Mendapatkan jsPDF dari window
 
-    const input = document.getElementById('paymentTableBody').closest('table'); // Targetkan elemen tabel
-    const filename = `Payment_History_${new Date().toLocaleDateString('id-ID')}.pdf`;
+          const input = document.getElementById('paymentTableBody').closest('table'); // Targetkan elemen tabel
+          const filename = `Payment_History_${new Date().toLocaleDateString('id-ID')}.pdf`;
 
-    html2canvas(input, {
-        scale: 2, // Meningkatkan skala untuk kualitas gambar yang lebih baik
-        useCORS: true // Penting jika ada gambar (seperti foto siswa) dari domain lain
-    }).then(canvas => {
-        const imgData = canvas.toDataURL('image/png'); // Konversi canvas menjadi data URL gambar
-        const pdf = new jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for A4 size
+          html2canvas(input, {
+              scale: 2, // Meningkatkan skala untuk kualitas gambar yang lebih baik
+              useCORS: true // Penting jika ada gambar (seperti foto siswa) dari domain lain
+          }).then(canvas => {
+              const imgData = canvas.toDataURL('image/png'); // Konversi canvas menjadi data URL gambar
+              const pdf = new jsPDF('p', 'mm', 'a4'); // 'p' for portrait, 'mm' for millimeters, 'a4' for A4 size
 
-        const imgWidth = 200; // Lebar gambar di PDF (sesuaikan)
-        const pageHeight = pdf.internal.pageSize.height;
-        const imgHeight = canvas.height * imgWidth / canvas.width;
-        let heightLeft = imgHeight;
-        let position = 0; // Posisi vertikal di halaman PDF
+              const imgWidth = 200; // Lebar gambar di PDF (sesuaikan)
+              const pageHeight = pdf.internal.pageSize.height;
+              const imgHeight = canvas.height * imgWidth / canvas.width;
+              let heightLeft = imgHeight;
+              let position = 0; // Posisi vertikal di halaman PDF
 
-        pdf.addImage(imgData, 'PNG', 5, position, imgWidth, imgHeight); // Tambahkan gambar ke PDF
-        heightLeft -= pageHeight;
+              pdf.addImage(imgData, 'PNG', 5, position, imgWidth, imgHeight); // Tambahkan gambar ke PDF
+              heightLeft -= pageHeight;
 
-        while (heightLeft >= 0) {
-            position = heightLeft - imgHeight;
-            pdf.addPage();
-            pdf.addImage(imgData, 'PNG', 5, position, imgWidth, imgHeight);
-            heightLeft -= pageHeight;
-        }
+              while (heightLeft >= 0) {
+                  position = heightLeft - imgHeight;
+                  pdf.addPage();
+                  pdf.addImage(imgData, 'PNG', 5, position, imgWidth, imgHeight);
+                  heightLeft -= pageHeight;
+              }
 
-        pdf.save(filename); // Unduh file PDF
-    }).catch(error => {
-        console.error("Error exporting to PDF:", error);
-        alert("Gagal mengekspor tabel ke PDF. Periksa konsol untuk detailnya.");
-    });
-}
+              pdf.save(filename); // Unduh file PDF
+          }).catch(error => {
+              console.error("Error exporting to PDF:", error);
+              showStatus("Failed to export the table to PDF. Check the console for details.", "/assets/error.png");
+          });
+      }
 
-function exportTableToCsv() {
-    const table = document.getElementById('paymentTableBody').closest('table');
-    if (!table) {
-        alert("Tabel pembayaran tidak ditemukan!");
-        return;
-    }
+      function exportTableToCsv() {
+          const table = document.getElementById('paymentTableBody').closest('table');
+          if (!table) {
+               showStatus("Payment table not found!", "/assets/error.png");
+              return;
+          }
 
-    const rows = table.querySelectorAll('tr'); // Dapatkan semua baris (header dan body)
-    let csvContent = "data:text/csv;charset=utf-8,"; // Tipe data dan encoding
+          const rows = table.querySelectorAll('tr'); // Dapatkan semua baris (header dan body)
+          let csvContent = "data:text/csv;charset=utf-8,"; // Tipe data dan encoding
 
-    // Dapatkan header tabel
-    const headerCells = table.querySelector('thead tr').querySelectorAll('th');
-    const header = Array.from(headerCells)
-                        .filter(th => !th.classList.contains('edit-checkbox-header') && !th.classList.contains('delete-checkbox-header')) // Filter header checkbox
-                        .map(th => `"${th.textContent.trim()}"`)
-                        .join(',');
-    csvContent += header + "\r\n"; // Tambahkan header ke CSV
+          // Dapatkan header tabel
+          const headerCells = table.querySelector('thead tr').querySelectorAll('th');
+          const header = Array.from(headerCells)
+                              .filter(th => !th.classList.contains('edit-checkbox-header') && !th.classList.contains('delete-checkbox-header')) // Filter header checkbox
+                              .map(th => `"${th.textContent.trim()}"`)
+                              .join(',');
+          csvContent += header + "\r\n"; // Tambahkan header ke CSV
 
-    // Dapatkan data dari body tabel
-    rows.forEach(row => {
-        // Lewati baris yang tidak memiliki data (misal: "Belum ada data")
-        if (row.children.length <= 1) { // Jika hanya ada 1 kolom (misal "No") atau kurang, kemungkinan itu bukan data
-            return;
-        }
+          // Dapatkan data dari body tabel
+          rows.forEach(row => {
+              // Lewati baris yang tidak memiliki data (misal: "Belum ada data")
+              if (row.children.length <= 1) { // Jika hanya ada 1 kolom (misal "No") atau kurang, kemungkinan itu bukan data
+                  return;
+              }
 
-        // Ambil sel dari setiap baris, filter sel checkbox jika ada
-        const cells = Array.from(row.querySelectorAll('td'))
-                           .filter(td => !td.querySelector('input[type="checkbox"]')); // Filter sel yang berisi checkbox
-        
-        const rowData = cells.map(cell => {
-            let text = cell.textContent.trim();
-            // Hapus karakter non-ASCII yang mungkin muncul dari ikon
-            text = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim(); 
-            // Handle koma di dalam teks dengan mengapitnya dalam tanda kutip ganda
-            return `"${text.replace(/"/g, '""')}"`;
-        }).join(',');
-        csvContent += rowData + "\r\n"; // Tambahkan baris data ke CSV
-    });
+              // Ambil sel dari setiap baris, filter sel checkbox jika ada
+              const cells = Array.from(row.querySelectorAll('td'))
+                                .filter(td => !td.querySelector('input[type="checkbox"]')); // Filter sel yang berisi checkbox
+              
+              const rowData = cells.map(cell => {
+                  let text = cell.textContent.trim();
+                  // Hapus karakter non-ASCII yang mungkin muncul dari ikon
+                  text = text.replace(/[\u0000-\u001F\u007F-\u009F]/g, "").trim(); 
+                  // Handle koma di dalam teks dengan mengapitnya dalam tanda kutip ganda
+                  return `"${text.replace(/"/g, '""')}"`;
+              }).join(',');
+              csvContent += rowData + "\r\n"; // Tambahkan baris data ke CSV
+          });
 
-    // Buat link download
-    const encodedUri = encodeURI(csvContent);
-    const link = document.createElement("a");
-    link.setAttribute("href", encodedUri);
-    link.setAttribute("download", `Payment_History_${new Date().toLocaleDateString('id-ID')}.csv`);
-    document.body.appendChild(link); // Penting: link harus ada di DOM agar bisa di-klik secara programatis
-    link.click(); // Klik link untuk memulai download
-    document.body.removeChild(link); // Hapus link setelah selesai
-}
+          // Buat link download
+          const encodedUri = encodeURI(csvContent);
+          const link = document.createElement("a");
+          link.setAttribute("href", encodedUri);
+          link.setAttribute("download", `Payment_History_${new Date().toLocaleDateString('id-ID')}.csv`);
+          document.body.appendChild(link); // Penting: link harus ada di DOM agar bisa di-klik secara programatis
+          link.click(); // Klik link untuk memulai download
+          document.body.removeChild(link); // Hapus link setelah selesai
+      }
+      </script>     
+
+      <script type="module">
+        import { setupStatusModal, showStatus } from '/js/statusModal.js';
+        setupStatusModal();
+        window.showStatus = showStatus;
       </script>
-
-      
-
     </body>
   </html>
 

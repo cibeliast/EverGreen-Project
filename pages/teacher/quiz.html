@@ -294,15 +294,15 @@
                 const data = await res.json();
                 if (data.success) {
                   await fetchQuizData(); // Refresh table
-                  alert("Quiz successfully added!");
+                  showStatus("Quiz successfully added!", "/assets/success.png");
                   addForm.reset();
                   addModal.classList.add("hidden");
                 } else {
-                  alert("❌ Gagal menyimpan quiz.");
+                  showStatus("Failed to save quiz!", "/assets/error.png");
                 }
               } catch (err) {
                 console.error("DETAIL ERROR:", err);
-                alert("❌ Terjadi kesalahan saat menyimpan.");
+                showStatus(err.message || "Something went wrong!", "/assets/error.png");
               }
             });
 
@@ -487,20 +487,20 @@
             
                                 const updateData = await updateRes.json();
                                 if (updateData.success) {
-                                  alert("✅ Quiz updated successfully.");
+                                  showStatus("Quiz successfully updated!", "/assets/success.png");
                                   document.getElementById("editQuizModal").classList.add("hidden");
                                   exitActionMode();
                                 } else {
-                                  alert("❌ Gagal update quiz.");
+                                  showStatus("Failed to update quiz!", "/assets/error.png");
                                 }
                               } catch (err) {
                                 console.error("Gagal update:", err);
-                                alert("❌ Terjadi kesalahan.");
+                                showStatus(err.message || "Something went wrong!", "/assets/error.png");
                               }
                             };
                           } catch (err) {
                             console.error("Gagal fetch quiz by ID:", err);
-                            alert("❌ Tidak bisa buka data quiz.");
+                            showStatus(err.message || "Can not access quiz data!", "/assets/error.png");
                           }
                         }
             
@@ -522,14 +522,14 @@
                             const data = await res.json();
             
                             if (data.success) {
-                              alert("🗑️ Quiz berhasil dihapus.");
+                              showStatus("Topic successfully deleted!", "/assets/success.png");
                               exitActionMode();
                             } else {
-                              alert("❌ Gagal menghapus quiz.");
+                              showStatus("Failed to delete quiz!", "/assets/error.png");
                             }
                           } catch (err) {
                             console.error("Gagal hapus quiz:", err);
-                            alert("❌ Terjadi kesalahan saat menghapus.");
+                            showStatus(err.message || "Something went wrong!", "/assets/error.png");
                           }
                         }
 
@@ -562,6 +562,11 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+      import { setupStatusModal, showStatus } from '/js/statusModal.js';
+      setupStatusModal();
+      window.showStatus = showStatus;
+    </script>
   </body>
 </html>
 

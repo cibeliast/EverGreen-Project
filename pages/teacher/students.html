@@ -372,12 +372,13 @@
                   return response.json();
                 })
                 .then(() => {
+                  showStatus("Student deleted successfully!", "/assets/success.png");
                   alert("Data siswa berhasil dihapus.");
                   location.reload();
                 })
                 .catch(err => {
                   console.error("Error deleting student:", err);
-                  alert("Gagal menghapus data siswa.");
+                  showStatus(err.message || "Failed delete student", "/assets/error.png");
                 })
                 .finally(() => {
                   document.getElementById("confirmModal").classList.add("hidden");
@@ -424,6 +425,11 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <script type="module">
+      import { setupStatusModal, showStatus } from '/js/statusModal.js';
+      setupStatusModal();
+      window.showStatus = showStatus;
+    </script>
   </body>
 </html>
 

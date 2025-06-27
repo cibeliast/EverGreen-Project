@@ -540,10 +540,10 @@
                 if (!res.ok)
                   throw new Error(data.error || "Failed to update topic");
 
-                alert("Topic successfully updated!");
+                showStatus("Topic successfully updated!", "/assets/success.png");
                 window.location.reload();
               } catch (err) {
-                alert(err.message);
+                 showStatus(err.message || "Something went wrong!", "/assets/error.png");
               }
             });
 
@@ -580,10 +580,10 @@
                 if (!res.ok)
                   throw new Error(data.error || "Failed to delete topic");
 
-                alert("Topic successfully deleted!");
+                showStatus("Topic successfully deleted!", "/assets/success.png");
                 window.location.reload();
               } catch (err) {
-                alert("Failed to delete topic.");
+                showStatus(err.message || "Something went wrong!", "/assets/error.png");
               }
             });
 
@@ -610,10 +610,10 @@
                 if (!res.ok)
                   throw new Error(data.error || "Failed to add topic");
 
-                alert("Topic successfully added!");
+                showStatus("Topic successfully added!", "/assets/success.png");
                 window.location.reload();
               } catch (err) {
-                alert("Failed to add topic.");
+                showStatus(err.message || "Something went wrong!", "/assets/error.png");
               }
             });
 
@@ -642,6 +642,11 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+      import { setupStatusModal, showStatus } from '/js/statusModal.js';
+      setupStatusModal();
+      window.showStatus = showStatus;
+    </script>
   </body>
 </html>
 
