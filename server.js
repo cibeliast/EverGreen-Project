@@ -66,8 +66,18 @@ app.use('/api', forgotPasswordRouter);
 app.use('/', resetPasswordRouter);
 
 
+// app.get('/profile', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
+// });
+
 app.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
+  if (req.session.folderRole === 'teacher') {
+    res.sendFile(path.join(__dirname, 'pages/teacher/profile.html'));
+  } else if (req.session.folderRole === 'student') {
+    res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
+  } else {
+    res.redirect('/'); // redirect ke login atau halaman lain kalau belum login
+  }
 });
 
 app.get('/forgot-password', (req, res) => {
