@@ -92,7 +92,12 @@
           <!-- Nav Bawah Start-->
           <hr class="border-[#ffffff] mb-6" />
           <nav class="flex flex-col gap-5 text-sm font-semibold text-[#a3c0d9]">
-            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="#"><i class="bi bi-person-circle"></i><span class="title">Profile</span></a>
+            <a
+              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
+              href="#"
+              ><i class="bi bi-person-circle"></i
+              ><span class="title">Profile</span></a
+            >
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
@@ -809,32 +814,28 @@
               .then((response) => response.json())
               .then((data) => {
                 const pastelColors = [
-                  "#D1FAE5", // hijau muda
-                  "#BFDBFE", // biru muda
-                  "#FDE68A", // kuning pastel
-                  "#FCA5A5", // merah muda
-                  "#E9D5FF", // ungu muda
-                  "#C7D2FE", // biru lembut
-                  "#FCD34D", // oranye pastel
-                  "#FBCFE8", // pink blush
-                  "#A7F3D0", // mint green
-                  "#FEF3C7"  // creamy soft yellow
+                  "rgba(16, 185, 129, 0.1)", // #10B981 - Emerald
+                  "rgba(14, 165, 233, 0.1)", // #0EA5E9 - Sky Blue
+                  "rgba(139, 92, 246, 0.1)", // #8B5CF6 - Violet
+                  "rgba(245, 158, 11, 0.1)", // #F59E0B - Amber
                 ];
-        
+
                 function getRandomPastelColor() {
-                  return pastelColors[Math.floor(Math.random() * pastelColors.length)];
+                  return pastelColors[
+                    Math.floor(Math.random() * pastelColors.length)
+                  ];
                 }
-        
+
                 function normalizeTime(rawTime) {
                   const parts = rawTime.split(":");
                   const hour = parts[0].padStart(2, "0");
                   return `${hour}:00`;
                 }
-        
+
                 data.forEach((schedule) => {
                   let { day, time, student_name } = schedule;
                   time = normalizeTime(time);
-        
+
                   const columnIndex = {
                     Sunday: 1,
                     Monday: 2,
@@ -844,7 +845,7 @@
                     Friday: 6,
                     Saturday: 7,
                   }[day];
-        
+
                   const rowIndex = {
                     "08:00": 1,
                     "09:00": 2,
@@ -860,28 +861,28 @@
                     "19:00": 12,
                     "20:00": 13,
                   }[time];
-        
+
                   if (!columnIndex || !rowIndex) {
                     console.warn(`⛔ Jadwal tidak cocok: ${day} - ${time}`);
                     return;
                   }
-        
+
                   const table = document.querySelector("table");
-                  document.querySelectorAll("tbody tr").forEach(tr => {
+                  document.querySelectorAll("tbody tr").forEach((tr) => {
                     tr.style.overflow = "visible";
                     tr.style.position = "relative";
                   });
-        
+
                   const rows = table.querySelectorAll("tbody tr");
                   const row = rows[rowIndex - 1];
                   if (!row) return;
-        
+
                   const cells = row.querySelectorAll("td");
                   const cell = cells[columnIndex - 1];
                   if (!cell) return;
-        
+
                   const bgColor = getRandomPastelColor();
-        
+
                   cell.innerHTML = `
                     <div class="p-2 mt-1 ms-1" style="
                       position: absolute;
@@ -894,14 +895,19 @@
                       color: #065F46;
                       padding: 6px;
                       font-size: 12px;
-                      z-index: 10;
+                      z-index: 5; <!-- biar card ga nabrak thead -->
                       overflow: hidden;
                     ">
-                      <div style="margin-bottom: 4px; font-weight: 500;">${time} - ${parseInt(time) + 1}:00</div>
-                      <div style="font-size: 14px; font-weight: 600;">👧 ${student_name}</div>
+                      <div style="margin-bottom: 4px; font-weight: 500;">
+                        ${time} - ${parseInt(time) + 1}:00
+                      </div>
+                      <div style="font-size: 14px; font-weight: 600;">
+                        👧 ${student_name ? student_name : "-"}
+                      </div>
+
                     </div>
                   `;
-        
+
                   cell.style.position = "relative";
                 });
               })
@@ -910,7 +916,6 @@
               });
           });
         </script>
-        
       </main>
       <!-- Main Content End -->
     </div>
