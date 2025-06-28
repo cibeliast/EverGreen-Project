@@ -24,6 +24,7 @@ import topicTeacher from './routes/teacher/topic.js';
 import quizTeacher from './routes/teacher/quiz.js';
 import forgotPasswordRouter from './routes/forgot-password/forgot-password.js';
 import resetPasswordRouter from './routes/forgot-password/reset-password.js';
+import scheduleTeacherDashboard from './routes/teacher/schedule_dashboard.js';
 
 dotenv.config();
 
@@ -64,6 +65,7 @@ app.use('/api', topicTeacher);
 app.use('/api', quizTeacher);
 app.use('/api', forgotPasswordRouter);
 app.use('/', resetPasswordRouter);
+app.use('/api', scheduleTeacherDashboard);
 
 
 // app.get('/profile', (req, res) => {
