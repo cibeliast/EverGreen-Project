@@ -44,11 +44,9 @@ router.post('/signup', async (req, res) => {
 
                 db.query(query, [email, username, hashedPassword], (err, results) => {
                     if (err) {
-                        console.error('Error inserting data: ', err);
-                        res.status(500).send('Failed saving data');
-                        return;
+                        return res.redirect('signup?error=Failed saving data!')
                     }
-                    res.send('User added!');
+                    return res.redirect('signup?success=User added!')
                 });
             } catch (hashError) {
                 console.error('Hash error: ', hashError);
@@ -77,7 +75,7 @@ router.post ('/login', (req, res) => {
     db.query(query, [username, username], async (err, results) => {
         if (err) {
             console.error(err);
-            return res.status(500).send('Database error');
+            return res.redirect('login?error=Database error!')
         } 
         if (results.length === 0) {
             return res.redirect('login?error=User not found!');
@@ -103,7 +101,7 @@ return res.redirect('/dashboard');
 router.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
-            return res.status(500).send('Failed to logout');
+            return res.redirect('login?error=Failed to logout!');
         }
         res.redirect('/login');
     });
