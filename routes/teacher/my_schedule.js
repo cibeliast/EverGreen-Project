@@ -44,4 +44,28 @@ router.get('/my_schedule', (req, res) => {
     });
 });
 
+// Endpoint untuk menambah jadwal
+router.post('/my_schedule', (req, res) => {
+    // Validasi session
+    if (!req.session.userId || req.session.folderRole !== 'teacher') {
+        return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    const { day, time } = req.body; // Ambil data dari request body
+    const teacherId = req.session.userId;
+
+    const sql = `
+        INSERT INTO schedules (day, time, teacher_id)
+        VALUES (?, ?, ?);
+    `;
+
+    db.query(sql, [day, time, teacherId], (err, results) => {
+        if (err) {
+            return res.status(500).json({ message: 'Database error', error: err });
+        }
+        res.status(201).json({ message: 'Schedule added successfully', scheduleId: results.insertId });
+    });
+});
+
+
 export default router;

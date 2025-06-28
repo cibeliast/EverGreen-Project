@@ -139,112 +139,53 @@
         <!-- My Schedule & Edit Button -->
         <div class="flex justify-between items-start w-full">
           <div>
-            <p class="font-semibold text-black text-lg select-none">
-              My Schedule
-            </p>
-            <p class="text-sm text-[#6b7280]">
-              See your teaching schedule with your assigned sessions.
-            </p>
+            <p class="font-semibold text-black text-lg select-none">My Schedule</p>
+            <p class="text-sm text-[#6b7280]">See your teaching schedule with your assigned sessions.</p>
           </div>
 
           <!-- Button Action -->
           <div class="flex justify-between items-center gap-3">
             <a id="add-Btn">
-              <button
-                class="whitespace-nowrap text-[#FFFFFF] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] hover:text-[#000000] transition transition-all duration-300"
-              >
+              <button class="whitespace-nowrap text-[#FFFFFF] px-3 py-2 text-center bg-[#1F2A44] rounded-lg font-medium hover:bg-[#CED6ED] hover:text-[#000000] transition transition-all duration-300">
                 <i class="bi bi-plus-lg mr-2"></i>Add Schedule
               </button>
             </a>
 
             <a href="/booked_schedule" id="edit-Btn">
-              <button
-                class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition transition-all duration-300"
-              >
-                <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
-              </button>
+              <button class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition transition-all duration-300">
+                <i class="bi bi-pencil-square mr-2"></i>Edit Schedule</button>
             </a>
 
             <a href="/booked_schedule" id="delete-Btn">
-              <button
-                class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFE4E6] rounded-lg font-medium hover:bg-[#E2B0B5] transition transition-all duration-300"
-              >
-                <i class="bi bi-trash3-fill mr-2"></i>Delete Schedule
-              </button>
+              <button class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFE4E6] rounded-lg font-medium hover:bg-[#E2B0B5] transition transition-all duration-300">
+                <i class="bi bi-trash3-fill mr-2"></i>Delete Schedule</button>
             </a>
           </div>
           <!-- Button Action End -->
 
           <!-- Pop Up Add Schedule -->
           <!-- Add Schedule Modal -->
-          <div
-            id="add-Modal"
-            class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20"
-          >
-            <div
-              class="bg-white p-8 rounded-2xl shadow-md text-center max-w-md w-full"
-            >
+          <div id="add-Modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+            <div class="bg-white p-8 rounded-2xl shadow-md text-center max-w-md w-full">
               <h2 class="text-2xl mb-4 font-bold">Add Your Schedule</h2>
 
               <!-- Dropdown Day -->
               <div class="relative w-full mb-4">
                 <p class="mb-1 text-left">Day</p>
-                <button
-                  id="dropdownButtonDay"
-                  type="button"
-                  class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white p-2 text-md text-black hover:bg-gray-50"
-                >
+                <button id="dropdownButtonDay" type="button" class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white p-2 text-md text-black hover:bg-gray-50">
                   <span id="selectedDay">Select a day</span>
                   <i class="bi bi-chevron-down font-bold ml-2"></i>
                 </button>
 
-                <div
-                  id="dropdownMenuDay"
-                  class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left"
-                >
+                <div id="dropdownMenuDay" class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left">
                   <div class="py-1 text-sm text-gray-700">
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Sunday"
-                    >
-                      Sunday
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Monday"
-                    >
-                      Monday
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Tuesday"
-                    >
-                      Tuesday
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Wednesday"
-                    >
-                      Wednesday
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Thursday"
-                    >
-                      Thursday
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Friday"
-                    >
-                      Friday
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-blue-100 cursor-pointer"
-                      data-value="Saturday"
-                    >
-                      Saturday
-                    </div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Sunday">Sunday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Monday">Monday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Tuesday">Tuesday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Wednesday">Wednesday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Thursday">Thursday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Friday">Friday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Saturday">Saturday</div>
                   </div>
                 </div>
               </div>
@@ -252,112 +193,33 @@
               <!-- Dropdown Time -->
               <div class="relative w-full mb-4">
                 <p class="mb-1 text-left">Time</p>
-                <button
-                  id="dropdownButtonTime"
-                  type="button"
-                  class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white p-2 text-md text-black hover:bg-gray-50"
-                >
+                <button id="dropdownButtonTime" type="button" class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white p-2 text-md text-black hover:bg-gray-50">
                   <span id="selectedTime">Select a time</span>
                   <i class="bi bi-chevron-down font-bold ml-2"></i>
                 </button>
 
-                <div
-                  id="dropdownMenuTime"
-                  class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left"
-                >
-                  <div
-                    class="py-1 text-sm text-gray-700 max-h-64 overflow-y-auto"
-                  >
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="08:00 - 09:00"
-                    >
-                      08:00 - 09:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="09:00 - 10:00"
-                    >
-                      09:00 - 10:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="10:00 - 11:00"
-                    >
-                      10:00 - 11:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="11:00 - 12:00"
-                    >
-                      11:00 - 12:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="12:00 - 13:00"
-                    >
-                      12:00 - 13:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="13:00 - 14:00"
-                    >
-                      13:00 - 14:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="14:00 - 15:00"
-                    >
-                      14:00 - 15:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="15:00 - 16:00"
-                    >
-                      15:00 - 16:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="16:00 - 17:00"
-                    >
-                      16:00 - 17:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="17:00 - 18:00"
-                    >
-                      17:00 - 18:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="18:00 - 19:00"
-                    >
-                      18:00 - 19:00
-                    </div>
-                    <div
-                      class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer"
-                      data-value="19:00 - 20:00"
-                    >
-                      19:00 - 20:00
-                    </div>
+                <div id="dropdownMenuTime" class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left">
+                  <div class="py-1 text-sm text-gray-700 max-h-64 overflow-y-auto">
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="08:00 - 09:00">08:00 - 09:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="09:00 - 10:00">09:00 - 10:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="10:00 - 11:00">10:00 - 11:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="11:00 - 12:00">11:00 - 12:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="12:00 - 13:00">12:00 - 13:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="13:00 - 14:00">13:00 - 14:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="14:00 - 15:00">14:00 - 15:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="15:00 - 16:00">15:00 - 16:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="16:00 - 17:00">16:00 - 17:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="17:00 - 18:00">17:00 - 18:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="18:00 - 19:00">18:00 - 19:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="19:00 - 20:00">19:00 - 20:00</div>
                   </div>
                 </div>
               </div>
 
               <!-- Action Buttons -->
               <div class="flex justify-center gap-4">
-                <button
-                  id="cancel-btn"
-                  class="w-[180px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
-                >
-                  Cancel
-                </button>
-                <button
-                  id="save-btn"
-                  class="w-[180px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white"
-                >
-                  Save
-                </button>
+                <button id="cancel-btn" class="w-[180px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition">Cancel</button>
+                <button id="save-btn"class="w-[180px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white">Save</button>
               </div>
             </div>
           </div>
@@ -399,52 +261,71 @@
 
             // Close dropdowns when clicking outside
             document.addEventListener("click", (e) => {
-              if (
-                !buttonDay.contains(e.target) &&
-                !menuDay.contains(e.target)
-              ) {
+              if (!buttonDay.contains(e.target) && !menuDay.contains(e.target)) {
                 menuDay.classList.add("hidden");
               }
-              if (
-                !buttonTime.contains(e.target) &&
-                !menuTime.contains(e.target)
-              ) {
+
+              if (!buttonTime.contains(e.target) && !menuTime.contains(e.target)) {
                 menuTime.classList.add("hidden");
               }
             });
 
             // Modal logic
-            const addScheduleBtn = document.getElementById("add-Btn");
-            const modal = document.getElementById("add-Modal");
-            const cancelBtn = document.getElementById("cancel-btn");
-            const saveBtn = document.getElementById("save-btn");
+  const addScheduleBtn = document.getElementById("add-Btn");
+  const modal = document.getElementById("add-Modal");
+  const cancelBtn = document.getElementById("cancel-btn");
+  const saveBtn = document.getElementById("save-btn");
 
-            if (addScheduleBtn) {
-              addScheduleBtn.addEventListener("click", () => {
-                modal.classList.remove("hidden");
-              });
-            }
+  addScheduleBtn.addEventListener("click", () => {
+      modal.classList.remove("hidden");
+  });
 
-            cancelBtn.addEventListener("click", () => {
-              modal.classList.add("hidden");
-            });
+  cancelBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+  });
 
-            saveBtn.addEventListener("click", () => {
-              const selectedDay = selectedDaySpan.textContent.trim();
-              const selectedTime = selectedTimeSpan.textContent.trim();
+  saveBtn.addEventListener("click", () => {
+      const selectedDay = selectedDaySpan.textContent.trim();
+      const selectedTime = selectedTimeSpan.textContent.trim();
 
-              if (selectedDay === "Select a day") {
-                alert("Please select a day.");
-                return;
-              } else if (selectedTime === "Select a time") {
-                alert("Please select a time.");
-                return;
-              }
-              console.log(
-                `Saving schedule for ${selectedDay} at ${selectedTime}`
-              );
-              modal.classList.add("hidden");
-            });
+      if (selectedDay === "Select a day") {
+          alert("Please select a day.");
+          return;
+      } else if (selectedTime === "Select a time") {
+          alert("Please select a time.");
+          return;
+      }
+
+      // Ambil studentId dari input atau dropdown (misalnya, jika ada)
+      //const studentId = 1; // Ganti dengan ID siswa yang sesuai
+
+      // Kirim data ke server
+      fetch("/api/my_schedule", {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              day: selectedDay,
+              time: selectedTime,
+              //studentId: studentId,
+          }),
+      })
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json();
+      })
+      .then(data => {
+          console.log('Schedule added:', data);
+          modal.classList.add("hidden");
+          loadScheduleData(); // Refresh jadwal setelah menambah
+      })
+      .catch(error => {
+          console.error('Error adding schedule:', error);
+      });
+  });
           </script>
         </div>
         <!-- My Schedule & Edit Button End -->
@@ -456,56 +337,15 @@
           <table class="w-full rounded-lg" style="table-layout: fixed">
             <thead class="sticky top-0 z-10 bg-[#FFFFFF]">
               <tr>
-                <th
-                  class="text-[#94a3b8] font-normal text-[14px] py-2 px-1 rounded-tl-lg select-none"
-                  style="width: 3.5%; height: 40px"
-                ></th>
-                <th
-                  class="bg-[#FFE4E6] text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center"
-                  style="width: 9.5%"
-                >
-                  SUN
-                </th>
-                <th
-                  class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center sticky"
-                  style="width: 9.5%"
-                >
-                  MON
-                </th>
-                <th
-                  class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center"
-                  style="width: 9.5%"
-                >
-                  TUE
-                </th>
-                <th
-                  class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center"
-                  style="width: 9.5%"
-                >
-                  WED
-                </th>
-                <th
-                  class="bg-blue-50 text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center"
-                  style="width: 9.5%"
-                >
-                  THU
-                </th>
-                <th
-                  class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center"
-                  style="width: 9.5%"
-                >
-                  FRI
-                </th>
-                <th
-                  class="bg-gray-100 text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 select-none text-center"
-                  style="width: 9.5%"
-                >
-                  SAT
-                </th>
-                <th
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                  style="width: 3%"
-                ></th>
+                <th class="text-[#94a3b8] font-normal text-[14px] py-2 px-1 rounded-tl-lg select-none" style="width: 3.5%; height: 40px"></th>
+                <th class="bg-[#FFE4E6] text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center" style="width: 9.5%">SUN</th>
+                <th class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center sticky" style="width: 9.5%">MON</th>
+                <th class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center" style="width: 9.5%">TUE</th>
+                <th class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center" style="width: 9.5%">WED</th>
+                <th class="bg-blue-50 text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center" style="width: 9.5%">THU</th>
+                <th class="text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 border-r border-[#E0E0E0] select-none text-center" style="width: 9.5%">FRI</th>
+                <th class="bg-gray-100 text-[#1F2A44] font-extrabold text-[20px] py-2 px-3 select-none text-center" style="width: 9.5%">SAT</th>
+                <th class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none" style="width: 3%"></th>
               </tr>
             </thead>
 
@@ -513,12 +353,7 @@
             <tbody>
               <!-- 08:00 row -->
               <tr class="border-t border-[#E0E0E0]">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  08:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">08:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
@@ -526,21 +361,12 @@
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  08:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">08:00</td>
               </tr>
 
               <!-- 09:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  09:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">09:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
@@ -548,21 +374,12 @@
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  09:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">09:00</td>
               </tr>
 
               <!-- 10:00 row -->
               <tr class="border-t border-[#E0E0E0]">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  10:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">10:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
@@ -570,21 +387,12 @@
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  10:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">10:00</td>
               </tr>
 
               <!-- 11:00 row -->
               <tr class="border-t border-[#E0E0E0]">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  11:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">11:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
@@ -592,21 +400,12 @@
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  11:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">11:00</td>
               </tr>
 
               <!-- 12:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  12:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">12:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
@@ -614,21 +413,12 @@
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  12:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">12:00</td>
               </tr>
 
               <!-- 13:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  13:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">13:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
@@ -636,172 +426,98 @@
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  13:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">13:00</td>
               </tr>
 
               <!-- 14:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  14:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">14:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  14:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">14:00</td>
               </tr>
 
               <!-- 15:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  15:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">15:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  15:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">15:00</td>
               </tr>
 
               <!-- 16:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  16:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">16:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  16:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">16:00</td>
               </tr>
 
               <!-- 17:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  17:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">17:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  17:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">17:00</td>
               </tr>
 
               <!-- 18:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  18:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">18:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  18:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">18:00</td>
               </tr>
 
               <!-- 19:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  19:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center" style="height: 60px">19:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  19:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">19:00</td>
               </tr>
 
               <!-- 20:00 row -->
               <tr class="border-t border-[#E0E0E0] relative">
-                <th
-                  class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"
-                  style="height: 60px"
-                >
-                  20:00
-                </th>
+                <th class="text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none text-center"style="height: 60px">20:00</th>
                 <td class="bg-[#FFE4E6] border-r border-[#E0E0E0]"></td>
-
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-blue-50 border-r border-[#E0E0E0]"></td>
                 <td class="border-r border-[#E0E0E0]"></td>
                 <td class="bg-gray-100 border-[#E0E0E0]"></td>
-                <td
-                  class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none"
-                >
-                  20:00
-                </td>
+                <td class="bg-gray-100 text-[#94a3b8] font-normal text-[12px] py-2 px-1 select-none">20:00</td>
               </tr>
             </tbody>
           </table>
