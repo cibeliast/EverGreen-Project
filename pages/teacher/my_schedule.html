@@ -120,7 +120,7 @@
           <a
             aria-current="page"
             class="text-[#67998D] font-semibold border-b-2 border-[#67998D] pb-1 text-md"
-            href="#"
+          
             >My schedule</a
           >
         </nav>
@@ -140,12 +140,11 @@
               </button>
             </a>
 
-            <a href="/booked_schedule" id="edit-Btn">
-              <button class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition transition-all duration-300">
-                <i class="bi bi-pencil-square mr-2"></i>Edit Schedule</button>
-            </a>
+            <button id="edit-Btn" class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFF7D4] rounded-lg font-medium hover:bg-[#E6D99F] transition transition-all duration-300">
+              <i class="bi bi-pencil-square mr-2"></i>Edit Schedule
+            </button>
 
-            <a href="/booked_schedule" id="delete-Btn">
+            <a id="delete-Btn">
               <button class="whitespace-nowrap text-[#000000] px-3 py-2 text-center bg-[#FFE4E6] rounded-lg font-medium hover:bg-[#E2B0B5] transition transition-all duration-300">
                 <i class="bi bi-trash3-fill mr-2"></i>Delete Schedule</button>
             </a>
@@ -213,8 +212,70 @@
             </div>
           </div>
           <!-- Pop Up Add End -->
-        </div>
-        <!-- My Schedule & Edit Button End -->
+
+          <!-- Modal Edit Schedule Start -->
+          <div id="editModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-20">
+            <div class="bg-white p-8 rounded-2xl shadow-md text-center max-w-md w-full">
+              <h2 class="text-2xl mb-4 font-bold">Edit Your Schedule</h2>
+              
+              <!-- Dropdown Day -->
+              <div class="relative w-full mb-4">
+                <p class="mb-1 text-left">Day</p>
+                <button id="editDropdownButtonDay" type="button" class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white p-2 text-md text-black hover:bg-gray-50">
+                  <span id="editSelectedDay">Select a day</span>
+                  <i class="bi bi-chevron-down font-bold ml-2"></i>
+                </button>
+
+                <div id="editDropdownMenuDay" class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left">
+                  <div class="py-1 text-sm text-gray-700">
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Sunday">Sunday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Monday">Monday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Tuesday">Tuesday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Wednesday">Wednesday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Thursday">Thursday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Friday">Friday</div>
+                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Saturday">Saturday</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Dropdown Time -->
+              <div class="relative w-full mb-4">
+                <p class="mb-1 text-left">Time</p>
+                <button id="editDropdownButtonTime" type="button" class="inline-flex justify-between w-full rounded-md border border-gray-300 bg-white p-2 text-md text-black hover:bg-gray-50">
+                  <span id="editSelectedTime">Select a time</span>
+                  <i class="bi bi-chevron-down font-bold ml-2"></i>
+                </button>
+
+                <div id="editDropdownMenuTime" class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left">
+                  <div class="py-1 text-sm text-gray-700 max-h-64 overflow-y-auto">
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="08:00 - 09:00">08:00 - 09:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="09:00 - 10:00">09:00 - 10:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="10:00 - 11:00">10:00 - 11:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="11:00 - 12:00">11:00 - 12:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="12:00 - 13:00">12:00 - 13:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="13:00 - 14:00">13:00 - 14:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="14:00 - 15:00">14:00 - 15:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="15:00 - 16:00">15:00 - 16:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="16:00 - 17:00">16:00 - 17:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="17:00 - 18:00">17:00 - 18:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="18:00 - 19:00">18:00 - 19:00</div>
+                    <div class="px-4 py-2 hover:bg-[#CDECE5] cursor-pointer" data-value="19:00 - 20:00">19:00 - 20:00</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex justify-center gap-4">
+                <button id="edit-cancel-btn" class="w-[180px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition">Cancel</button>
+                <button id="update-btn"class="w-[180px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white">Update</button>
+              </div>
+
+              
+            </div>
+          </div><!-- Modal Edit Schedule End -->
+
+        </div><!-- My Schedule & Edit Button End -->
 
         <!-- Tabel Jadwal -->
         <section class="max-h-[480px] overflow-y-auto scroll-container rounded-xl overflow-hidden bg-white">
@@ -418,6 +479,7 @@
               .then((data) => {
                 existingSchedule = data;
                 renderSchedule(data); // render semua jadwal ke tabel
+                enableEditListeners();
               })
               .catch((err) => {
                 console.error("Error fetching schedule:", err);
@@ -470,12 +532,13 @@
         
               const bgColor = getRandomPastelColor();
               cell.innerHTML = `
-                <div class="p-2 mt-4 ms-1" style="
+              
+                <div class="p-2 mt-4 ms-1 schedule-card" data-id="${schedule.schedule_id}" data-student="${schedule.student_id}" data-day="${day}" data-time="${parseInt(time)}" " style="
                   position: absolute;
                   top: 0;
                   left: 4px;
                   width: 90%;
-                  height: calc(2 * 29px);
+                  height: calc(2 * 28px); 
                   background-color: ${bgColor};
                   border-radius: 6px;
                   color: #065F46;
@@ -621,8 +684,166 @@
               });
           });
           
-          
-          
+        // Tambahan logika edit jadwal (frontend)
+
+// Tambahan logika edit jadwal (frontend)
+
+let isEditMode = false;
+const editScheduleBtn = document.getElementById("edit-Btn");
+const editModal = document.getElementById("editModal");
+const editDaySpan = document.getElementById("editSelectedDay");
+const editTimeSpan = document.getElementById("editSelectedTime");
+const editUpdateBtn = document.getElementById("update-btn");
+const editCloseBtn = document.getElementById("edit-cancel-btn");
+
+editScheduleBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  isEditMode = !isEditMode;
+
+  if (isEditMode) {
+    // Mode Edit Aktif
+    editScheduleBtn.classList.remove("bg-[#FFF7D4]", "hover:bg-[#E6D99F]");
+    editScheduleBtn.classList.add("bg-[#E6D99F]", "hover:bg-[#FFF7D4]");
+    editScheduleBtn.innerHTML = '<i class="bi bi-x-circle mr-2"></i>Close Edit';
+
+    document.querySelectorAll(".schedule-card").forEach((card) => {
+      card.classList.add("editable-card");
+    });
+  } else {
+    // Mode Edit Tidak Aktif (kembali normal)
+    editScheduleBtn.classList.remove("bg-[#E6D99F]", "hover:bg-[#FFF7D4]");
+    editScheduleBtn.classList.add("bg-[#FFF7D4]", "hover:bg-[#E6D99F]");
+    editScheduleBtn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Schedule';
+    
+    document.querySelectorAll(".schedule-card").forEach((card) => {
+      card.classList.remove("editable-card");
+    });
+  }
+});
+
+function enableEditListeners() {
+  document.querySelectorAll(".schedule-card").forEach((card) => {
+    card.addEventListener("click", () => {
+      if (!isEditMode) return;
+
+      const studentId = card.getAttribute("data-student");
+      const scheduleId = card.getAttribute("data-id");
+
+      if (studentId !== "null" && studentId !== null) {
+        alert("❌ Jadwal ini sudah memiliki siswa. Silakan kosongkan siswa terlebih dahulu sebelum mengedit jadwal.");
+        return;
+      }
+
+      editModal.setAttribute("data-id", scheduleId);
+      editModal.classList.remove("hidden");
+
+      const day = card.getAttribute("data-day");
+      const timeStart = card.getAttribute("data-time") + ":00";
+      const timeEnd = (parseInt(card.getAttribute("data-time")) + 1).toString().padStart(2, "0") + ":00";
+      const timeRange = `${timeStart} - ${timeEnd}`;
+
+      editDaySpan.textContent = day;
+      editTimeSpan.textContent = timeRange;
+    });
+  });
+}
+
+document.querySelectorAll("#editDropdownMenuDay div[data-value]").forEach((item) => {
+  item.addEventListener("click", () => {
+    editDaySpan.textContent = item.getAttribute("data-value");
+    document.getElementById("editDropdownMenuDay").classList.add("hidden");
+  });
+});
+
+document.querySelectorAll("#editDropdownMenuTime div[data-value]").forEach((item) => {
+  item.addEventListener("click", () => {
+    editTimeSpan.textContent = item.getAttribute("data-value");
+    document.getElementById("editDropdownMenuTime").classList.add("hidden");
+  });
+});
+
+document.getElementById("editDropdownButtonDay").addEventListener("click", () => {
+  document.getElementById("editDropdownMenuDay").classList.toggle("hidden");
+});
+
+document.getElementById("editDropdownButtonTime").addEventListener("click", () => {
+  document.getElementById("editDropdownMenuTime").classList.toggle("hidden");
+});
+
+document.addEventListener("click", (e) => {
+  const dayBtn = document.getElementById("editDropdownButtonDay");
+  const timeBtn = document.getElementById("editDropdownButtonTime");
+  const dayMenu = document.getElementById("editDropdownMenuDay");
+  const timeMenu = document.getElementById("editDropdownMenuTime");
+
+  if (!dayBtn.contains(e.target) && !dayMenu.contains(e.target)) {
+    dayMenu.classList.add("hidden");
+  }
+  if (!timeBtn.contains(e.target) && !timeMenu.contains(e.target)) {
+    timeMenu.classList.add("hidden");
+  }
+});
+
+editUpdateBtn.addEventListener("click", () => {
+  const scheduleId = editModal.getAttribute("data-id");
+  const newDay = editDaySpan.textContent.trim();
+  const newTime = editTimeSpan.textContent.split(" - ")[0].trim();
+
+  function timeToMinutes(timeStr) {
+    const [hour, minute] = timeStr.split(":" ).map(Number);
+    return hour * 60 + minute;
+  }
+
+  function isTimeOverlap(start1, end1, start2, end2) {
+    return !(end1 <= start2 || end2 <= start1);
+  }
+
+  const selectedStartMin = timeToMinutes(newTime);
+  const selectedEndMin = selectedStartMin + 60;
+
+  const isConflict = existingSchedule.some((s) => {
+    const existingStartMin = timeToMinutes(s.time);
+    const existingEndMin = existingStartMin + 60;
+
+    return s.day === newDay && isTimeOverlap(
+      selectedStartMin,
+      selectedEndMin,
+      existingStartMin,
+      existingEndMin
+    ) && s.schedule_id != scheduleId;
+  });
+
+  if (isConflict) {
+    alert("❌ Jadwal bentrok dengan jadwal lain. Silakan pilih waktu lain.");
+    return;
+  }
+
+  fetch(`/api/my_schedule/${scheduleId}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ day: newDay, time: newTime, student_id: null })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Gagal update jadwal");
+      return res.json();
+    })
+    .then(() => {
+      alert("✅ Jadwal berhasil diperbarui!");
+      window.location.reload();
+    })
+    .catch(err => {
+      console.error(err);
+      alert("❌ Gagal memperbarui jadwal.");
+    });
+});
+
+editCloseBtn.addEventListener("click", () => {
+  editModal.classList.add("hidden");
+  editModal.removeAttribute("data-id");
+  editDaySpan.textContent = "Select a day";
+  editTimeSpan.textContent = "Select a time";
+});
+
           
         </script>
         
@@ -678,4 +899,11 @@
   .scroll-container:active {
     cursor: grabbing;
   }
+
+  .editable-card {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+  }
+  
 </style>
