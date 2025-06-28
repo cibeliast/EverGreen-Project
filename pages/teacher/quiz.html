@@ -462,10 +462,10 @@
               isActionMode = !isActionMode;
 
               if (isActionMode) {
-                actionBtn.classList.remove("bg-[#CEE8E2]");
-                actionBtn.classList.add("bg-[#9FD3C7]");
-                actionBtn.innerHTML =
-                  '<i class="bi bi-x-circle mr-2"></i>Close Action';
+                // Mode Action Aktif
+                actionBtn.classList.remove("bg-[#CEE8E2]", "hover:bg-[#9FD3C7]");
+                actionBtn.classList.add("bg-[#9FD3C7]", "hover:bg-[#CEE8E2]");
+                actionBtn.innerHTML = '<i class="bi bi-x-circle mr-2"></i>Close Action';
 
                 // Add checkbox column to the table
                 const thead = document.querySelector("thead tr");
@@ -479,10 +479,10 @@
                 // Fetch and display quiz data with checkboxes
                 await fetchQuizDataWithCheckboxes();
               } else {
-                actionBtn.classList.add("bg-[#CEE8E2]");
-                actionBtn.classList.remove("bg-[#9FD3C7]");
-                actionBtn.innerHTML =
-                  '<i class="bi bi-hand-index-thumb-fill mr-2"></i>Action';
+                // Mode Action Nonaktif
+                actionBtn.classList.remove("bg-[#9FD3C7]", "hover:bg-[#CEE8E2]");
+                actionBtn.classList.add("bg-[#CEE8E2]", "hover:bg-[#9FD3C7]");
+                actionBtn.innerHTML = '<i class="bi bi-hand-index-thumb-fill mr-2"></i>Action';
 
                 // Remove checkbox column from the table
                 const thead = document.querySelector("thead tr");
