@@ -470,12 +470,12 @@
         
               const bgColor = getRandomPastelColor();
               cell.innerHTML = `
-                <div class="p-2 mt-1 ms-1" style="
+                <div class="p-2 mt-4 ms-1" style="
                   position: absolute;
                   top: 0;
                   left: 4px;
                   width: 90%;
-                  height: calc(2 * 56px);
+                  height: calc(2 * 29px);
                   background-color: ${bgColor};
                   border-radius: 6px;
                   color: #065F46;
@@ -585,7 +585,7 @@
           
             const isConflict = existingSchedule.some((s) => {
               const existingStartMin = timeToMinutes(s.time);
-              const existingEndMin = existingStartMin + 120; // jaraknya dibuat 2 jam. jd biar bisa nambah di jam stlhnya, biar ga bentrok. nek +60 nnti di jam bentrok mlh msih bs nambah
+              const existingEndMin = existingStartMin + 60; // jaraknya dibuat 2 jam. jd biar bisa nambah di jam stlhnya, biar ga bentrok. nek +60 nnti di jam bentrok mlh msih bs nambah
           
               return s.day === selectedDay && isTimeOverlap(
                 selectedStartMin, selectedEndMin,
