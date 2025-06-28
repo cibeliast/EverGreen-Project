@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="style.css">
-    <title>Log In</title>
+    <title>Evergreen | Log In</title>
 </head>
 <body>
     <div class="container-fluid">
@@ -38,19 +38,9 @@
             <img src="/assets/login.png" alt="">
         </div>
     </div>
-
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const error = params.get('error');
-        if (error) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: decodeURIComponent(error)
-            });
-        }
     </script>
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script type="module" src="/js/authStatusHandler.js"></script>
 </body>
 </html>
 

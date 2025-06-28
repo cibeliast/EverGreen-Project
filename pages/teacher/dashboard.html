@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dashboard Teacher</title>
+    <title>Teacher Dashboard</title>
 
     <!-- Tailwind CSS-->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -99,7 +99,7 @@
             </a>
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
+              href="/logout"
             >
               <i class="bi bi-box-arrow-right"></i>
               <span class="title">Log out</span>
@@ -259,111 +259,7 @@
                       </tr>
                     </thead>
 
-                    <tbody class="text-gray-700">
-                      <!-- Schedule rows -->
-                      <tr class="border">
-                        <td class="py-3 px-4">1</td>
-                        <td class="py-3 px-4">Monday</td>
-                        <td class="py-3 px-4">08:00 - 09:00</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            <span
-                              class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                              >K</span
-                            >
-                            <span class="font-semibold text-gray-900"
-                              >Ketty</span
-                            >
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr class="border">
-                        <td class="py-3 px-4">2</td>
-                        <td class="py-3 px-4">Monday</td>
-                        <td class="py-3 px-4">08:00 - 09:00</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            <span
-                              class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                              >K</span
-                            >
-                            <span class="font-semibold text-gray-900"
-                              >Ketty</span
-                            >
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr class="border">
-                        <td class="py-3 px-4">3</td>
-                        <td class="py-3 px-4">Tuesday</td>
-                        <td class="py-3 px-4">08:00 - 09:00</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            <span
-                              class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                              >K</span
-                            >
-                            <span class="font-semibold text-gray-900"
-                              >Ketty</span
-                            >
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr class="border">
-                        <td class="py-3 px-4">4</td>
-                        <td class="py-3 px-4">Monday</td>
-                        <td class="py-3 px-4">08:00 - 09:00</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            <span
-                              class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                              >K</span
-                            >
-                            <span class="font-semibold text-gray-900"
-                              >Ketty</span
-                            >
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr class="border">
-                        <td class="py-3 px-4">4</td>
-                        <td class="py-3 px-4">Monday</td>
-                        <td class="py-3 px-4">08:00 - 09:00</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            <span
-                              class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                              >K</span
-                            >
-                            <span class="font-semibold text-gray-900"
-                              >Ketty</span
-                            >
-                          </div>
-                        </td>
-                      </tr>
-
-                      <tr class="border">
-                        <td class="py-3 px-4">4</td>
-                        <td class="py-3 px-4">Monday</td>
-                        <td class="py-3 px-4">08:00 - 09:00</td>
-                        <td class="py-3 px-4">
-                          <div class="flex items-center space-x-2">
-                            <span
-                              class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none"
-                              >K</span
-                            >
-
-                            <!-- Judul -->
-                            <span class="font-semibold text-gray-900"
-                              >Ketty</span
-                            >
-                          </div>
-                        </td>
-                      </tr>
+                    <tbody id="schedule-body" class="text-gray-700">
                     </tbody>
                   </table>
                 </div>
@@ -601,6 +497,58 @@
         flatpickr("#myCalendar", {
           inline: true,
           defaultDate: "today",
+        });
+      </script>
+      <script>
+        document.addEventListener('DOMContentLoaded', () => {
+          fetch('/api/scheduleTeacherDashboard') // ganti jika route kamu beda
+            .then(res => {
+              if (!res.ok) throw new Error("Unauthorized or error");
+              return res.json();
+            })
+            .then(data => {
+              const tbody = document.getElementById('schedule-body');
+              tbody.innerHTML = ''; // Clear if needed
+
+              if (data.length === 0) {
+                tbody.innerHTML = `
+                  <tr>
+                    <td colspan="4" class="text-center py-3">No schedule available</td>
+                  </tr>
+                `;
+                return;
+              }
+
+              data.forEach((item, index) => {
+                const row = document.createElement('tr');
+                row.className = 'border';
+                row.innerHTML = `
+                  <td class="py-3 px-4">${index + 1}</td>
+                  <td class="py-3 px-4">${item.day}</td>
+                  <td class="py-3 px-4">${item.time}</td>
+                  <td class="py-3 px-4">
+                    <div class="flex items-center space-x-2">
+                      <span class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none">
+                        ${item.student_name.charAt(0).toUpperCase()}
+                      </span>
+                      <span class="font-semibold text-gray-900">
+                        ${item.student_name}
+                      </span>
+                    </div>
+                  </td>
+                `;
+                tbody.appendChild(row);
+              });
+            })
+            .catch(error => {
+              console.error("Error fetching schedule:", error);
+              const tbody = document.getElementById('schedule-body');
+              tbody.innerHTML = `
+                <tr>
+                  <td colspan="4" class="text-center py-3 text-red-500">Failed to load schedule</td>
+                </tr>
+              `;
+            });
         });
       </script>
     </div>

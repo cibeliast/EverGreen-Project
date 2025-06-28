@@ -3,13 +3,19 @@ import db from '../../db/db.js';
 
 const router = express.Router();
 
-router.get('/studentSchedule', (req, res) => {
+router.get('/scheduleTeacherDashboard', (req, res) => {
     if(!req.session.userId) {
         return res.status(401).send('Unauthorized, please login!');
     }
 
     const userId = req.session.userId;
-    const query = 'SELECT * FROM student_schedule_view WHERE student_id = ?';
+    const query = `SELECT 
+                    s.day,
+                    s.time,
+                    st.name AS student_name
+                    FROM schedules s
+                    JOIN students st ON s.student_id = st.student_id
+                    WHERE s.teacher_id = ?`;
 
     db.query(query, [userId], (err, results) => {
         if (err) {

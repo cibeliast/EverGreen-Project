@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Quizz Page</title>
+    <title>Quiz Page</title>
 
     <!-- Tailwind CSS-->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -103,10 +103,7 @@
               <span class="title">Profile</span>
             </a>
 
-            <a
-              class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
-            >
+            <a class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors" href="#">
               <i class="bi bi-box-arrow-right"></i>
               <span class="title">Log out</span>
             </a>
@@ -448,15 +445,15 @@
                 const data = await res.json();
                 if (data.success) {
                   await fetchQuizData(); // Refresh table
-                  alert("Quiz successfully added!");
+                  showStatus("Quiz successfully added!", "/assets/success.png");
                   addForm.reset();
                   addModal.classList.add("hidden");
                 } else {
-                  alert("❌ Gagal menyimpan quiz.");
+                  showStatus("Failed to save quiz!", "/assets/error.png");
                 }
               } catch (err) {
                 console.error("DETAIL ERROR:", err);
-                alert("❌ Terjadi kesalahan saat menyimpan.");
+                showStatus(err.message || "Something went wrong!", "/assets/error.png");
               }
             });
 
@@ -622,105 +619,87 @@
               }
             }
 
-            // ==== 6. LOAD SAAT PERTAMA KALI ====
-            fetchTopicDetail();
-            fetchQuizData();
-
-            // === Edit Quiz Modal ===
-            async function openEditModal(quizId) {
-              try {
-                const res = await fetch(`/api/quizTeacher/${quizId}`, {
-                  method: "GET",
-                  credentials: "include",
-                });
-                const quiz = await res.json();
-
-                document.getElementById("editQuizName").value = quiz.quiz_link;
-                document.getElementById("editResultName").value =
-                  quiz.result_link;
-                document
-                  .getElementById("editQuizModal")
-                  .classList.remove("hidden");
-
-                const editForm = document.querySelector("#editQuizModal form");
-                editForm.onsubmit = async function (e) {
-                  e.preventDefault();
-                  const updatedQuizLink = document
-                    .getElementById("editQuizName")
-                    .value.trim();
-                  const updatedResultLink = document
-                    .getElementById("editResultName")
-                    .value.trim();
-
-                  try {
-                    const updateRes = await fetch(
-                      `/api/quizTeacher/${quizId}`,
-                      {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        credentials: "include",
-                        body: JSON.stringify({
-                          quizLink: updatedQuizLink,
-                          resultLink: updatedResultLink,
-                        }),
-                      }
-                    );
-
-                    const updateData = await updateRes.json();
-                    if (updateData.success) {
-                      alert("✅ Quiz updated successfully.");
-                      document
-                        .getElementById("editQuizModal")
-                        .classList.add("hidden");
-                      exitActionMode();
-                    } else {
-                      alert("❌ Gagal update quiz.");
-                    }
-                  } catch (err) {
-                    console.error("Gagal update:", err);
-                    alert("❌ Terjadi kesalahan.");
-                  }
-                };
-              } catch (err) {
-                console.error("Gagal fetch quiz by ID:", err);
-                alert("❌ Tidak bisa buka data quiz.");
-              }
-            }
-
-            // Tombol cancel modal edit
-            document
-              .getElementById("cancelEditQuiz")
-              .addEventListener("click", () => {
-                document
-                  .getElementById("editQuizModal")
-                  .classList.add("hidden");
-              });
-
-            // === Delete Quiz ===
-            async function confirmDelete(quizId) {
-              const confirmHapus = confirm(
-                "Apakah kamu yakin ingin menghapus quiz ini?"
-              );
-              if (!confirmHapus) return;
-
-              try {
-                const res = await fetch(`/api/quizTeacher/${quizId}`, {
-                  method: "DELETE",
-                  credentials: "include",
-                });
-                const data = await res.json();
-
-                if (data.success) {
-                  alert("🗑️ Quiz berhasil dihapus.");
-                  exitActionMode();
-                } else {
-                  alert("❌ Gagal menghapus quiz.");
-                }
-              } catch (err) {
-                console.error("Gagal hapus quiz:", err);
-                alert("❌ Terjadi kesalahan saat menghapus.");
-              }
-            }
+                        // ==== 6. LOAD SAAT PERTAMA KALI ====
+                        fetchTopicDetail();
+                        fetchQuizData();
+            
+                        // === Edit Quiz Modal ===
+                        async function openEditModal(quizId) {
+                          try {
+                            const res = await fetch(`/api/quizTeacher/${quizId}`, {
+                              method: "GET",
+                              credentials: "include",
+                            });
+                            const quiz = await res.json();
+            
+                            document.getElementById("editQuizName").value = quiz.quiz_link;
+                            document.getElementById("editResultName").value = quiz.result_link;
+                            document.getElementById("editQuizModal").classList.remove("hidden");
+            
+                            const editForm = document.querySelector("#editQuizModal form");
+                            editForm.onsubmit = async function (e) {
+                              e.preventDefault();
+                              const updatedQuizLink = document.getElementById("editQuizName").value.trim();
+                              const updatedResultLink = document.getElementById("editResultName").value.trim();
+            
+                              try {
+                                const updateRes = await fetch(`/api/quizTeacher/${quizId}`, {
+                                  method: "PUT",
+                                  headers: { "Content-Type": "application/json" },
+                                  credentials: "include",
+                                  body: JSON.stringify({
+                                    quizLink: updatedQuizLink,
+                                    resultLink: updatedResultLink,
+                                  }),
+                                });
+            
+                                const updateData = await updateRes.json();
+                                if (updateData.success) {
+                                  alert("✅ Quiz updated successfully.");
+                                  document.getElementById("editQuizModal").classList.add("hidden");
+                                  exitActionMode();
+                                } else {
+                                  alert("❌ Gagal update quiz.");
+                                }
+                              } catch (err) {
+                                console.error("Gagal update:", err);
+                                alert("❌ Terjadi kesalahan.");
+                              }
+                            };
+                          } catch (err) {
+                            console.error("Gagal fetch quiz by ID:", err);
+                            alert("❌ Tidak bisa buka data quiz.");
+                          }
+                        }
+            
+                        // Tombol cancel modal edit
+                        document.getElementById("cancelEditQuiz").addEventListener("click", () => {
+                          document.getElementById("editQuizModal").classList.add("hidden");
+                        });
+            
+                        // === Delete Quiz ===
+                        async function confirmDelete(quizId) {
+                          const confirmHapus = confirm("Apakah kamu yakin ingin menghapus quiz ini?");
+                          if (!confirmHapus) return;
+            
+                          try {
+                            const res = await fetch(`/api/quizTeacher/${quizId}`, {
+                              method: "DELETE",
+                              credentials: "include",
+                            });
+                            const data = await res.json();
+            
+                            if (data.success) {
+                              alert("🗑️ Quiz berhasil dihapus.");
+                              exitActionMode();
+                            } else {
+                              alert("❌ Gagal menghapus quiz.");
+                            }
+                          } catch (err) {
+                            console.error("Gagal hapus quiz:", err);
+                            alert("❌ Terjadi kesalahan saat menghapus.");
+                          }
+                        }
 
             function exitActionMode() {
               isActionMode = false;
@@ -750,6 +729,11 @@
 
     <!-- JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module">
+      import { setupStatusModal, showStatus } from '/js/statusModal.js';
+      setupStatusModal();
+      window.showStatus = showStatus;
+    </script>
   </body>
 </html>
 
