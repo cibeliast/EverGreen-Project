@@ -40,8 +40,7 @@
           <a
             id="brandTitle"
             class="text-white d-block font-extrabold text-lg mb-4 mt-2 text-center"
-            href=""
-          >
+            href="">
             <span>EverGreen</span>
           </a>
 
@@ -50,8 +49,7 @@
           <nav class="flex flex-col gap-5 text-sm">
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/dashboard/teacher"
-            >
+              href="/dashboard/teacher">
               <i class="bi bi-grid-1x2"></i>
               <span class="title">Dashboard</span>
             </a>
@@ -63,24 +61,21 @@
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/teacher/students"
-            >
+              href="/teacher/students">
               <i class="bi bi-people"></i>
               <span class="title">Students</span>
             </a>
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/topicTeacher"
-            >
+              href="/topicTeacher">
               <i class="bi bi-question-circle"></i>
               <span class="title">Quizzes</span>
             </a>
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/payment"
-            >
+              href="/payment">
               <i class="bi bi-credit-card-2-back"></i>
               <span class="title">Payment History</span>
             </a>
@@ -94,17 +89,11 @@
           <nav class="flex flex-col gap-5 text-sm font-semibold text-[#a3c0d9]">
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="#"
-              ><i class="bi bi-person-circle"></i
-              ><span class="title">Profile</span></a
-            >
+              href="#"><i class="bi bi-person-circle"></i><span class="title">Profile</span></a>
 
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/logout"
-              ><i class="bi bi-box-arrow-right"></i
-              ><span class="title">Log out</span></a
-            >
+              href="/logout"><i class="bi bi-box-arrow-right"></i><span class="title">Log out</span></a>
           </nav>
         </div>
         <!-- Nav bawah End-->
@@ -224,116 +213,11 @@
             </div>
           </div>
           <!-- Pop Up Add End -->
-
-          <!-- Script: Dropdown + Modal -->
-          <script>
-            // Day Dropdown
-            const buttonDay = document.getElementById("dropdownButtonDay");
-            const menuDay = document.getElementById("dropdownMenuDay");
-            const selectedDaySpan = document.getElementById("selectedDay");
-
-            buttonDay.addEventListener("click", () => {
-              menuDay.classList.toggle("hidden");
-            });
-
-            menuDay.querySelectorAll("div[data-value]").forEach((item) => {
-              item.addEventListener("click", () => {
-                selectedDaySpan.textContent = item.getAttribute("data-value");
-                menuDay.classList.add("hidden");
-              });
-            });
-
-            // Time Dropdown
-            const buttonTime = document.getElementById("dropdownButtonTime");
-            const menuTime = document.getElementById("dropdownMenuTime");
-            const selectedTimeSpan = document.getElementById("selectedTime");
-
-            buttonTime.addEventListener("click", () => {
-              menuTime.classList.toggle("hidden");
-            });
-
-            menuTime.querySelectorAll("div[data-value]").forEach((item) => {
-              item.addEventListener("click", () => {
-                selectedTimeSpan.textContent = item.getAttribute("data-value");
-                menuTime.classList.add("hidden");
-              });
-            });
-
-            // Close dropdowns when clicking outside
-            document.addEventListener("click", (e) => {
-              if (!buttonDay.contains(e.target) && !menuDay.contains(e.target)) {
-                menuDay.classList.add("hidden");
-              }
-
-              if (!buttonTime.contains(e.target) && !menuTime.contains(e.target)) {
-                menuTime.classList.add("hidden");
-              }
-            });
-
-            // Modal logic
-  const addScheduleBtn = document.getElementById("add-Btn");
-  const modal = document.getElementById("add-Modal");
-  const cancelBtn = document.getElementById("cancel-btn");
-  const saveBtn = document.getElementById("save-btn");
-
-  addScheduleBtn.addEventListener("click", () => {
-      modal.classList.remove("hidden");
-  });
-
-  cancelBtn.addEventListener("click", () => {
-      modal.classList.add("hidden");
-  });
-
-  saveBtn.addEventListener("click", () => {
-      const selectedDay = selectedDaySpan.textContent.trim();
-      const selectedTime = selectedTimeSpan.textContent.trim();
-
-      if (selectedDay === "Select a day") {
-          alert("Please select a day.");
-          return;
-      } else if (selectedTime === "Select a time") {
-          alert("Please select a time.");
-          return;
-      }
-
-      // Ambil studentId dari input atau dropdown (misalnya, jika ada)
-      //const studentId = 1; // Ganti dengan ID siswa yang sesuai
-
-      // Kirim data ke server
-      fetch("/api/my_schedule", {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              day: selectedDay,
-              time: selectedTime,
-              //studentId: studentId,
-          }),
-      })
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json();
-      })
-      .then(data => {
-          console.log('Schedule added:', data);
-          modal.classList.add("hidden");
-          loadScheduleData(); // Refresh jadwal setelah menambah
-      })
-      .catch(error => {
-          console.error('Error adding schedule:', error);
-      });
-  });
-          </script>
         </div>
         <!-- My Schedule & Edit Button End -->
 
         <!-- Tabel Jadwal -->
-        <section
-          class="max-h-[480px] overflow-y-auto scroll-container rounded-xl overflow-hidden bg-white"
-        >
+        <section class="max-h-[480px] overflow-y-auto scroll-container rounded-xl overflow-hidden bg-white">
           <table class="w-full rounded-lg" style="table-layout: fixed">
             <thead class="sticky top-0 z-10 bg-[#FFFFFF]">
               <tr>
@@ -525,113 +409,223 @@
         <!-- Tabel Jadwal End -->
 
         <script>
+          let existingSchedule = [];
+        
+          // Ambil semua jadwal saat halaman pertama kali dimuat
           document.addEventListener("DOMContentLoaded", () => {
             fetch("/api/my_schedule")
               .then((response) => response.json())
               .then((data) => {
-                const pastelColors = [
-                  "rgba(16, 185, 129, 0.1)", // #10B981 - Emerald
-                  "rgba(14, 165, 233, 0.1)", // #0EA5E9 - Sky Blue
-                  "rgba(139, 92, 246, 0.1)", // #8B5CF6 - Violet
-                  "rgba(245, 158, 11, 0.1)", // #F59E0B - Amber
-                ];
-
-                function getRandomPastelColor() {
-                  return pastelColors[
-                    Math.floor(Math.random() * pastelColors.length)
-                  ];
-                }
-
-                function normalizeTime(rawTime) {
-                  const parts = rawTime.split(":");
-                  const hour = parts[0].padStart(2, "0");
-                  return `${hour}:00`;
-                }
-
-                data.forEach((schedule) => {
-                  let { day, time, student_name } = schedule;
-                  time = normalizeTime(time);
-
-                  const columnIndex = {
-                    Sunday: 1,
-                    Monday: 2,
-                    Tuesday: 3,
-                    Wednesday: 4,
-                    Thursday: 5,
-                    Friday: 6,
-                    Saturday: 7,
-                  }[day];
-
-                  const rowIndex = {
-                    "08:00": 1,
-                    "09:00": 2,
-                    "10:00": 3,
-                    "11:00": 4,
-                    "12:00": 5,
-                    "13:00": 6,
-                    "14:00": 7,
-                    "15:00": 8,
-                    "16:00": 9,
-                    "17:00": 10,
-                    "18:00": 11,
-                    "19:00": 12,
-                    "20:00": 13,
-                  }[time];
-
-                  if (!columnIndex || !rowIndex) {
-                    console.warn(`⛔ Jadwal tidak cocok: ${day} - ${time}`);
-                    return;
-                  }
-
-                  const table = document.querySelector("table");
-                  document.querySelectorAll("tbody tr").forEach((tr) => {
-                    tr.style.overflow = "visible";
-                    tr.style.position = "relative";
-                  });
-
-                  const rows = table.querySelectorAll("tbody tr");
-                  const row = rows[rowIndex - 1];
-                  if (!row) return;
-
-                  const cells = row.querySelectorAll("td");
-                  const cell = cells[columnIndex - 1];
-                  if (!cell) return;
-
-                  const bgColor = getRandomPastelColor();
-
-                  cell.innerHTML = `
-                    <div class="p-2 mt-1 ms-1" style="
-                      position: absolute;
-                      top: 0;
-                      left: 4px;
-                      width: 90%;
-                      height: calc(2 * 56px);
-                      background-color: ${bgColor};
-                      border-radius: 6px;
-                      color: #065F46;
-                      padding: 6px;
-                      font-size: 12px;
-                      z-index: 5; <!-- biar card ga nabrak thead -->
-                      overflow: hidden;
-                    ">
-                      <div style="margin-bottom: 4px; font-weight: 500;">
-                        ${time} - ${parseInt(time) + 1}:00
-                      </div>
-                      <div style="font-size: 14px; font-weight: 600;">
-                        👧 ${student_name ? student_name : "-"}
-                      </div>
-
-                    </div>
-                  `;
-
-                  cell.style.position = "relative";
-                });
+                existingSchedule = data;
+                renderSchedule(data); // render semua jadwal ke tabel
               })
               .catch((err) => {
                 console.error("Error fetching schedule:", err);
               });
           });
+        
+          // Fungsi render jadwal ke tabel
+          function renderSchedule(data) {
+            const pastelColors = [
+              "rgba(16, 185, 129, 0.1)", // emerald
+              "rgba(14, 165, 233, 0.1)", // sky blue
+              "rgba(139, 92, 246, 0.1)", // violet
+              "rgba(245, 158, 11, 0.1)", // amber
+            ];
+        
+            function getRandomPastelColor() {
+              return pastelColors[Math.floor(Math.random() * pastelColors.length)];
+            }
+        
+            function normalizeTime(rawTime) {
+              const parts = rawTime.split(":");
+              const hour = parts[0].padStart(2, "0");
+              return `${hour}:00`;
+            }
+        
+            data.forEach((schedule) => {
+              let { day, time, student_name } = schedule;
+              time = normalizeTime(time);
+        
+              const columnIndex = {
+                Sunday: 1, Monday: 2, Tuesday: 3, Wednesday: 4,
+                Thursday: 5, Friday: 6, Saturday: 7,
+              }[day];
+        
+              const rowIndex = {
+                "08:00": 1, "09:00": 2, "10:00": 3, "11:00": 4,
+                "12:00": 5, "13:00": 6, "14:00": 7, "15:00": 8,
+                "16:00": 9, "17:00": 10, "18:00": 11, "19:00": 12,
+                "20:00": 13,
+              }[time];
+        
+              if (!columnIndex || !rowIndex) return;
+        
+              const table = document.querySelector("table");
+              const row = table.querySelectorAll("tbody tr")[rowIndex - 1];
+              if (!row) return;
+        
+              const cell = row.querySelectorAll("td")[columnIndex - 1];
+              if (!cell) return;
+        
+              const bgColor = getRandomPastelColor();
+              cell.innerHTML = `
+                <div class="p-2 mt-1 ms-1" style="
+                  position: absolute;
+                  top: 0;
+                  left: 4px;
+                  width: 90%;
+                  height: calc(2 * 56px);
+                  background-color: ${bgColor};
+                  border-radius: 6px;
+                  color: #065F46;
+                  padding: 6px;
+                  font-size: 12px;
+                  z-index: 5;
+                  overflow: hidden;
+                ">
+                  <div style="margin-bottom: 4px; font-weight: 500;">
+                    ${time} - ${parseInt(time) + 1}:00
+                  </div>
+                  <div style="font-size: 14px; font-weight: 600;">
+                    👧 ${student_name ? student_name : "-"}
+                  </div>
+                </div>
+              `;
+              cell.style.position = "relative";
+            });
+          }
+        
+          // Dropdown Day & Time
+          const buttonDay = document.getElementById("dropdownButtonDay");
+          const menuDay = document.getElementById("dropdownMenuDay");
+          const selectedDaySpan = document.getElementById("selectedDay");
+        
+          buttonDay.addEventListener("click", () => {
+            menuDay.classList.toggle("hidden");
+          });
+        
+          menuDay.querySelectorAll("div[data-value]").forEach((item) => {
+            item.addEventListener("click", () => {
+              selectedDaySpan.textContent = item.getAttribute("data-value");
+              menuDay.classList.add("hidden");
+            });
+          });
+        
+          const buttonTime = document.getElementById("dropdownButtonTime");
+          const menuTime = document.getElementById("dropdownMenuTime");
+          const selectedTimeSpan = document.getElementById("selectedTime");
+        
+          buttonTime.addEventListener("click", () => {
+            menuTime.classList.toggle("hidden");
+          });
+        
+          menuTime.querySelectorAll("div[data-value]").forEach((item) => {
+            item.addEventListener("click", () => {
+              selectedTimeSpan.textContent = item.getAttribute("data-value");
+              menuTime.classList.add("hidden");
+            });
+          });
+        
+          // Tutup dropdown kalau klik di luar
+          document.addEventListener("click", (e) => {
+            if (!buttonDay.contains(e.target) && !menuDay.contains(e.target)) {
+              menuDay.classList.add("hidden");
+            }
+            if (!buttonTime.contains(e.target) && !menuTime.contains(e.target)) {
+              menuTime.classList.add("hidden");
+            }
+          });
+        
+          // Modal logic
+          const addScheduleBtn = document.getElementById("add-Btn");
+          const modal = document.getElementById("add-Modal");
+          const cancelBtn = document.getElementById("cancel-btn");
+          const saveBtn = document.getElementById("save-btn");
+        
+          addScheduleBtn.addEventListener("click", () => {
+            modal.classList.remove("hidden");
+          });
+        
+          cancelBtn.addEventListener("click", () => {
+            modal.classList.add("hidden");
+            selectedDaySpan.textContent = "Select a day";
+            selectedTimeSpan.textContent = "Select a time";
+          });
+          
+          saveBtn.addEventListener("click", () => {
+            const selectedDay = selectedDaySpan.textContent.trim();
+            const selectedTimeRange = selectedTimeSpan.textContent.trim();
+          
+            if (selectedDay === "Select a day" || selectedTimeRange === "Select a time") {
+              alert("❗ Silakan pilih hari dan jam terlebih dahulu.");
+              return;
+            }
+          
+            // Validasi format waktu
+            if (!selectedTimeRange.includes(" - ")) {
+              alert("❗ Format waktu tidak valid. Harus seperti '08:00 - 09:00'");
+              return;
+            }
+          
+            const [selectedStart, selectedEnd] = selectedTimeRange.split(" - ").map((t) => t.trim());
+          
+            function timeToMinutes(timeStr) {
+              const [hour, minute] = timeStr.split(":").map(Number);
+              return hour * 60 + minute;
+            }
+          
+            function isTimeOverlap(start1, end1, start2, end2) {
+              return !(end1 <= start2 || end2 <= start1);
+            }
+            
+          
+            const selectedStartMin = timeToMinutes(selectedStart);
+            const selectedEndMin = timeToMinutes(selectedEnd);
+          
+            const isConflict = existingSchedule.some((s) => {
+              const existingStartMin = timeToMinutes(s.time);
+              const existingEndMin = existingStartMin + 120; // jaraknya dibuat 2 jam. jd biar bisa nambah di jam stlhnya, biar ga bentrok. nek +60 nnti di jam bentrok mlh msih bs nambah
+          
+              return s.day === selectedDay && isTimeOverlap(
+                selectedStartMin, selectedEndMin,
+                existingStartMin, existingEndMin
+              );
+            });
+          
+            if (isConflict) {
+              alert("❌ Jadwal bentrok! Silakan pilih waktu lain.");
+              return;
+            }
+          
+            // Kirim waktu mulai saja ke server
+            fetch("/api/my_schedule", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                day: selectedDay,
+                time: selectedStart,
+              }),
+            })
+              .then((response) => {
+                if (!response.ok) throw new Error("Gagal menyimpan");
+                return response.json();
+              })
+              .then(() => {
+                alert("✅ Jadwal berhasil ditambahkan!");
+                window.location.reload();
+              })
+              .catch((error) => {
+                console.error("Error adding schedule:", error);
+                alert("❌ Gagal menambahkan jadwal.");
+              });
+          });
+          
+          
+          
+          
         </script>
+        
       </main>
       <!-- Main Content End -->
     </div>
