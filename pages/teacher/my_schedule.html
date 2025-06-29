@@ -758,6 +758,19 @@
             e.preventDefault();
             isEditMode = !isEditMode;
 
+            // Tambahan: jika sedang dalam delete mode, maka nonaktifkan delete
+            if (isEditMode && isDeleteMode) {
+              isDeleteMode = false;
+
+              deleteScheduleBtn.querySelector("button").classList.remove("bg-[#E2B0B5]", "hover:bg-[#FFE4E6]");
+              deleteScheduleBtn.querySelector("button").classList.add("bg-[#FFE4E6]", "hover:bg-[#E2B0B5]");
+              deleteScheduleBtn.querySelector("button").innerHTML = `<i class="bi bi-trash3-fill mr-2"></i>Delete Schedule`;
+
+              document.querySelectorAll(".schedule-card").forEach((card) => {
+                card.classList.remove("deletable-card");
+              });
+            }
+
             if (isEditMode) {
               // Mode Edit Aktif
               editScheduleBtn.classList.remove("bg-[#FFF7D4]", "hover:bg-[#E6D99F]");
@@ -924,6 +937,20 @@
 
           deleteScheduleBtn.addEventListener("click", () => {
             isDeleteMode = !isDeleteMode;
+
+            // Jika delete diaktifkan, nonaktifkan mode edit
+            if (isDeleteMode && isEditMode) {
+              isEditMode = false;
+
+              editScheduleBtn.classList.remove("bg-[#E6D99F]", "hover:bg-[#FFF7D4]");
+              editScheduleBtn.classList.add("bg-[#FFF7D4]", "hover:bg-[#E6D99F]");
+              editScheduleBtn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Schedule';
+
+              document.querySelectorAll(".schedule-card").forEach((card) => {
+                card.classList.remove("editable-card");
+              });
+            }
+
 
             if (isDeleteMode) {
               deleteScheduleBtn.querySelector("button").classList.remove("bg-[#FFE4E6]", "hover:bg-[#E2B0B5]");
