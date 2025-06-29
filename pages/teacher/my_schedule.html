@@ -758,7 +758,7 @@
             e.preventDefault();
             isEditMode = !isEditMode;
 
-            // Tambahan: jika sedang dalam delete mode, maka nonaktifkan delete
+            // Jika edit diaktifkan, nonaktifkan mode delete
             if (isEditMode && isDeleteMode) {
               isDeleteMode = false;
 
