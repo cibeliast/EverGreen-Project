@@ -172,7 +172,7 @@
             .then(data => {
             if(!data.error) {
                 document.getElementById('profile-username').innerHTML = `${data.username}`;
-                document.getElementById('profile-id').innerHTML = `T-${data.teacher_id}`;
+                document.getElementById('profile-id').innerHTML = `ID - ${data.teacher_id}`;
                 document.getElementById('name').value = data.name || '';
                 document.getElementById('username').value = data.username || '';
                 document.getElementById('email').value = data.email || '';
