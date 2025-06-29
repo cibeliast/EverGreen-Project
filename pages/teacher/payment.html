@@ -351,7 +351,7 @@
           });
 
           let totalNominal = 0;
-          let totalLessons = 1;
+          let totalLessons = 0;
           const uniqueStudents = new Set(); // Menggunakan Set untuk menyimpan siswa unik
 
           currentMonthPayments.forEach(payment => {
@@ -631,7 +631,7 @@
         // DOM ready
         document.addEventListener("DOMContentLoaded", () => {
           fetchAndRenderPayments();
-          fetch("/api/booked_schedule")
+          fetch("/api/teacher_students")
             .then((res) => res.json())
             .then((data) => {
               const select = document.getElementById("studentSelect");

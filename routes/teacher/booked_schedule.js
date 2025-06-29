@@ -80,6 +80,28 @@ router.get('/students', (req, res) => {
       res.json(results);
     });
   });
+
+//   Endpoint ambil booked schedule where teacher_id = ?
+router.get('/teacher_students', (req, res) => {
+  if (!req.session.userId || req.session.folderRole !== 'teacher') {
+    return res.status(403).json({ message: 'Unauthorized' });
+  }
+
+  const sql = `
+    SELECT DISTINCT st.student_id, st.name AS student_name
+    FROM schedules sc
+    JOIN students st ON sc.student_id = st.student_id
+    WHERE sc.teacher_id = ?
+  `;
+
+  db.query(sql, [req.session.userId], (err, results) => {
+    if (err) {
+      return res.status(500).json({ message: 'Database error', error: err });
+    }
+    res.json(results);
+  });
+});
+
   
 
 export default router;

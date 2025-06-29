@@ -14,18 +14,19 @@ router.get('/payment', (req, res) => {
 
   const sql = `
     SELECT 
-      s.name AS student_name, s.student_id AS student_id,
-      COUNT(DISTINCT sc.schedule_id) AS total_meetings,
-      p.nominal, p.payment_id AS payment_id,
-      DATE_FORMAT(p.date, '%Y-%m-%d') AS date, -- Format langsung di SQL (YYYY-MM-DD)
-      p.note
+    s.name AS student_name, s.student_id,
+    COUNT(DISTINCT sc.schedule_id) AS total_meetings,
+    p.nominal, p.payment_id,
+    DATE_FORMAT(p.date, '%Y-%m-%d') AS date,
+    p.note
     FROM students s
-    INNER JOIN schedules sc ON s.student_id = sc.student_id AND sc.teacher_id = ?
     LEFT JOIN payments p ON s.student_id = p.student_id AND p.teacher_id = ?
+    LEFT JOIN schedules sc ON s.student_id = sc.student_id AND sc.teacher_id = ?
+    WHERE p.teacher_id = ?
     GROUP BY s.student_id, p.nominal, p.date, p.note;
-  `;
+    `;
 
-  db.query(sql, [teacherId, teacherId], (err, results) => {
+  db.query(sql, [teacherId, teacherId, teacherId], (err, results) => {
     if (err) {
       return res.status(500).json({ message: 'Database error', error: err });
     }
