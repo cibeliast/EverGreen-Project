@@ -717,7 +717,7 @@
             });
           
             if (isConflict) {
-              alert("❌ Jadwal bentrok! Silakan pilih waktu lain.");
+              showStatus("❌ Schedule conflict! Please choose another time.", "/assets/error.png");
               return;
             }
           
@@ -735,12 +735,12 @@
                 return response.json();
               })
               .then(() => {
-                alert("✅ Jadwal berhasil ditambahkan!");
+                showStatus("Schedule added successfully!", "/assets/success.png");
                 window.location.reload();
               })
               .catch((error) => {
                 console.error("Error adding schedule:", error);
-                alert("❌ Gagal menambahkan jadwal.");
+                showStatus("Failed updating schedule.", "/assets/error.png");
               });
           });
                     
@@ -801,7 +801,7 @@
                 if (isEditMode) {
                   // EDIT
                   if (studentId !== "null" && studentId !== null) {
-                    alert("❌ Jadwal ini sudah memiliki siswa. Silakan kosongkan siswa terlebih dahulu sebelum mengedit.");
+                    showStatus("❌ This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
                     return;
                   }
 
@@ -819,7 +819,7 @@
 
                 if (isDeleteMode) {
                   if (studentId !== "null" && studentId !== null) {
-                    alert("❌ Jadwal ini masih memiliki siswa. Silakan kosongkan siswa terlebih dahulu sebelum menghapus.");
+                    showStatus("❌ This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
                     return;
                   }
 
@@ -897,7 +897,7 @@
             });
 
             if (isConflict) {
-              alert("❌ Jadwal bentrok dengan jadwal lain. Silakan pilih waktu lain.");
+             showStatus("Schedule conflict! Please choose another time.", "/assets/error.png");
               return;
             }
 
@@ -911,12 +911,12 @@
                 return res.json();
               })
               .then(() => {
-                alert("✅ Jadwal berhasil diperbarui!");
+                showStatus("Schedule updated successfully!", "/assets/success.png");
                 window.location.reload();
               })
               .catch(err => {
                 console.error(err);
-                alert("❌ Gagal memperbarui jadwal.");
+                showStatus("Failed updating schedule.", "/assets/error.png");
               });
           });
 
@@ -982,12 +982,12 @@
                 return res.json();
               })
               .then(() => {
-                alert("✅ Jadwal berhasil dihapus.");
+                showStatus("Schedule deleted successfully!", "/assets/success.png");
                 window.location.reload();
               })
               .catch((err) => {
                 console.error(err);
-                alert("❌ Gagal menghapus jadwal.");
+                showStatus("Failed updating schedule.", "/assets/error.png");
               });
           });
 
@@ -996,6 +996,11 @@
             scheduleIdToDelete = null;
           });  
         </script>
+         <script type="module">
+        import { setupStatusModal, showStatus } from '/js/statusModal.js';
+        setupStatusModal();
+        window.showStatus = showStatus;
+      </script>
       </main><!-- Main Content End -->
     </div><!-- KOTAKAN UTAMA SMUA -->
 
