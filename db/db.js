@@ -1,10 +1,11 @@
 import mysql from 'mysql2';
 
 const db = mysql.createConnection({
-    host: 'localhost',
+    host: 'maglev.proxy.rlwy.net',
     user: 'root',
-    password: '',
-    database: 'rpl'
+    password: 'YxCIPIxdOkzlxNlyEQtJfUgiYNGcsZKt',
+    database: 'railway',
+    port: '11975'
 });
 
 db.connect((err) => {
