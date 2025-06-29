@@ -72,6 +72,10 @@ app.use('/api', scheduleTeacherDashboard);
 //   res.sendFile(path.join(__dirname, 'pages/student/profile.html'));
 // });
 
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'pages/auth/login.html'));
+});
+
 app.get('/profile', (req, res) => {
   if (req.session.folderRole === 'teacher') {
     res.sendFile(path.join(__dirname, 'pages/teacher/profile.html'));
