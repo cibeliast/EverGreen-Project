@@ -423,6 +423,8 @@
               btn.classList.add("bg-[#FFF7D4]");
               btn.classList.remove("bg-[#E6D99F]");
               btn.innerHTML = '<i class="bi bi-pencil-square mr-2"></i>Edit Payment';
+
+              disableEditMode();
               fetchAndRenderPayments();
             })
             .catch((err) => {
