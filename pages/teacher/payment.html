@@ -176,7 +176,7 @@
                   <tr>
                     <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">No</th>
                     <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Student</th>
-                    <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Total meetings</th>
+                    <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Total meetings in a week</th>
                     <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Nominal</th>
                     <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Payment date</th>
                     <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Notes</th>
@@ -215,8 +215,8 @@
             <!-- Total & Nominal (dalam 1 baris) -->
             <div class="flex gap-4">
               <div class="w-1/2">
-                <label class="block mb-1 text-start">Total Meeting(s)</label>
-                <input type="number" name="total_meetings" id="totalMeetings" class="w-full border rounded px-3 py-2" required/>
+                <label class="block mb-1 text-start">Sessions to pay for</label>
+                <input type="number" name="total_meetings" id="totalMeetings" class="w-full border rounded px-3 py-2" min="0" placeholder="For a week"required/>
               </div>
 
               <div class="w-1/2">
@@ -271,7 +271,10 @@
 
           currentMonthPayments.forEach(payment => {
               totalNominal += parseInt(payment.nominal);
-              totalLessons += payment.total_meetings;
+              const matches = payment.note.match(/Paid for (\d+) session/);
+              if (matches) {
+                totalLessons += parseInt(matches[1]);
+              }
               uniqueStudents.add(payment.student_id); // Menambahkan ID siswa ke Set
           });
 

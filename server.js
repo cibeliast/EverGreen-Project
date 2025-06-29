@@ -43,7 +43,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(session({
     secret: 'rahasia',
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: { maxAge: 1000 * 60 * 60}
 }));
 
