@@ -84,76 +84,14 @@
   </div>
 
   <!-- Topic cards -->
-  <div class="container my-2" id="topic-container">
-    <div class="row g-5" id="topics-row">
-      <!-- Cards will be inserted here -->
-      <!-- Contoh static card -->
-      <div class="col-md-4 my-4 topic-card">
-        <a href="/your-target-page" class="text-decoration-none text-dark">
-          <div class="card">
-            <img src="/assets/quizzes.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text text-start">A collection of words known and used within a language, essential for understanding and communication.</p>
-              <h5 class="card-title">Vocabulary</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4 my-4 topic-card">
-        <a href="/your-target-page" class="text-decoration-none text-dark">
-          <div class="card">
-            <img src="/assets/quizzes.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text text-start">A collection of words known and used within a language, essential for understanding and communication.</p>
-              <h5 class="card-title">Vocabulary</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4 my-4 topic-card">
-        <a href="/your-target-page" class="text-decoration-none text-dark">
-          <div class="card">
-            <img src="/assets/quizzes.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text text-start">A collection of words known and used within a language, essential for understanding and communication.</p>
-              <h5 class="card-title">Vocabulary</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4 my-4 topic-card">
-        <a href="/your-target-page" class="text-decoration-none text-dark">
-          <div class="card">
-            <img src="/assets/quizzes.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text text-start">A collection of words known and used within a language, essential for understanding and communication.</p>
-              <h5 class="card-title">Vocabulary</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4 my-4 topic-card">
-        <a href="/your-target-page" class="text-decoration-none text-dark">
-          <div class="card">
-            <img src="/assets/quizzes.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text text-start">A collection of words known and used within a language, essential for understanding and communication.</p>
-              <h5 class="card-title">Vocabulary</h5>
-            </div>
-          </div>
-        </a>
-      </div>
-      <div class="col-md-4 my-4 topic-card">
-        <a href="/your-target-page" class="text-decoration-none text-dark">
-          <div class="card">
-            <img src="/assets/quizzes.png" class="card-img-top" alt="...">
-            <div class="card-body">
-              <p class="card-text text-start">A collection of words known and used within a language, essential for understanding and communication.</p>
-              <h5 class="card-title">Vocabulary</h5>
-            </div>
-          </div>
-        </a>
-      </div>
+  <div
+    class="max-h-[520px] overflow-y-auto rounded-lg scroll-container px-16 py-2"
+  >
+    <div
+      id="cardContainer"
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"
+    >
+      <!-- Cards will be injected dynamically -->
     </div>
   </div>
   
@@ -195,46 +133,71 @@
 
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
-      const topicCards = document.querySelectorAll('.topic-card'); 
+      const topicCards = document.querySelectorAll('#cardContainer > div'); // ambil setiap card di dalam cardContainer
 
       topicCards.forEach(card => {
-        const title = card.querySelector('.card-title').textContent.toLowerCase();
-        if (title.includes(query)) {
-          card.style.display = ''; 
+        const title = card.querySelector('h2')?.textContent.toLowerCase(); // ambil isi <h2> yang berisi nama topic
+        if (title && title.includes(query)) {
+          card.style.display = '';
         } else {
-          card.style.display = 'none'; 
+          card.style.display = 'none';
         }
       });
     });
 
+    document.addEventListener("DOMContentLoaded", async () => {
+      const cardContainer = document.getElementById("cardContainer");
 
-    // Fetch topics from API and render cards
-    fetch('/api/topics')
-      .then(response => response.json())
-      .then(topics => {
-        const topicsRow = document.getElementById('topics-row');
-        topicsRow.innerHTML = ''; // Clear static content
+      try {
+        const response = await fetch("/api/topicTeacher");
+        if (!response.ok) throw new Error("Failed to fetch topics");
+        const topics = await response.json();
+        renderTopics(topics);
+      } catch (err) {
+        console.error(err);
+        cardContainer.innerHTML = "<p>Error loading topics.</p>";
+      }
 
-        topics.forEach(topic => {
-          const cardHTML = `
-            <div class="col-md-4 my-4 topic-card">
-              <a href="/quiz?topic_id=${topic.topic_id}" class="text-decoration-none text-dark">
-                <div class="card">
-                  <img src="${topic.picture}" class="card-img-top" alt="Topic image" />
-                  <div class="card-body">
-                    <p class="card-text text-start">${topic.description}</p>
-                    <h5 class="card-title">${topic.name}</h5>
-                  </div>
-                </div>
-              </a>
+      function renderTopics(topics) {
+        cardContainer.innerHTML = ""; // clear cards
+
+        if (topics.length === 0) {
+          const emptyMsg = document.createElement("p");
+          emptyMsg.className = "text-center text-gray-500 col-span-full";
+          emptyMsg.textContent = "No topics found.";
+          cardContainer.appendChild(emptyMsg);
+          return;
+        }
+
+        topics.forEach((topic) => {
+          const card = document.createElement("div");
+          card.className =
+            "bg-white rounded-3xl shadow p-3 w-full h-[320px] relative max-w-sm";
+
+          card.onclick = () => {
+            window.location.href = `/quizTeacher?topic_id=${topic.topic_id}`;
+          };
+
+          card.innerHTML = `
+            <img src="${topic.picture}" 
+                alt="topic" 
+                class="rounded-2xl mb-3 w-full h-40 object-cover cursor-pointer hover:opacity-80 transition duration-200" 
+                onclick="event.stopPropagation(); window.location.href='/quizTeacher?topic_id=${topic.topic_id}'" />
+
+            <div class="flex justify-between items-start mt-4">
+              <p class="text-sm text-start text-gray-600 mb-2 line-clamp-2">
+                ${topic.description || "No description provided."}
+              </p>
+              <div class="relative"></div>
             </div>
+            
+            <h2 class="text-xl text-start font-bold text-[#67998D]">${topic.name}</h2>
           `;
-          topicsRow.insertAdjacentHTML('beforeend', cardHTML);
+
+          cardContainer.appendChild(card);
         });
-      })
-      .catch(error => {
-        console.error('Failed to fetch topics:', error);
-      });
+      }
+    });
   </script>
 </body>
 </html>
