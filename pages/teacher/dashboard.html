@@ -123,171 +123,94 @@
         <hr />
 
         <!-- Card Container -->
-        <div>
+        <div class="w-full">
           <div id="cardContainer">
-            <!-- Bagian Atas Start -->
-            <div class="flex flex-col md:flex-row w-full">
-              <!-- Ijo -->
-              <div
-                class="bg-[#d0e0e5] rounded-xl pt-3 px-8 flex-1 flex flex-col gap-2"
-              >
-                <!-- Judul -->
-                <h2 class="font-semibold text-lg text-[#111827]">
-                  Upcoming Class
-                </h2>
 
-                <!-- Blok Putih -->
-                <div class="bg-white rounded-lg flex items-center gap-40 mb-6">
-                  <img
-                    alt="Illustration of a female teacher sitting at desk with pen and paper"
-                    class="w-35 h-35 object-contain"
-                    height="80"
-                    src="https://storage.googleapis.com/a1aa/image/17327a70-f7fe-43fc-e82c-a7c374deff0c.jpg"
-                    width="80"
-                  />
+            <!-- Bungkus Horizontal: Kiri & Kanan -->
+            <div class="flex flex-col lg:flex-row gap-4 w-full">
 
-                  <div class="ml-40">
-                    <p class="font-bold text-[#111827] text-sm mb-1">English</p>
-                    <p class="text-xs text-[#374151] mb-1">10:00 - 11:00</p>
-                    <p class="text-xs text-[#374151]">Student: Lord Loki</p>
+              <!-- Bagian Kiri: Upcoming Class + My Schedule -->
+              <div class="flex flex-col flex-1 gap-4">
+
+                <!-- Upcoming Class (Ijo) -->
+                <div class="h-[180px] bg-[#d0e0e5] rounded-xl pt-3 px-8 flex flex-col gap-2">
+                  <!-- Judul -->
+                  <h2 class="font-semibold text-lg text-[#111827]">Upcoming Class</h2>
+
+                  <!-- Putih Bawah -->
+                  <div id="upcoming-schedule" class="bg-[#ffffff] rounded-lg p-3 flex justify-center gap-40 w-full">
+                    <div class="flex flex-col items-center gap-2">
+                      <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">1</div>
+                      <div>
+                        <p class="font-bold text-xs text-[#111827] text-center">English</p>
+                        <p class="text-xs text-[#6b7280] text-center">10:00 - 11:00</p>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-2">
+                      <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">2</div>
+                      <div>
+                        <p class="font-bold text-xs text-[#111827] text-center">English</p>
+                        <p class="text-xs text-[#6b7280] text-center">10:00 - 11:00</p>
+                      </div>
+                    </div>
+
+                    <div class="flex flex-col items-center gap-2">
+                      <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">3</div>
+                      <div>
+                        <p class="font-bold text-xs text-[#111827] text-center">English</p>
+                        <p class="text-xs text-[#6b7280] text-center">10:00 - 11:00</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                <!-- Putih Bawah -->
-                <div
-                  class="bg-[#ffffff] rounded-lg p-3 flex justify-center gap-40 w-full"
-                >
-                  <div class="flex flex-col items-center gap-2">
-                    <div
-                      class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto"
-                    >
-                      1
-                    </div>
-                    <div>
-                      <p class="font-bold text-xs text-[#111827] text-center">
-                        English
-                      </p>
-                      <p class="text-xs text-[#6b7280] text-center">
-                        10:00 - 11:00
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="flex flex-col items-center gap-2">
-                    <div
-                      class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto"
-                    >
-                      2
-                    </div>
-                    <div>
-                      <p class="font-bold text-xs text-[#111827] text-center">
-                        English
-                      </p>
-                      <p class="text-xs text-[#6b7280] text-center">
-                        10:00 - 11:00
-                      </p>
-                    </div>
-                  </div>
-
-                  <div class="flex flex-col items-center gap-2">
-                    <div
-                      class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto"
-                    >
-                      3
-                    </div>
-                    <div>
-                      <p class="font-bold text-xs text-[#111827] text-center">
-                        English
-                      </p>
-                      <p class="text-xs text-[#6b7280] text-center">
-                        10:00 - 11:00
-                      </p>
-                    </div>
+                <!-- My Schedule -->
+                <div class="h-[400px] bg-[#FFFFFF] rounded-xl shadow-2xl pb-2 px-8 flex flex-col gap-2">
+                  <h3 class="font-semibold text-lg text-[#111827] pt-3">My schedule</h3>
+                  <div class="overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden">
+                    <table class="min-w-full text-xs text-left">
+                      <thead class="bg-[#1F2A44] text-white">
+                        <tr>
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">No</th>
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Day</th>
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Time</th>
+                          <th class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10">Student</th>
+                        </tr>
+                      </thead>
+                      <tbody id="schedule-body" class="text-gray-700">
+                        <!-- JS akan inject jadwal di sini -->
+                      </tbody>
+                    </table>
                   </div>
                 </div>
+
               </div>
-              <!-- Upcoming Class End -->
 
-              <!-- Calendar Start -->
-              <div>
-                <section class="ml-4">
-                  <!-- Calendar Start-->
+              <!-- Bagian Kanan: Calendar + Online Students -->
+              <div class="flex flex-col flex-1 gap-4 max-w-[300px]">
+
+                <!-- Calendar -->
+                <section >
                   <div class="right-top">
                     <div id="myCalendar"></div>
                   </div>
                 </section>
-              </div>
-              <!-- Calendar End -->
-            </div>
-            <!-- Bagian Atas End -->
 
-            <!-- Bagian Bawah Start -->
-            <div class="max-h-[295px] flex flex-col md:flex-row w-full">
-              <!-- Jadwal Start -->
-              <div
-                class="bg-white rounded-xl shadow-2xl mt-3 pl-6 pr-6 px-8 flex-1 flex flex-col gap-2 w-full"
-              >
-                <h3 class="font-semibold text-lg text-[#111827] pt-3 mb-2">
-                  My schedule
-                </h3>
-                <div
-                  class="max-h-[220px] overflow-y-auto scroll-container bg-white rounded-xl overflow-hidden"
-                >
-                  <table class="min-w-full text-xs text-left">
-                    <thead class="bg-[#1F2A44] text-white">
-                      <tr>
-                        <th
-                          class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                        >
-                          No
-                        </th>
-                        <th
-                          class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                        >
-                          Day
-                        </th>
-                        <th
-                          class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                        >
-                          Time
-                        </th>
-                        <th
-                          class="py-3 px-4 font-semibold sticky top-0 bg-[#1F2A44] z-10"
-                        >
-                          Student
-                        </th>
-                      </tr>
-                    </thead>
-
-                    <tbody id="schedule-body" class="text-gray-700">
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <!-- Jadwal End -->
-
-              <!-- Online Students -->
-              <div
-                class="right-bottom bg-[#d0e0e5] rounded-xl mt-3 ml-3 pb-6 px-4 flex-1 flex flex-col gap-2 max-w-[300px] w-full"
-              >
-                <h3 class="font-semibold text-lg text-[#111827] pt-3 mb-2">
-                  Online Students
-                </h3>
-
-                <!-- Scroll online student start-->
-                <div
-                  class="max-h-[220px] overflow-y-auto scroll-container rounded-md overflow-hidden"
-                >
-                  <div class="student-list flex flex-col gap-2 mb-3" id="student-list">
-                    <!-- JS will inject student cards here -->
+                <!-- Online Students -->
+                <div class="h-[274px] bg-[#d0e0e5] rounded-xl pb-6 px-4 flex flex-col gap-2">
+                  <h3 class="font-semibold text-lg text-[#111827] pt-3 mb-2">Online Students</h3>
+                  <div class="max-h-[220px] overflow-y-auto scroll-container rounded-md overflow-hidden">
+                    <div class="student-list flex flex-col gap-2 mb-3" id="student-list">
+                      <!-- JS akan inject student cards di sini -->
+                    </div>
                   </div>
                 </div>
+
               </div>
 
-                <!-- Scroll online student end -->
-              </div>
             </div>
-            <!-- Bagian Bawah End -->
+            <!-- End Horizontal Wrapper -->
           </div>
         </div>
 
@@ -317,8 +240,7 @@
             </div>
           </div>
         </div>
-      </main>
-      <!-- Main Content End -->
+      </main><!-- Main Content End -->
 
       <!-- CDN Flatpickr -->
       <link
@@ -376,6 +298,7 @@
           defaultDate: "today",
         });
       </script>
+
       <script>
         document.addEventListener('DOMContentLoaded', () => {
           fetch('/api/scheduleTeacherDashboard') // ganti jika route kamu beda
@@ -396,16 +319,43 @@
                 return;
               }
 
+              // Nentuin urutan hari
+              const dayOrder = {
+                "Monday": 1,
+                "Tuesday": 2,
+                "Wednesday": 3,
+                "Thursday": 4,
+                "Friday": 5,
+                "Saturday": 6,
+                "Sunday": 7
+              };
+
+              // Fungsi bantu untuk parsing jam ke angka menit
+              const parseTimeToMinutes = (timeStr) => {
+                const [hour, minute] = timeStr.split(':').map(Number);
+                return hour * 60 + minute;
+              };
+
+              // Sort data berdasarkan hari dan jam
+              data.sort((a, b) => {
+                const dayA = dayOrder[a.day] || 999;
+                const dayB = dayOrder[b.day] || 999;
+                if (dayA !== dayB) return dayA - dayB;
+
+                return parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time);
+              });
+
+              // Data tabel jadwal
               data.forEach((item, index) => {
                 const row = document.createElement('tr');
                 row.className = 'border';
                 row.innerHTML = `
-                  <td class="py-3 px-4">${index + 1}</td>
-                  <td class="py-3 px-4">${item.day}</td>
-                  <td class="py-3 px-4">${item.time}</td>
-                  <td class="py-3 px-4">
+                  <td class="py-2 px-3">${index + 1}</td>
+                  <td class="py-2 px-3">${item.day}</td>
+                  <td class="py-2 px-3">${item.time}</td>
+                  <td class="py-2 px-3">
                     <div class="flex items-center space-x-2">
-                      <span class="w-8 h-8 rounded-full bg-purple-600 text-white text-xs font-semibold flex items-center justify-center select-none">
+                      <span class="w-8 h-8 rounded-full bg-[#AB91CD] text-white text-xs font-semibold flex items-center justify-center select-none">
                         ${item.student_name.charAt(0).toUpperCase()}
                       </span>
                       <span class="font-semibold text-gray-900">
@@ -428,24 +378,72 @@
             });
         });
 
-        fetch('/teacher/api/students')
+        // Upcoming schedule
+        // Ambil dan filter jadwal untuk hari ini → Upcoming Class
+          fetch('/api/scheduleTeacherDashboard')
+          .then(res => {
+            if (!res.ok) throw new Error("Unauthorized or error");
+            return res.json();
+          })
+          .then(data => {
+            const today = new Date().toLocaleString('en-US', { weekday: 'long' });
+            const upcomingData = data.filter(item => item.day === today);
+
+            const container = document.getElementById('upcoming-schedule');
+            container.innerHTML = '';
+
+            if (upcomingData.length === 0) {
+              container.innerHTML = `<p class="text-sm text-gray-500 text-center">No class today.</p>`;
+              return;
+            }
+
+            upcomingData.forEach((item, index) => {
+              const div = document.createElement('div');
+              div.className = 'flex flex-col items-center gap-2';
+              div.innerHTML = `
+                <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">${index + 1}</div>
+                <div>
+                  <p class="font-bold text-xs text-[#111827] text-center">${item.student_name}</p>
+                  <p class="text-xs text-[#6b7280] text-center">${item.time}</p>
+                </div>
+              `;
+              container.appendChild(div);
+            });
+          })
+          .catch(error => {
+            console.error('Failed to load upcoming schedule:', error);
+            const container = document.getElementById('upcoming-schedule');
+            container.innerHTML = `<p class="text-sm text-red-500 text-center">Failed to load upcoming schedule</p>`;
+          });
+
+
+        // Online student
+       fetch('/teacher/api/students')
           .then(res => res.json())
           .then(students => {
             const container = document.getElementById('student-list');
             container.innerHTML = ''; // Kosongkan dulu
 
-            // Filter hanya yang online (misalnya < 5 menit)
-            const onlineStudents = students.filter(s =>
-              s.last_seen === 'Online now' || s.last_seen.includes('minute')
-            );
+            // Filter latest online
+            students.sort((a, b) => {
+              const getMinutes = (label) => {
+                if (label === 'Online now') return 0;
+                if (label.includes('minute')) return parseInt(label);
+                if (label.includes('hour')) return parseInt(label) * 60;
+                if (label.includes('day')) return parseInt(label) * 1440;
+                return Infinity; // untuk "Never online"
+              };
 
-            onlineStudents.forEach(student => {
-              const initials = student.name.trim().charAt(0).toUpperCase(); // ambil huruf pertama
+              return getMinutes(a.last_seen) - getMinutes(b.last_seen);
+            });
+
+            students.forEach(student => {
+              const initials = student.name.trim().charAt(0).toUpperCase();
 
               const studentDiv = document.createElement('div');
               studentDiv.className = 'student bg-white rounded-md p-2 flex items-center gap-2';
               studentDiv.innerHTML = `
-                <div class="w-6 h-6 rounded-full bg-purple-600 text-white text-[10px] font-semibold flex items-center justify-center select-none">
+                <div class="w-6 h-6 rounded-full bg-purple-500 text-white text-[10px] font-semibold flex items-center justify-center select-none">
                   ${initials}
                 </div>
                 <div class="text-xs font-semibold text-[#111827]">
@@ -455,7 +453,6 @@
               `;
               container.appendChild(studentDiv);
             });
-
           });
 
           const logoutTrigger = document.getElementById('logoutTrigger');

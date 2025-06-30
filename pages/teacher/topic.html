@@ -608,7 +608,8 @@
                 if (!res.ok)
                   throw new Error(data.error || "Failed to delete topic");
 
-                showStatus("Topic successfully deleted!", "/assets/success.png");
+                sessionStorage.setItem("statusMessage", "Topic successfully deleted!");
+                sessionStorage.setItem("statusImage", "/assets/success.png");
                 window.location.reload();
               } catch (err) {
                 showStatus(err.message || "Something went wrong!", "/assets/error.png");
