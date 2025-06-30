@@ -540,7 +540,8 @@
                 if (!res.ok)
                   throw new Error(data.error || "Failed to update topic");
 
-                showStatus("Topic successfully updated!", "/assets/success.png");
+                sessionStorage.setItem("statusMessage", "Topic successfully updated!");
+                sessionStorage.setItem("statusImage", "/assets/success.png");
                 window.location.reload();
               } catch (err) {
                  showStatus(err.message || "Something went wrong!", "/assets/error.png");
@@ -611,6 +612,8 @@
                   throw new Error(data.error || "Failed to add topic");
 
                 showStatus("Topic successfully added!", "/assets/success.png");
+                sessionStorage.setItem("statusMessage", "Topic successfully added!");
+                sessionStorage.setItem("statusImage", "/assets/success.png");
                 window.location.reload();
               } catch (err) {
                 showStatus(err.message || "Something went wrong!", "/assets/error.png");
@@ -634,6 +637,19 @@
               document.getElementById("editTopicPreviewImage").src = imageUrl;
               document.getElementById("editTopicPicture").value = imageUrl;
             });
+
+            window.addEventListener("DOMContentLoaded", () => {
+              const message = sessionStorage.getItem("statusMessage");
+              const image = sessionStorage.getItem("statusImage");
+
+              if (message && image) {
+                showStatus(message, image);
+                // Hapus setelah ditampilkan agar tidak muncul terus
+                sessionStorage.removeItem("statusMessage");
+                sessionStorage.removeItem("statusImage");
+              }
+            });
+
         </script>
       </main>
       <!-- Main Content End -->
