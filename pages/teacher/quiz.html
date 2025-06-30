@@ -404,6 +404,7 @@
                 });
                 const topic = await res.json();
                 topicTitle.textContent = topic.name || "Topic - Quiz";
+                document.getElementById("topicDescription").textContent = `Organize and assign the ${topic.name} quizzes to enhance student learning.`;
               } catch (err) {
                 console.error("Failed fetch topic:", err);
               }

@@ -167,7 +167,7 @@
 
                 <div id="dropdownMenuDay" class="hidden absolute z-10 mt-2 w-full rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 text-left">
                   <div class="py-1 text-sm text-gray-700">
-                    <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Sunday">Sunday</div>
+                    <!-- <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Sunday">Sunday</div> -->
                     <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Monday">Monday</div>
                     <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Tuesday">Tuesday</div>
                     <div class="px-4 py-2 hover:bg-blue-100 cursor-pointer" data-value="Wednesday">Wednesday</div>
@@ -861,7 +861,7 @@
 
                 if (isDeleteMode) {
                   if (studentId !== "null" && studentId !== null) {
-                    showStatus("This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
+                    showStatus("This schedule already has a student. Please remove the student first before deleting.", "/assets/error.png");
                     return;
                   }
 
