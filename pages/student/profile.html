@@ -39,8 +39,8 @@
           </button>
           <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-40 bg-white rounded-md shadow-lg z-50">
             <a href="/profile" class="block px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Profile</a>
-            <hr class="my-1">
-            <a href="/logout" class="block px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Log out</a>
+            <hr class="my-1 border-t border-black-300 w-5/6 mx-auto">
+            <a href="#" class=" logoutTrigger px-4 py-2 text-sm text-black-700 hover:bg-gray-100">Log out</a>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
       <ul>
         <li><a href="#"><i class="bi bi-person-circle"></i> Account details</a></li>
         <li><a href="/change-password"><i class="bi bi-key"></i> Change password</a></li>
-        <li><a href="/logout"><i class="bi bi-box-arrow-right"></i> Log out</a></li>
+        <li><a href="#" class="logoutTrigger"><i class="bi bi-box-arrow-right"></i> Log out</a></li>
       </ul>
     </div>
 
@@ -97,6 +97,32 @@
         </form>
     </div>
   </div>
+
+  <div
+      id="confirmModal"
+      class="fixed inset-0 hidden bg-[#000000] bg-opacity-50 flex items-center justify-center z-50"
+    >
+      <div
+        class="bg-white p-6 rounded-lg shadow-md text-center max-w-sm w-full"
+      >
+        <h2 class="mb-4 text-xl font-semibold">Logout</h2>
+        <p class="mb-3">Are you sure you want to log out?</p>
+        <div class="flex justify-center gap-4">
+          <button
+            id="confirmNo"
+            class="w-[140px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
+          >
+            No
+          </button>
+          <button
+            id="confirmYes"
+            class="w-[140px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white"
+          >
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
 
   <script>
     // TAMPILAN AWAL
@@ -197,10 +223,49 @@
 
   // HANDLER DISCARD
     document.getElementById('btn-discard').addEventListener('click', (e) => {
-    e.preventDefault();
-    // Lakukan fetch ulang atau reload halaman
-    location.reload();
-  });
+      e.preventDefault();
+      // Lakukan fetch ulang atau reload halaman
+      location.reload();
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const logoutTriggers = document.querySelectorAll('.logoutTrigger');
+      const confirmModal = document.getElementById('confirmModal');
+      const confirmYes = document.getElementById('confirmYes');
+      const confirmNo = document.getElementById('confirmNo');
+
+      logoutTriggers.forEach(trigger => {
+        trigger.addEventListener('click', (e) => {
+          e.preventDefault();
+          confirmModal.classList.remove('hidden');
+        });
+      });
+
+      confirmNo.addEventListener('click', () => {
+        confirmModal.classList.add('hidden');
+      });
+
+      confirmYes.addEventListener('click', () => {
+        window.location.href = "/logout";
+      });
+    });
+
+
+   function startPing() {
+    setInterval(() => {
+      console.log("📡 Pinging server...");
+      fetch('/teacher/ping', {
+        method: 'POST',
+        credentials: 'include',
+      }).then((res) => {
+        if (!res.ok) throw new Error('Ping failed');
+        console.log('✅ Ping success');
+      }).catch((err) => {
+        console.error('❌ Failed to ping server:', err);
+      });
+    }, 20 * 1000);
+  }
+  document.addEventListener('DOMContentLoaded', startPing);
   </script>
 
   <script type="module">
@@ -258,7 +323,7 @@
     }
 
     .menu {
-      font-size: 13px;
+      font-size: 16px;
     }
 
     .nav-link.dropdown-toggle::after {
