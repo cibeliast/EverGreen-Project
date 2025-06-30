@@ -12,7 +12,7 @@ console.log("Inserting modal HTML...");
       <div class="modal-content p-3 d-flex flex-column justify-content-center align-items-center text-center" style="height: 220px; border-radius: 16px;">
         <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
         <img id="statusIcon" src="" alt="icon" class="mx-auto mb-3" style="width: 80px; height: 80px;  border-radius: 0 !important; object-fit: contain;">
-        <h5 id="statusMessage" class="fw-bold mb-0" style="color: black">Status Message Here</h5>
+        <h5 id="statusMessage" class="fw-semibold mb-0" style="color: black">Status Message Here</h5>
       </div>
     </div>
   </div>
