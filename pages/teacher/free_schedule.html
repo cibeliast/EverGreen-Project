@@ -279,6 +279,16 @@
                   return;
                 }
 
+                function formatTimeRange(startTime, durationMinutes = 60) {
+                  const [hour, minute] = startTime.split(':').map(Number);
+                  const start = new Date(0, 0, 0, hour, minute);
+                  const end = new Date(start.getTime() + durationMinutes * 60000);
+                
+                  const format = (d) => d.toTimeString().slice(0, 5); // hasil: "08:00"
+                  return `${format(start)} - ${format(end)}`;
+                }
+                
+
                  // Nentuin urutan hari
                  const dayOrder = {
                    "Monday": 1,
@@ -320,7 +330,7 @@
                   row.innerHTML = `
                     <!-- Day & Time -->
                     <td class="py-3 px-4">${schedule.day}</td>
-                    <td class="py-3 px-4">${schedule.time}</td>
+                    <td class="py-3 px-4">${formatTimeRange(schedule.time, schedule.duration || 60)}</td>
 
                     <!-- Teacher -->
                     <td class="py-3 px-4">

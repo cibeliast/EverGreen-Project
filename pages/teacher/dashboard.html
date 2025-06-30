@@ -138,7 +138,7 @@
                 <h2 class="font-semibold text-lg text-[#111827]">Upcoming Class</h2>
 
                 <!-- Kotak putih dengan scroll horizontal -->
-                <div id="upcoming-schedule" class="bg-white rounded-lg p-3 overflow-x-auto overflow-y-hidden w-full">
+                <div id="upcoming-schedule" class="bg-white rounded-lg p-3 overflow-x-auto overflow-y-hidden w-full justify-center">
 
                     <!-- CARD 1 -->
                     <div class="flex flex-col items-center gap-2 min-w-[80px]">
@@ -298,6 +298,15 @@
       </script>
 
       <script>
+        function formatTimeRange(startTime, durationMinutes = 60) {
+          const [hour, minute] = startTime.split(':').map(Number);
+          const start = new Date(0, 0, 0, hour, minute);
+          const end = new Date(start.getTime() + durationMinutes * 60000);
+        
+          const format = (d) => d.toTimeString().slice(0, 5); // hasil: "08:00"
+          return `${format(start)} - ${format(end)}`;
+        }
+        
         document.addEventListener('DOMContentLoaded', () => {
           fetch('/api/scheduleTeacherDashboard') // ganti jika route kamu beda
             .then(res => {
@@ -350,7 +359,8 @@
                 row.innerHTML = `
                   <td class="py-2 px-3">${index + 1}</td>
                   <td class="py-2 px-3">${item.day}</td>
-                  <td class="py-2 px-3">${item.time}</td>
+                  <td class="py-3 px-4">${formatTimeRange(item.time, item.duration || 60)}</td>
+
                   <td class="py-2 px-3">
                     <div class="flex items-center space-x-2">
                       <span class="w-8 h-8 rounded-full bg-[#AB91CD] text-white text-xs font-semibold flex items-center justify-center select-none">
@@ -376,7 +386,6 @@
             });
         });
 
-        // Upcoming schedule
         // Ambil dan filter jadwal untuk hari ini → Upcoming Class
         fetch('/api/scheduleTeacherDashboard')
         .then(res => {
@@ -401,12 +410,13 @@
       
           upcomingData.forEach((item, index) => {
             const div = document.createElement('div');
-            div.className = 'flex flex-col items-center gap-2 min-w-[100px]';
+            div.className = 'flex flex-col items-center gap-2 min-w-[100px] ';
             div.innerHTML = `
               <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">${index + 1}</div>
               <div>
                 <p class="font-bold text-xs text-[#111827] text-center">${item.student_name}</p>
-                <p class="text-xs text-[#6b7280] text-center">${item.time}</p>
+                <p class="text-xs text-[#6b7280] text-center">${formatTimeRange(item.time, item.duration || 60)}</p>
+
               </div>
             `;
             scrollWrapper.appendChild(div);
@@ -420,7 +430,6 @@
           container.innerHTML = `<p class="text-sm text-red-500 text-center">Failed to load upcoming schedule</p>`;
         });
       
-
         // Online student
        fetch('/teacher/api/students')
           .then(res => res.json())
