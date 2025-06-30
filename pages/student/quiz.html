@@ -78,7 +78,7 @@
             <tr>
               <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">No</th>
               <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Quiz Link</th>
-              <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Score</th>
+              <!-- <th class="py-3 px-4 font-semibold sticky top-0 bg-[#A69ACA] z-10">Score</th> -->
             </tr>
           </thead>
           <tbody class="text-gray-700"></tbody>
@@ -140,8 +140,8 @@
             const row = `
               <tr class="border-t">
                 <td class="py-3 px-4">${index + 1}</td>
-                <td class="py-3 px-4"><a href="${quiz.quiz_link}" target="_blank">Start Quiz #${index + 1}</a></td>
-                <td class="py-3 px-4">${quiz.score ?? '-'}</td>
+                <td class="py-3 px-4 text-blue-700 "><a href="${quiz.quiz_link}" target="_blank">Start Quiz #${index + 1}</a></td>
+                <!-- <td class="py-3 px-4">${quiz.score ?? '-'}</td> -->
               </tr>
             `;
             tbody.insertAdjacentHTML('beforeend', row);
@@ -242,7 +242,6 @@
     background-color: #ffffff;
     padding: 10px;
     border-radius: 8px;
-    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.25);
     overflow: hidden;
     display: flex;
     flex-direction: column;
