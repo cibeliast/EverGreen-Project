@@ -188,48 +188,50 @@
     async function fetchJadwal() {
       try {
         const response = await fetch('/api/studentSchedule');
-        if (!response.ok) {
-          throw new Error('Failed to fetch jadwal');
-      }
-      const schedules = await response.json();
+        if (!response.ok) throw new Error('Failed to fetch jadwal');
   
-      const tbody = document.querySelector('#table-schedule tbody');
-      tbody.innerHTML = '';  // Kosongkan dulu
+        const schedules = await response.json();
+        const tbody = document.querySelector('#table-schedule tbody');
+        tbody.innerHTML = '';  // Kosongkan tabel lebih dulu
   
-      if (schedules.length === 0) {
-        const tr = document.createElement('tr');
-        tr.classList.add("border-t");
-
-        const td = document.createElement('td');
-        td.classList.add("py-3 px-4 text-center");
-        td.colSpan = 4;  // colspan supaya menutupi semua kolom
-        td.textContent = 'Tidak ada jadwal';
-        td.style.textAlign = 'center';
-        tr.appendChild(td);
-        
-        tbody.appendChild(tr);
-        return;
-      }
+        // ✅ Kalau tidak ada jadwal
+        if (!Array.isArray(schedules) || schedules.length === 0) {
+          const tr = document.createElement('tr');
+          tr.classList.add("border-t");
   
-      schedules.forEach((schedule, index) => {
-        const tr = document.createElement('tr');
-        tr.classList.add("border-t");
-
-        tr.innerHTML = `
-          <td class="py-3 px-4">${index + 1}</td>
-          <td class="py-3 px-4">${schedule.day}</td>
-          <td class="py-3 px-4">${schedule.time}</td>
-          <td class="py-3 px-4">${schedule.teacher_name}</td>
+          const td = document.createElement('td');
+          td.classList.add("py-3", "px-4", "text-center", "text-gray-500");
+          td.colSpan = 4;
+          td.textContent = 'There is no schedule';
+          tr.appendChild(td);
+  
+          tbody.appendChild(tr);
+          return;
+        }
+  
+        // ✅ Kalau ada jadwal
+        schedules.forEach((schedule, index) => {
+          const tr = document.createElement('tr');
+          tr.classList.add("border-t");
+          tr.innerHTML = `
+            <td class="py-3 px-4">${index + 1}</td>
+            <td class="py-3 px-4">${schedule.day}</td>
+            <td class="py-3 px-4">${schedule.time}</td>
+            <td class="py-3 px-4">${schedule.teacher_name}</td>
+          `;
+          tbody.appendChild(tr);
+        });
+  
+      } catch (error) {
+        console.error('Gagal memuat jadwal:', error);
+        const tbody = document.querySelector('#table-schedule tbody');
+        tbody.innerHTML = `
+          <tr><td colspan="4" class="py-3 px-4 text-center text-red-500">Error when trying fetch data.</td></tr>
         `;
-  
-        tbody.appendChild(tr);
-      });
-    } catch (error) {
-      console.error(error);
+      }
     }
-  }
   
-  fetchJadwal();
+    document.addEventListener('DOMContentLoaded', fetchJadwal);
   
   const logoutTrigger = document.getElementById('logoutTrigger');
   const confirmModal = document.getElementById('confirmModal');
