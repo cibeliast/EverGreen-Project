@@ -89,7 +89,7 @@
             </a>
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/logout"
+              href="#" id="logoutTrigger"
             >
               <i class="bi bi-box-arrow-right"></i>
               <span class="title">Log out</span>
@@ -315,6 +315,33 @@
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+
+        <!-- Modal logout -->
+        <div
+          id="confirmLogout"
+          class="fixed inset-0 hidden bg-[#000000] bg-opacity-50 flex items-center justify-center z-50"
+        >
+          <div
+            class="bg-white p-6 rounded-lg shadow-md text-center max-w-sm w-full"
+          >
+            <h2 class="mb-4 text-xl font-semibold">Logout</h2>
+            <p class="mb-3">Are you sure you want to log out?</p>
+            <div class="flex justify-center gap-4">
+              <button
+                id="confirmNoLogout"
+                class="w-[140px] bg-[#FFFFFF] border-2 border-[#9FD3C7] px-4 py-2 rounded hover:bg-[#9FD3C7] transition"
+              >
+                No
+              </button>
+              <button
+                id="confirmYesLogout"
+                class="w-[140px] bg-[#9FD3C7] text-[#000000] px-4 py-2 rounded hover:bg-[#57998A] hover:text-white"
+              >
+                Yes
+              </button>
+            </div>
           </div>
         </div>
 
@@ -649,6 +676,27 @@
                 sessionStorage.removeItem("statusImage");
               }
             });
+
+          const logoutTrigger = document.getElementById('logoutTrigger');
+          const confirmLogout = document.getElementById('confirmLogout');
+          const confirmYesLogout = document.getElementById('confirmYesLogout');
+          const confirmNoLogout = document.getElementById('confirmNoLogout');
+
+          // Tampilkan modal saat klik "Log out"
+          logoutTrigger.addEventListener('click', (e) => {
+            e.preventDefault();
+            confirmLogout.classList.remove('hidden');
+          });
+
+          // Klik "No" → sembunyikan modal
+          confirmNoLogout.addEventListener('click', () => {
+            confirmLogout.classList.add('hidden');
+          });
+
+          // Klik "Yes" → redirect ke logout
+          confirmYesLogout.addEventListener('click', () => {
+            window.location.href = "/logout"; // atau fetch POST kalau pakai method post
+          });
         </script>
       </main>
       <!-- Main Content End -->
