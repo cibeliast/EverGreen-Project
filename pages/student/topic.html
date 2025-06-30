@@ -77,20 +77,18 @@
       <div class="d-flex justify-content-center mb-4">
         <div class="position-relative w-100">
           <i class="bi bi-search position-absolute" style="top: 50%; left: 10px; transform: translateY(-50%); color: gray;"></i>
-          <input type="text" class="form-control ps-5" placeholder="Search" id="search-input">
+          <input type="text" class="form-control ps-5" placeholder="Search topic" id="search-input">
         </div>
       </div>
     </div>
   </div>
 
   <!-- Topic cards -->
-  <div
-    class="max-h-[520px] overflow-y-auto rounded-lg scroll-container px-16 py-2"
-  >
+  <div class="max-h-[470px] overflow-y-auto rounded-lg scroll-container px-16 py-2 mx-auto max-w-[4000px]">
+
     <div
       id="cardContainer"
-      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10"
-    >
+      class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10">
       <!-- Cards will be injected dynamically -->
     </div>
   </div>
@@ -120,8 +118,8 @@
         </div>
       </div>
     </div>
-  <script>
 
+    <script>
     // PROFILE DROPDOWN
      document.addEventListener('DOMContentLoaded', () => {
       const button = document.getElementById('profileButton');
@@ -158,17 +156,37 @@
 
     searchInput.addEventListener('input', () => {
       const query = searchInput.value.toLowerCase();
-      const topicCards = document.querySelectorAll('#cardContainer > div'); // ambil setiap card di dalam cardContainer
-
+      const topicCards = document.querySelectorAll('#cardContainer > div');
+    
+      let visibleCount = 0;
+    
       topicCards.forEach(card => {
-        const title = card.querySelector('h2')?.textContent.toLowerCase(); // ambil isi <h2> yang berisi nama topic
+        const title = card.querySelector('h2')?.textContent.toLowerCase();
         if (title && title.includes(query)) {
           card.style.display = '';
+          visibleCount++;
         } else {
           card.style.display = 'none';
         }
       });
+    
+      // Cek apakah semua card disembunyikan
+      let noTopic = document.getElementById('no-topic-msg');
+    
+      if (visibleCount === 0) {
+        if (!noTopic) {
+          noTopic = document.createElement("p");
+          noTopic.id = "no-topic-msg";
+          noTopic.className = "text-center text-base text-gray-500 col-span-full";
+          noTopic.textContent = "No topics found.";
+          document.getElementById("cardContainer").appendChild(noTopic);
+        }
+      } else {
+        // Jika sebelumnya sudah muncul, hilangkan
+        if (noTopic) noTopic.remove();
+      }
     });
+    
 
     document.addEventListener("DOMContentLoaded", async () => {
       const cardContainer = document.getElementById("cardContainer");
@@ -177,6 +195,8 @@
         const response = await fetch("/api/topicTeacher");
         if (!response.ok) throw new Error("Failed to fetch topics");
         const topics = await response.json();
+        console.log("Topics fetched:", topics);
+
         renderTopics(topics);
       } catch (err) {
         console.error(err);
@@ -186,13 +206,7 @@
       function renderTopics(topics) {
         cardContainer.innerHTML = ""; // clear cards
 
-        if (topics.length === 0) {
-          const emptyMsg = document.createElement("p");
-          emptyMsg.className = "text-center text-gray-500 col-span-full";
-          emptyMsg.textContent = "No topics found.";
-          cardContainer.appendChild(emptyMsg);
-          return;
-        }
+        
 
         topics.forEach((topic) => {
           const card = document.createElement("div");
@@ -413,6 +427,17 @@
     }
 
     #topic-container::-webkit-scrollbar {
+      display: none;
+    }
+
+    .scroll-container {
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  
+    .scroll-container::-webkit-scrollbar {
       display: none;
     }
 

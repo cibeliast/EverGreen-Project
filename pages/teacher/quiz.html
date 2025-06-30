@@ -420,7 +420,10 @@
                 quizTable.innerHTML = ""; // Kosongkan tabel
 
                 if (data.length === 0) {
-                  quizTable.innerHTML = `<tr><td colspan="3" class="text-center py-4 text-gray-500">There is no quiz</td></tr>`;
+                  quizTable.innerHTML = 
+                  `<tr>
+                    <td colspan="3" class="text-center py-4 text-gray-500">There is no quiz</td>
+                  </tr>`;
                   return;
                 }
 
