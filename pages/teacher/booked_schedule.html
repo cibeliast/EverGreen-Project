@@ -345,7 +345,8 @@
                     return res.json();
                   })
                   .then(() => {
-                    showStatus("Succes reassign schedule!", "/assets/success.png");
+                    sessionStorage.setItem("statusMessage", "Schedule successfully updated!");
+                    sessionStorage.setItem("statusImage", "/assets/success.png");
                     location.reload(); // Refresh the page to show updated data
                   })
                   .catch(() => {
@@ -354,6 +355,18 @@
               }
             });
           });
+
+           window.addEventListener("DOMContentLoaded", () => {
+              const message = sessionStorage.getItem("statusMessage");
+              const image = sessionStorage.getItem("statusImage");
+
+              if (message && image) {
+                showStatus(message, image);
+                // Hapus setelah ditampilkan agar tidak muncul terus
+                sessionStorage.removeItem("statusMessage");
+                sessionStorage.removeItem("statusImage");
+              }
+            });
         </script>
         
       </main>

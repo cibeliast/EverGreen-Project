@@ -717,7 +717,7 @@
             });
           
             if (isConflict) {
-              showStatus("❌ Schedule conflict! Please choose another time.", "/assets/error.png");
+              showStatus("Schedule conflict! Please choose another time.", "/assets/error.png");
               return;
             }
           
@@ -735,7 +735,8 @@
                 return response.json();
               })
               .then(() => {
-                showStatus("Schedule added successfully!", "/assets/success.png");
+                sessionStorage.setItem("statusMessage", "Schedule added successfully!");
+                sessionStorage.setItem("statusImage", "/assets/success.png");
                 window.location.reload();
               })
               .catch((error) => {
@@ -801,7 +802,7 @@
                 if (isEditMode) {
                   // EDIT
                   if (studentId !== "null" && studentId !== null) {
-                    showStatus("❌ This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
+                    showStatus("This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
                     return;
                   }
 
@@ -819,7 +820,7 @@
 
                 if (isDeleteMode) {
                   if (studentId !== "null" && studentId !== null) {
-                    showStatus("❌ This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
+                    showStatus("This schedule already has a student. Please remove the student first before editing.", "/assets/error.png");
                     return;
                   }
 
@@ -897,7 +898,7 @@
             });
 
             if (isConflict) {
-             showStatus("Schedule conflict! Please choose another time.", "/assets/error.png");
+              showStatus("Schedule conflict! Please choose another time.", "/assets/error.png");
               return;
             }
 
@@ -911,7 +912,8 @@
                 return res.json();
               })
               .then(() => {
-                showStatus("Schedule updated successfully!", "/assets/success.png");
+                sessionStorage.setItem("statusMessage", "Schedule updated successfully!");
+                sessionStorage.setItem("statusImage", "/assets/success.png");
                 window.location.reload();
               })
               .catch(err => {
@@ -982,7 +984,8 @@
                 return res.json();
               })
               .then(() => {
-                showStatus("Schedule deleted successfully!", "/assets/success.png");
+                sessionStorage.setItem("statusMessage", "Schedule deleted successfully!");
+                sessionStorage.setItem("statusImage", "/assets/success.png");
                 window.location.reload();
               })
               .catch((err) => {
@@ -995,6 +998,18 @@
             confirmModal.classList.add("hidden");
             scheduleIdToDelete = null;
           });  
+
+           window.addEventListener("DOMContentLoaded", () => {
+              const message = sessionStorage.getItem("statusMessage");
+              const image = sessionStorage.getItem("statusImage");
+
+              if (message && image) {
+                showStatus(message, image);
+                // Hapus setelah ditampilkan agar tidak muncul terus
+                sessionStorage.removeItem("statusMessage");
+                sessionStorage.removeItem("statusImage");
+              }
+            });
         </script>
          <script type="module">
         import { setupStatusModal, showStatus } from '/js/statusModal.js';
