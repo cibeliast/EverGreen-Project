@@ -133,13 +133,15 @@
               <div class="flex flex-col flex-1 gap-4">
 
                 <!-- Upcoming Class (Ijo) -->
-                <div class="h-[180px] bg-[#d0e0e5] rounded-xl pt-3 px-8 flex flex-col gap-2">
-                  <!-- Judul -->
-                  <h2 class="font-semibold text-lg text-[#111827]">Upcoming Class</h2>
+              <div class="h-[180px] bg-[#d0e0e5] rounded-xl pt-3 px-8 flex flex-col gap-2">
+                <!-- Judul -->
+                <h2 class="font-semibold text-lg text-[#111827]">Upcoming Class</h2>
 
-                  <!-- Putih Bawah -->
-                  <div id="upcoming-schedule" class="bg-[#ffffff] rounded-lg p-3 flex justify-center gap-40 w-full">
-                    <div class="flex flex-col items-center gap-2">
+                <!-- Kotak putih dengan scroll horizontal -->
+                <div id="upcoming-schedule" class="bg-white rounded-lg p-3 overflow-x-auto overflow-y-hidden w-full">
+
+                    <!-- CARD 1 -->
+                    <div class="flex flex-col items-center gap-2 min-w-[80px]">
                       <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">1</div>
                       <div>
                         <p class="font-bold text-xs text-[#111827] text-center">English</p>
@@ -147,23 +149,19 @@
                       </div>
                     </div>
 
-                    <div class="flex flex-col items-center gap-2">
+                    <!-- CARD 2 -->
+                    <div class="flex flex-col items-center gap-2 min-w-[80px]">
                       <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">2</div>
                       <div>
-                        <p class="font-bold text-xs text-[#111827] text-center">English</p>
-                        <p class="text-xs text-[#6b7280] text-center">10:00 - 11:00</p>
+                        <p class="font-bold text-xs text-[#111827] text-center">Math</p>
+                        <p class="text-xs text-[#6b7280] text-center">11:00 - 12:00</p>
                       </div>
                     </div>
 
-                    <div class="flex flex-col items-center gap-2">
-                      <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">3</div>
-                      <div>
-                        <p class="font-bold text-xs text-[#111827] text-center">English</p>
-                        <p class="text-xs text-[#6b7280] text-center">10:00 - 11:00</p>
-                      </div>
-                    </div>
-                  </div>
+                    <!-- Tambah lebih banyak item sesuka kamu -->
                 </div>
+              </div>
+
 
                 <!-- My Schedule -->
                 <div class="h-[400px] bg-[#FFFFFF] rounded-xl shadow-2xl pb-2 px-8 flex flex-col gap-2">
@@ -380,42 +378,48 @@
 
         // Upcoming schedule
         // Ambil dan filter jadwal untuk hari ini → Upcoming Class
-          fetch('/api/scheduleTeacherDashboard')
-          .then(res => {
-            if (!res.ok) throw new Error("Unauthorized or error");
-            return res.json();
-          })
-          .then(data => {
-            const today = new Date().toLocaleString('en-US', { weekday: 'long' });
-            const upcomingData = data.filter(item => item.day === today);
-
-            const container = document.getElementById('upcoming-schedule');
-            container.innerHTML = '';
-
-            if (upcomingData.length === 0) {
-              container.innerHTML = `<p class="text-sm text-gray-500 text-center">No class today.</p>`;
-              return;
-            }
-
-            upcomingData.forEach((item, index) => {
-              const div = document.createElement('div');
-              div.className = 'flex flex-col items-center gap-2';
-              div.innerHTML = `
-                <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">${index + 1}</div>
-                <div>
-                  <p class="font-bold text-xs text-[#111827] text-center">${item.student_name}</p>
-                  <p class="text-xs text-[#6b7280] text-center">${item.time}</p>
-                </div>
-              `;
-              container.appendChild(div);
-            });
-          })
-          .catch(error => {
-            console.error('Failed to load upcoming schedule:', error);
-            const container = document.getElementById('upcoming-schedule');
-            container.innerHTML = `<p class="text-sm text-red-500 text-center">Failed to load upcoming schedule</p>`;
+        fetch('/api/scheduleTeacherDashboard')
+        .then(res => {
+          if (!res.ok) throw new Error("Unauthorized or error");
+          return res.json();
+        })
+        .then(data => {
+          const today = new Date().toLocaleString('en-US', { weekday: 'long' });
+          const upcomingData = data.filter(item => item.day === today);
+      
+          const container = document.getElementById('upcoming-schedule');
+          container.innerHTML = '';
+      
+          if (upcomingData.length === 0) {
+            container.innerHTML = `<p class="text-sm text-gray-500 text-center">No class today.</p>`;
+            return;
+          }
+      
+          // 🔽 Bikin WRAPPER fleksibel di dalam kotak putih
+          const scrollWrapper = document.createElement('div');
+          scrollWrapper.className = 'flex gap-6 w-max'; // ⬅️ HANYA wrapper yang melebar
+      
+          upcomingData.forEach((item, index) => {
+            const div = document.createElement('div');
+            div.className = 'flex flex-col items-center gap-2 min-w-[100px]';
+            div.innerHTML = `
+              <div class="font-lg text-xs w-5 h-5 rounded-full bg-[#93B9D6] text-white flex items-center justify-center mx-auto">${index + 1}</div>
+              <div>
+                <p class="font-bold text-xs text-[#111827] text-center">${item.student_name}</p>
+                <p class="text-xs text-[#6b7280] text-center">${item.time}</p>
+              </div>
+            `;
+            scrollWrapper.appendChild(div);
           });
-
+      
+          container.appendChild(scrollWrapper); // masukkan ke dalam kotak putih
+        })
+        .catch(error => {
+          console.error('Failed to load upcoming schedule:', error);
+          const container = document.getElementById('upcoming-schedule');
+          container.innerHTML = `<p class="text-sm text-red-500 text-center">Failed to load upcoming schedule</p>`;
+        });
+      
 
         // Online student
        fetch('/teacher/api/students')
