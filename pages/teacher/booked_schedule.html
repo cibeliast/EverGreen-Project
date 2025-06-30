@@ -52,7 +52,7 @@
           <nav class="flex flex-col gap-5 text-sm">
             <a
               class="flex items-center gap-3 text-[#ffffff] hover:text-[#9FD3C7] transition-colors"
-              href="/dashbord/teacher"
+              href="/dashboard/teacher"
             >
               <i class="bi bi-grid-1x2"></i>
               <span class="title">Dashboard</span>
@@ -255,7 +255,33 @@
                     '<tr><td colspan="5" class="text-center py-4">there is no schedule yet</td></tr>';
                   return;
                 }
-        
+
+                // Nentuin urutan hari
+                const dayOrder = {
+                  "Monday": 1,
+                  "Tuesday": 2,
+                  "Wednesday": 3,
+                  "Thursday": 4,
+                  "Friday": 5,
+                  "Saturday": 6,
+                  "Sunday": 7
+                };
+
+                // Fungsi bantu untuk parsing jam ke angka menit
+                const parseTimeToMinutes = (timeStr) => {
+                  const [hour, minute] = timeStr.split(':').map(Number);
+                  return hour * 60 + minute;
+                };
+
+                // Sort data berdasarkan hari dan jam
+                validSchedules.sort((a, b) => {
+                  const dayA = dayOrder[a.day] || 999;
+                  const dayB = dayOrder[b.day] || 999;
+                  if (dayA !== dayB) return dayA - dayB;
+
+                  return parseTimeToMinutes(a.time) - parseTimeToMinutes(b.time);
+                });
+          
                 validSchedules.forEach((schedule) => {
                   const teacherName = schedule.teacher_name || "Tidak diketahui";
                   const teacherInitials = getInitials(teacherName);
