@@ -66,7 +66,7 @@ router.post('/change-password', (req, res) => {
               return res.status(500).send('Error updating password');
             }
 
-            res.send('Password updated!');
+            res.json({ message: "Password updated!" });
           }
         );
       });
