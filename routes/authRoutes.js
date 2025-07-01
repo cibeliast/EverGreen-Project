@@ -15,7 +15,7 @@ router.get('/signup', (req, res) => {
 
 // Route POST signup
 router.post('/signup', async (req, res) => {
-    const {email, username, role, password} = req.body;
+    const {name, email, username, role, password} = req.body;
 
     try {
        const checkQuery = `
@@ -40,9 +40,9 @@ router.post('/signup', async (req, res) => {
 
             try {
                 const hashedPassword = await bcrypt.hash(password, 10);
-                const query = `INSERT INTO ${role} (email, username, password) VALUES (?, ?, ?)`;
+                const query = `INSERT INTO ${role} (email, username, password, name) VALUES (?, ?, ?, ?)`;
 
-                db.query(query, [email, username, hashedPassword], (err, results) => {
+                db.query(query, [email, username, hashedPassword, name], (err, results) => {
                     if (err) {
                         return res.redirect('signup?error=Failed saving data!')
                     }

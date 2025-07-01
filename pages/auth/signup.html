@@ -13,23 +13,28 @@
     <div class="container-fluid">
         <div class="column left">
             <h1>EverGreen</h1>
-            <h5>Create Account</h5>
+            <h5 class="mb-5">Create Account</h5>
 
             <div id="errorMessage" style="color: red;"></div>
             <form action="/signup" method="POST">
                 <div class="mb-3">
+                    <label for="exampleFormControlInput1" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" required>
+                </div>
+
+                <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">E-mail</label>
-                    <input type="email" class="form-control" id="email" name="email">
+                    <input type="email" class="form-control" id="email" name="email" required>
                 </div>
 
                 <div class="row mb-3">
                      <label for="exampleFormControlInput1" class="form-label">Username</label>
                     <div class="col-md-8">
-                    <input type="text" class="form-control" id="username" name="username">
+                    <input type="text" class="form-control" id="username" name="username" required>
                     </div>
 
                     <div class="col-md-4">
-                    <select class="form-select" aria-label="Default select example" name="role">
+                    <select class="form-select" aria-label="Default select example" name="role" required>
                         <option selected disabled>Role</option>
                         <option value="teachers">Teacher</option>
                         <option value="students">Student</option>
@@ -39,7 +44,7 @@
 
                  <div class="mb-3">
                     <label for="exampleFormControlInput1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
+                    <input type="password" class="form-control" id="password" name="password" required>
                 </div>
 
                 <div class="d-grid">
