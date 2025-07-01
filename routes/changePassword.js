@@ -48,7 +48,7 @@ router.post('/change-password', (req, res) => {
 
     bcrypt.compare(prevPassword, hashedPassword, (err, isMatch) => {
       if (err || !isMatch) {
-        return res.status(400).send('Previous password incorrect');
+        return res.status(400).json({ message: 'Previous password incorrect' });
       }
 
       bcrypt.hash(newPassword, 10, (err, newHashedPassword) => {
