@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 26, 2025 at 03:56 PM
+-- Generation Time: Jul 01, 2025 at 07:48 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `rpl`
+-- Database: `rpl_kk`
 --
 
 -- --------------------------------------------------------
@@ -46,8 +46,15 @@ INSERT INTO `payments` (`payment_id`, `student_id`, `teacher_id`, `nominal`, `da
 (3, 2, 2, 50000.00, '2025-05-03', 'Paid for 1 session'),
 (4, 3, 1, 50000.00, '2025-05-04', 'Paid for 1 session'),
 (5, 2, 2, 50000.00, '2025-05-10', 'Paid for another session'),
-(6, 11, 5, 100000.00, '2025-06-23', 'Paid for 2 session'),
-(7, 3, 5, 50000.00, '2025-06-23', 'Paid for 1 session');
+(6, 11, 5, 500000.00, '2025-06-23', 'Paid for 10 session'),
+(7, 11, 5, 300000.00, '2025-06-23', 'Paid for 6 session'),
+(9, 11, 5, 300000.00, '2025-07-01', 'Paid for 6 session'),
+(10, 1, 5, 50000.00, '2025-06-30', 'Paid for 1 session'),
+(11, 3, 5, 150000.00, '2025-07-01', 'Paid for 3 session'),
+(12, 3, 5, 350000.00, '2025-06-30', 'Paid for 7 session'),
+(13, 2, 5, 250000.00, '2025-07-01', 'Paid for 5 session'),
+(14, 2, 5, 150000.00, '2025-06-30', 'Paid for 3 session'),
+(15, 2, 5, 50000.00, '2025-06-23', 'Paid for 1 session');
 
 -- --------------------------------------------------------
 
@@ -68,31 +75,13 @@ CREATE TABLE `quizzes` (
 --
 
 INSERT INTO `quizzes` (`quiz_id`, `topic_id`, `teacher_id`, `quiz_link`, `result_link`) VALUES
-(1, 1, 1, 'https://forms.gle/quiz1', 'https://sheets.google.com/results1'),
-(2, 2, 1, 'https://forms.gle/quiz2', 'https://sheets.google.com/results2'),
-(3, 3, 2, 'https://forms.gle/quiz3', 'https://sheets.google.com/results90'),
-(4, 1, 5, 'hai', 'a'),
-(5, 1, 5, 'a', 'a'),
-(6, 1, 5, 'battt', 'aaa'),
-(7, 1, 5, 'nambah', 'neng'),
-(8, 2, 5, 'a', 'a'),
-(9, 2, 5, 'b', 'b'),
-(10, 2, 5, 'halo', 'ftom the other side'),
-(11, 3, 5, 'h', 'a'),
-(12, 3, 5, 'coba', 'add quiz'),
-(13, 3, 5, 'ciba', 'adele'),
-(15, 4, 5, 'ternak sapi', 'hehe'),
-(16, 5, 5, 'eating', 'sugar'),
-(17, 5, 5, 'halo', 'halo'),
-(18, 5, 5, 'ke mana', 'hey'),
-(19, 5, 5, 'a', 'a'),
-(20, 5, 5, 'a', 'a'),
-(21, 1, 5, 'a', 'a'),
-(23, 4, 5, 'a', 'a'),
-(24, 4, 5, 'bisa dong', 'busa'),
-(25, 4, 5, 'a', 'a'),
-(26, 4, 5, 'a', 'a'),
-(30, 2, 5, 'hy', 'hehe');
+(38, 10, 5, 'https://forms.gle/5YevGnbXHjmMryNY8', 'https://docs.google.com/spreadsheets/d/1f2ulzbFhDnqwMgIyz7VWmuSQz3_GVEhBU_WloVKIcWA/edit?usp=sharing'),
+(39, 8, 5, 'https://forms.gle/8DEhEn56UphF92ct7', 'https://docs.google.com/spreadsheets/d/1BD1pqqt6baTtBygasczxE8VIlZb7MyaJ26ZoBPT6xOA/edit?usp=sharing'),
+(40, 8, 5, 'https://forms.gle/8DEhEn56UphF92ct7', 'https://docs.google.com/spreadsheets/d/1BD1pqqt6baTtBygasczxE8VIlZb7MyaJ26ZoBPT6xOA/edit?usp=sharing'),
+(41, 8, 5, 'https://forms.gle/8DEhEn56UphF92ct7', 'https://docs.google.com/spreadsheets/d/1BD1pqqt6baTtBygasczxE8VIlZb7MyaJ26ZoBPT6xOA/edit?usp=sharing'),
+(42, 10, 5, 'https://forms.gle/5YevGnbXHjmMryNY8', 'https://docs.google.com/spreadsheets/d/1f2ulzbFhDnqwMgIyz7VWmuSQz3_GVEhBU_WloVKIcWA/edit?usp=sharing'),
+(43, 10, 5, 'https://forms.gle/5YevGnbXHjmMryNY8', 'https://docs.google.com/spreadsheets/d/1f2ulzbFhDnqwMgIyz7VWmuSQz3_GVEhBU_WloVKIcWA/edit?usp=sharing'),
+(44, 10, 5, 'https://forms.gle/5YevGnbXHjmMryNY8', 'https://docs.google.com/spreadsheets/d/1f2ulzbFhDnqwMgIyz7VWmuSQz3_GVEhBU_WloVKIcWA/edit?usp=sharing');
 
 -- --------------------------------------------------------
 
@@ -115,11 +104,22 @@ CREATE TABLE `schedules` (
 INSERT INTO `schedules` (`schedule_id`, `student_id`, `teacher_id`, `day`, `time`) VALUES
 (1, 11, 1, 'Monday', '10:00:00'),
 (2, 11, 1, 'Wednesday', '14:00:00'),
-(3, NULL, 1, 'Tuesday', '09:00:00'),
+(3, 3, 1, 'Tuesday', '09:00:00'),
 (4, 11, 2, 'Thursday', '11:00:00'),
 (5, 11, 1, 'Friday', '13:00:00'),
-(6, 1, 1, 'Friday', '17:00:00'),
-(7, 3, 2, 'Thursday', '17:00:00');
+(6, NULL, 1, 'Friday', '17:00:00'),
+(7, 2, 2, 'Thursday', '17:00:00'),
+(8, 11, 5, 'Monday', '09:00:00'),
+(9, 2, 5, 'Thursday', '09:00:00'),
+(12, 3, 5, 'Wednesday', '08:00:00'),
+(13, 3, 5, 'Friday', '11:00:00'),
+(15, 3, 5, 'Tuesday', '09:00:00'),
+(16, 11, 5, 'Monday', '10:00:00'),
+(17, 2, 5, 'Monday', '08:00:00'),
+(18, NULL, 5, 'Monday', '12:00:00'),
+(19, NULL, 5, 'Thursday', '10:00:00'),
+(20, 3, 5, 'Saturday', '14:00:00'),
+(24, 2, 5, 'Tuesday', '12:00:00');
 
 -- --------------------------------------------------------
 
@@ -135,18 +135,20 @@ CREATE TABLE `students` (
   `password` varchar(255) NOT NULL,
   `phone_number` varchar(15) DEFAULT NULL,
   `address` varchar(100) DEFAULT NULL,
-  `total_meetings` int(10) DEFAULT NULL
+  `total_meetings` int(10) DEFAULT NULL,
+  `last_online` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`student_id`, `name`, `email`, `username`, `password`, `phone_number`, `address`, `total_meetings`) VALUES
-(1, 'Rina Putri', 'rina@student.com', 'rina123', 'pass123', '089876543210', 'Jl. Anggrek No.5', 3),
-(2, 'Dina Laras', 'dina@student.com', 'dinal', 'pass123', '089812345678', 'Jl. Melati No.8', 2),
-(3, 'Toni Setiawan', 'toni@student.com', 'tonis', 'pass123', '089876543211', 'Jl. Kamboja No.3', 1),
-(11, 'Kitibella', 'kibel@email.com', 'kibel', '$2b$10$gXzu9ZWiDNisPSwawnPOQeY/7soGU4uhRmypvbD/qk/iXr2qzsPOy', '', 'Jl. Jalan Yukk', NULL);
+INSERT INTO `students` (`student_id`, `name`, `email`, `username`, `password`, `phone_number`, `address`, `total_meetings`, `last_online`) VALUES
+(1, 'Rina Putri', 'rina@student.com', 'rina123', 'pass123', '089876543210', 'Jl. Anggrek No.5', 0, NULL),
+(2, 'Dina Laras', 'dina@student.com', 'dinal', 'pass123', '089812345678', 'Jl. Melati No.8', 4, NULL),
+(3, 'Toni Setiawan', 'toni@student.com', 'tonis', 'pass123', '089876543211', 'Jl. Kamboja No.3', 5, NULL),
+(11, 'Kitibella', 'xintinkoink@gmail.com', 'kibel', '$2b$10$QLGEjZRQt5WUnXmp.dnPt.D4ngFGDC8XIz5Psw1B5g5ipl9mrNb8O', '017232058', 'Flamboyan', 6, '2025-07-01 12:02:49'),
+(14, 'Jae', 'jae@email.com', 'jae12', '$2b$10$zQe98X3QZnHpl6WFIkl4nuHbtcI2ijFKegvmjzOjEWhNtZM1xy7OG', NULL, NULL, 0, '2025-07-01 12:47:15');
 
 -- --------------------------------------------------------
 
@@ -182,9 +184,10 @@ CREATE TABLE `teachers` (
 --
 
 INSERT INTO `teachers` (`teacher_id`, `name`, `email`, `username`, `password`, `phone_number`, `address`) VALUES
-(1, 'Ari', 'ari@teacher.com', 'ariww', 'pass123', '081234567890', 'Jl. Merdeka No.1'),
-(2, 'Santo', 'santo@teacher.com', 'santow', 'santo123', '081234567891', 'Jl. Mawar No, 2'),
-(5, 'guru', 'teacher@gmail.com', 'Teacher', '$2b$10$e0EYMZuChPedjLQZgtRUx.6BCh1A.HzrFQj9TWRPoY6aTCwXwQ03O', NULL, NULL);
+(1, 'Mr Ari', 'ari@teacher.com', 'ariww', 'pass123', '081234567890', 'Jl. Merdeka No.1'),
+(2, 'Mr Santo', 'santo@teacher.com', 'santow', 'santo123', '081234567891', 'Jl. Mawar No, 2'),
+(5, 'Ms Marvel', 'teacher@gmail.com', 'Teacher', '$2b$10$e0EYMZuChPedjLQZgtRUx.6BCh1A.HzrFQj9TWRPoY6aTCwXwQ03O', '125467', 'jogja'),
+(6, 'nora', 'nora@email.com', 'nora12', '$2b$10$YH9Q91PiI/lyxz8w6pyokOvcHEUZ6hoKs5hBr4iy08zqhCIV10vFi', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -204,11 +207,9 @@ CREATE TABLE `topics` (
 --
 
 INSERT INTO `topics` (`topic_id`, `name`, `description`, `picture`) VALUES
-(1, 'Tenses', 'Basic to advanced English tenses.', '/assets/book.png'),
-(2, 'Vocabulary', 'Daily vocabulary enrichment.', 'https://images.unsplash.com/photo-1477865300989-86ba6d4adcab?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NjM0Mjd8MHwxfHNlYXJjaHwxfHxWb2NhYnVsYXJ5fGVufDB8fHx8MTc1MDYwNDQxNHww&ixlib=rb-4.1.0&q=80&w'),
-(3, 'Speaking', 'Improve speaking confidence.aaaaaaku anak yang baik namaku ketty teemn cibel. kmu syp???', '/assets/quizzes.png'),
-(4, 'bird', 'sheep and cows', 'https://images.unsplash.com/photo-1620720970374-5b7e67e1e610?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NjM0Mjd8MHwxfHNlYXJjaHwxfHxiaXJ8ZW58MHx8fHwxNzUwNjY5MTM1fDA&ixlib=rb-4.1.0&q=80&w=400'),
-(5, 'eating with gusto', 'eat morning', 'https://images.unsplash.com/photo-1600832501609-0ba64370e7ff?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NjM0Mjd8MHwxfHNlYXJjaHwxfHxlYXRpbmclMjB3aXRoJTIwZ3VzdG98ZW58MHx8fHwxNzUwOTQ2MTA0fDA&ixlib=');
+(8, 'Modals', 'Modals are helping verbs used to show ability, possibility, or necessity.', 'https://images.unsplash.com/photo-1590239662565-4274532102c2?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NjM0Mjd8MHwxfHNlYXJjaHwxfHxwb3NpYmlsaXR5fGVufDB8fHx8MTc1MTMzNjA0OXww&ixlib=rb-4.1.0&q=80&w'),
+(10, 'Past Tense', 'Past Tense is used to describe actions or events that happened in the past.', 'https://images.unsplash.com/photo-1597392582469-a697322d5c16?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NjM0Mjd8MHwxfHNlYXJjaHwxfHx3b3Jkc3xlbnwwfHx8fDE3NTEzNDA4Mjl8MA&ixlib=rb-4.1.0&q=80&w=400'),
+(11, 'Gerunds & Infinitive', 'Gerunds and infinitives are verb forms used as nouns in a sentence.', 'https://images.unsplash.com/photo-1506880018603-83d5b814b5a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NjM0Mjd8MHwxfHNlYXJjaHwxfHxyZWFkaW5nfGVufDB8fHx8MTc1MTMzNjk3M3ww&ixlib=rb-4.1.0&q=80&w=400');
 
 -- --------------------------------------------------------
 
@@ -277,37 +278,37 @@ ALTER TABLE `topics`
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `payment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `quizzes`
 --
 ALTER TABLE `quizzes`
-  MODIFY `quiz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `quiz_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
 
 --
 -- AUTO_INCREMENT for table `schedules`
 --
 ALTER TABLE `schedules`
-  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `schedule_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `teachers`
 --
 ALTER TABLE `teachers`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `topics`
 --
 ALTER TABLE `topics`
-  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `topic_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
@@ -325,7 +326,7 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `quizzes`
   ADD CONSTRAINT `fk_quiz_teacher` FOREIGN KEY (`teacher_id`) REFERENCES `teachers` (`teacher_id`),
-  ADD CONSTRAINT `fk_quiz_topic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`);
+  ADD CONSTRAINT `fk_quiz_topic` FOREIGN KEY (`topic_id`) REFERENCES `topics` (`topic_id`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `schedules`
