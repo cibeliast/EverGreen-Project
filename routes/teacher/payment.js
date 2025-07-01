@@ -23,7 +23,7 @@ router.get('/payment', (req, res) => {
     LEFT JOIN payments p ON s.student_id = p.student_id AND p.teacher_id = ?
     LEFT JOIN schedules sc ON s.student_id = sc.student_id AND sc.teacher_id = ?
     WHERE p.teacher_id = ?
-    GROUP BY s.student_id, p.nominal, p.date, p.note;
+    GROUP BY s.student_id, p.nominal, p.date, p.note, p.payment_id;
     `;
 
   db.query(sql, [teacherId, teacherId, teacherId], (err, results) => {
